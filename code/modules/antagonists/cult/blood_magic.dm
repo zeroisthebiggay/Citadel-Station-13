@@ -416,6 +416,9 @@
 	var/mob/living/L = target
 	if(iscultist(target))
 		return
+	if(user.getStaminaLoss() >= STAMINA_SOFTCRIT)//CIT CHANGE - Stamina critical check.
+		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")
+		return
 	if(iscultist(user))
 		user.visible_message("<span class='warning'>[user] holds up [user.p_their()] hand, which explodes in a flash of red light!</span>", \
 							"<span class='cultitalic'>You attempt to stun [L] with the spell!</span>")
