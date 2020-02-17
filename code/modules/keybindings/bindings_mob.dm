@@ -33,7 +33,7 @@
 			quick_equip()
 			return
 		if("Alt")
-			toggle_move_intent()
+			keybind_toggle_move_intent()
 			return
 		//Bodypart selections
 		if("Numpad8")
@@ -80,3 +80,6 @@
 			toggle_move_intent()
 			return
 	return ..()
+
+/mob/proc/keybind_toggle_move_intent()
+	return toggle_move_intent()
