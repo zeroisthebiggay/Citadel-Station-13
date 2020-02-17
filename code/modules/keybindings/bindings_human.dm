@@ -79,7 +79,7 @@
 			return
 	return ..()
 
-/mob/living/carbon/human/keybind_toggle_move_intent(mob/user)
+/mob/living/carbon/human/keybind_toggle_move_intent(client/user)
 	if(!user.prefs.sprint_toggle && sprinting)
 		return
 	return ..()
