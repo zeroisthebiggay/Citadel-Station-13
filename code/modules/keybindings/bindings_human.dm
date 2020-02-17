@@ -78,3 +78,8 @@
 				sprint_hotkey(FALSE)
 			return
 	return ..()
+
+/mob/living/carbon/human/keybind_toggle_move_intent(mob/user)
+	if(!user.prefs.sprint_toggle && sprinting)
+		return
+	return ..()
