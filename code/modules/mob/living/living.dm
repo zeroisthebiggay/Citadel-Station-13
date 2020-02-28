@@ -249,8 +249,7 @@
 	var/current_dir
 	if(isliving(AM))
 		current_dir = AM.dir
-	if(step(AM, t))
-		step(src, t)
+	step(AM, t)
 	if(current_dir)
 		AM.setDir(current_dir)
 	now_pushing = FALSE
