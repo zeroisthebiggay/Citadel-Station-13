@@ -75,6 +75,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	. = ..()
 	AddComponent(/datum/component/butchering, 40, 105)
 
+/obj/item/claymore/altafterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(!proximity_flag && ismob(target))		//we can't whack 'em and they're a mob
+		user.visible_message("<span class='warning'>[user] points the tip of [src] at [target]!</span>")
+
 /obj/item/claymore/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is falling on [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return(BRUTELOSS)
