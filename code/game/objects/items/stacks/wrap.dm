@@ -66,7 +66,7 @@
 		return
 	if(!istype(target))
 		return
-	if(target.anchored || (user in target))
+	if(target.anchored)
 		return
 
 	if(isitem(target))
