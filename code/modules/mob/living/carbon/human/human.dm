@@ -29,7 +29,7 @@
 	. = ..()
 
 	if(CONFIG_GET(flag/disable_stambuffer))
-		togglesprint()
+		enable_intentional_sprint_mode()
 
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, /atom.proc/clean_blood)
 
@@ -621,16 +621,16 @@
 
 //Used for new human mobs created by cloning/goleming/podding
 /mob/living/carbon/human/proc/set_cloned_appearance()
-	if(gender == MALE)
+	if(dna.features["body_model"] == MALE)
 		facial_hair_style = "Full Beard"
 	else
 		facial_hair_style = "Shaved"
 	hair_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
 	underwear = "Nude"
 	undershirt = "Nude"
-	update_body()
+	socks = "Nude"
+	update_body(TRUE)
 	update_hair()
-	update_genitals()
 
 /mob/living/carbon/human/singularity_pull(S, current_size)
 	..()
@@ -707,7 +707,7 @@
 
 /mob/living/carbon/human/wash_cream()
 	if(creamed) //clean both to prevent a rare bug
-		cut_overlay(mutable_appearance('icons/effects/creampie.dmi', "creampie_lizard"))
+		cut_overlay(mutable_appearance('icons/effects/creampie.dmi', "creampie_snout"))
 		cut_overlay(mutable_appearance('icons/effects/creampie.dmi', "creampie_human"))
 		creamed = FALSE
 
@@ -768,7 +768,7 @@
 		return
 	else
 		if(hud_used.healths)
-			var/health_amount = health - CLAMP(getStaminaLoss()-50, 0, 80)//CIT CHANGE - makes staminaloss have less of an impact on the health hud
+			var/health_amount = min(health, maxHealth - CLAMP(getStaminaLoss()-50, 0, 80))//CIT CHANGE - makes staminaloss have less of an impact on the health hud
 			if(..(health_amount)) //not dead
 				switch(hal_screwyhud)
 					if(SCREWYHUD_CRIT)
@@ -880,14 +880,24 @@
 	return (ishuman(target) && !CHECK_MOBILITY(target, MOBILITY_STAND))
 
 /mob/living/carbon/human/proc/fireman_carry(mob/living/carbon/target)
-	if(can_be_firemanned(target))
-		visible_message("<span class='notice'>[src] starts lifting [target] onto their back...</span>",
-			"<span class='notice'>You start lifting [target] onto your back...</span>")
-		if(do_after(src, 30, TRUE, target))
+	var/carrydelay = 50 //if you have latex you are faster at grabbing
+	var/skills_space = "" //cobby told me to do this
+	if(HAS_TRAIT(src, TRAIT_QUICKER_CARRY))
+		carrydelay = 30
+		skills_space = "expertly"
+	else if(HAS_TRAIT(src, TRAIT_QUICK_CARRY))
+		carrydelay = 40
+		skills_space = "quickly"
+	if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE))
+		visible_message("<span class='notice'>[src] starts [skills_space] lifting [target] onto their back..</span>",
+		//Joe Medic starts quickly/expertly lifting Grey Tider onto their back..
+		"<span class='notice'>[carrydelay < 35 ? "Using your gloves' nanochips, you" : "You"] [skills_space] start to lift [target] onto your back[carrydelay == 40 ? ", while assisted by the nanochips in your gloves.." : "..."]</span>")
+		//(Using your gloves' nanochips, you/You) ( /quickly/expertly) start to lift Grey Tider onto your back(, while assisted by the nanochips in your gloves../...)
+		if(do_after(src, carrydelay, TRUE, target))
 			//Second check to make sure they're still valid to be carried
 			if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE))
 				target.set_resting(FALSE, TRUE)
-				buckle_mob(target, TRUE, TRUE, 90, 1, 0)
+				buckle_mob(target, TRUE, TRUE, 90, 1, 0, TRUE)
 				return
 		visible_message("<span class='warning'>[src] fails to fireman carry [target]!")
 	else
@@ -904,13 +914,13 @@
 				if(target.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
 					target.visible_message("<span class='warning'>[target] can't hang onto [src]!</span>")
 					return
-				buckle_mob(target, TRUE, TRUE, FALSE, 0, 2)
+				buckle_mob(target, TRUE, TRUE, FALSE, 0, 2, FALSE)
 		else
 			visible_message("<span class='warning'>[target] fails to climb onto [src]!</span>")
 	else
 		to_chat(target, "<span class='warning'>You can't piggyback ride [src] right now!</span>")
 
-/mob/living/carbon/human/buckle_mob(mob/living/target, force = FALSE, check_loc = TRUE, lying_buckle = FALSE, hands_needed = 0, target_hands_needed = 0)
+/mob/living/carbon/human/buckle_mob(mob/living/target, force = FALSE, check_loc = TRUE, lying_buckle = FALSE, hands_needed = 0, target_hands_needed = 0, fireman = FALSE)
 	if(!force)//humans are only meant to be ridden through piggybacking and special cases
 		return
 	if(!is_type_in_typecache(target, can_ride_typecache))
@@ -941,6 +951,7 @@
 
 	stop_pulling()
 	riding_datum.handle_vehicle_layer()
+	riding_datum.fireman_carrying = fireman
 	. = ..(target, force, check_loc)
 
 /mob/living/carbon/human/proc/is_shove_knockdown_blocked() //If you want to add more things that block shove knockdown, extend this
