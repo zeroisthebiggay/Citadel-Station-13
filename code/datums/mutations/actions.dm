@@ -40,13 +40,10 @@
 	name = "Fire Breath"
 	desc = "You can breathe fire at a target."
 	school = "evocation"
-<<<<<<< HEAD
 	charge_max = 1200
 	clothes_req = FALSE
-=======
 	charge_max = 600
 	clothes_req = NONE
->>>>>>> 8379169b812cd3b72b1ca2244e756ea4b3914af9
 	range = 20
 	base_icon_state = "fireball"
 	action_icon_state = "fireball0"
