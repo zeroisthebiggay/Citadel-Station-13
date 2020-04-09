@@ -47,6 +47,23 @@
 	new /obj/item/clothing/glasses/hud/health(src)
 	return
 
+/obj/structure/closet/secure_closet/medical4
+	name = "EMT locker"
+	req_access = list(ACCESS_MEDICAL)
+	icon_state = "med_secure"
+
+/obj/structure/closet/secure_closet/medical4/PopulateContents()
+	..()
+	new /obj/item/radio/headset/headset_med(src)
+	new /obj/item/radio/headset/headset_med(src)
+	new /obj/item/defibrillator/loaded(src)
+	new /obj/item/defibrillator/loaded(src)
+	new /obj/item/clothing/gloves/color/latex(src)
+	new /obj/item/clothing/gloves/color/latex(src)
+	new /obj/item/roller(src)
+	new /obj/item/roller(src)
+	return
+
 /obj/structure/closet/secure_closet/CMO
 	name = "\proper chief medical officer's locker"
 	req_access = list(ACCESS_CMO)
