@@ -44,3 +44,13 @@
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
 
 	chameleon_extras = /obj/item/gun/syringe
+
+/datum/outfit/job/cmo/hardsuit
+	name = "Paramedic (Hardsuit)"
+
+	head = null
+	mask = /obj/item/clothing/mask/breath
+	suit = /obj/item/clothing/suit/space/hardsuit/paramedic
+	suit_store = /obj/item/tank/internals/oxygen
+	r_hand = /obj/item/flashlight/pen
+
