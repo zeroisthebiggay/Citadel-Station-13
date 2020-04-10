@@ -45,7 +45,7 @@
 
 	chameleon_extras = /obj/item/gun/syringe
 
-/datum/outfit/job/cmo/hardsuit
+/datum/outfit/job/paramedic/hardsuit
 	name = "Paramedic (Hardsuit)"
 
 	head = null
