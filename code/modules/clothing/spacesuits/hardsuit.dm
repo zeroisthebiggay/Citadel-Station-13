@@ -489,6 +489,9 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | ALLOWINTERNALS
 
+/obj/item/clothing/head/helmet/space/hardsuit/paramedic/attack_self()
+	return //Sprites required for flashlight
+
 /obj/item/clothing/head/helmet/space/hardsuit/paramedic/equipped(mob/living/carbon/human/user, slot)
 	..()
 	if (slot == SLOT_HEAD)
