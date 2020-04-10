@@ -49,7 +49,7 @@
 
 /obj/structure/closet/secure_closet/medical4
 	name = "EMT locker"
-	req_access = list(ACCESS_MEDICAL)
+	req_access = list(ACCESS_PARAMEDIC)
 	icon_state = "med_secure"
 
 /obj/structure/closet/secure_closet/medical4/PopulateContents()
@@ -62,6 +62,8 @@
 	new /obj/item/clothing/gloves/color/latex(src)
 	new /obj/item/roller(src)
 	new /obj/item/roller(src)
+	new /obj/item/clothing/glasses/hud/health(src)
+	new /obj/item/clothing/glasses/hud/health(src)
 	return
 
 /obj/structure/closet/secure_closet/CMO

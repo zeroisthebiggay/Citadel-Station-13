@@ -479,6 +479,38 @@
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/medical
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_ALL_TAURIC
 
+	//Paramedical hardsuit
+/obj/item/clothing/head/helmet/space/hardsuit/paramedic
+	name = "paramedic hardsuit helmet"
+	desc = "A deep blue space helmet with a large blue cross on the faceplate to designate the wearer as trained emergency medical personnel."
+	icon_state = "paramedic-eva-helmet"
+	item_state = "paramedic-eva-helmet"
+	armor = list("melee" = 10, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 75)
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | BLOCK_GAS_SMOKE_EFFECT | ALLOWINTERNALS
+
+/obj/item/clothing/head/helmet/space/hardsuit/paramedic/equipped(mob/living/carbon/human/user, slot)
+	..()
+	if (slot == SLOT_HEAD)
+		var/datum/atom_hud/DHUD = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+		DHUD.add_hud_to(user)
+
+/obj/item/clothing/head/helmet/space/hardsuit/paramedic/dropped(mob/living/carbon/human/user)
+	..()
+	if (user.head == src)
+		var/datum/atom_hud/DHUD = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
+		DHUD.remove_hud_from(user)
+
+/obj/item/clothing/suit/space/hardsuit/paramedic
+	name = "paramedic hardsuit"
+	icon_state = "paramedic-eva"
+	item_state = "paramedic-eva"
+	desc = "A deep blue space suit decorated with blue and white crosses to indicate that the wearer is trained emergency medical personnel."
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/storage/firstaid, /obj/item/healthanalyzer, /obj/item/stack/medical, /obj/item/roller)
+	armor = list("melee" = 10, "bullet" = 5, "laser" = 10, "energy" = 5, "bomb" = 10, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 75)
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/paramedic
+	mutantrace_variation = STYLE_DIGITIGRADE
+
 	//Research Director hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/rd
 	name = "prototype hardsuit helmet"
