@@ -1255,9 +1255,9 @@
 "yg" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/plasteel,/area/space)
 "yh" = (/obj/structure/rack,/obj/item/storage/backpack/duffelbag/med,/obj/item/surgical_drapes,/obj/item/flashlight/pen{pixel_x = 2; pixel_y = 2},/turf/open/floor/plating{icon_state = "platingdmg3"},/area/space)
 "yi" = (/obj/machinery/door/airlock/medical{name = "Medbay Break Room"; req_access_txt = "5"},/turf/open/floor/plasteel/cafeteria,/area/space)
-"yj" = (/obj/machinery/vending/hydronutrients,/turf/open/floor/plasteel,/area/space)
+"yj" = (/obj/machinery/vending/hydronutrients,/obj/effect/turf_decal/bot,/turf/open/floor/plasteel,/area/space)
 "yk" = (/obj/machinery/disposal/bin,/turf/open/floor/plasteel/cafeteria,/area/space)
-"yl" = (/obj/machinery/vending/hydroseeds,/turf/open/floor/plasteel,/area/space)
+"yl" = (/obj/machinery/vending/hydroseeds,/obj/effect/turf_decal/bot,/turf/open/floor/plasteel,/area/space)
 "ym" = (/obj/structure/table/glass,/obj/item/storage/box/masks{pixel_x = 4; pixel_y = 4},/obj/item/storage/box/gloves,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/effect/turf_decal/tile/neutral,/turf/open/floor/plasteel/dark,/area/space)
 "yn" = (/obj/effect/turf_decal/stripes/white/line{dir = 4},/turf/open/floor/plasteel/dark,/area/space)
 "yo" = (/obj/effect/turf_decal/stripes/line{dir = 5},/obj/effect/turf_decal/stripes/corner{dir = 1},/turf/open/floor/plasteel/dark,/area/space)
@@ -1283,7 +1283,7 @@
 "yI" = (/obj/structure/table/reinforced,/obj/machinery/door/firedoor,/turf/open/floor/plasteel/dark,/area/space)
 "yJ" = (/obj/machinery/computer/crew{dir = 4},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/bot,/turf/open/floor/plasteel/dark,/area/space)
 "yK" = (/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/tile/blue{dir = 1},/turf/open/floor/plasteel/white,/area/space)
-"yL" = (/obj/machinery/vending/wardrobe/chef_wardrobe,/turf/open/floor/plasteel/showroomfloor,/area/space)
+"yL" = (/obj/machinery/vending/wardrobe/chef_wardrobe,/obj/effect/turf_decal/bot,/turf/open/floor/plasteel/showroomfloor,/area/space)
 "yM" = (/obj/machinery/door/airlock/medical/glass{name = "Pharmacy"; req_access_txt = "5; 69"},/obj/machinery/door/firedoor,/obj/effect/turf_decal/tile/yellow{dir = 1},/obj/effect/turf_decal/tile/yellow{dir = 8},/obj/effect/turf_decal/tile/yellow,/obj/effect/turf_decal/tile/yellow{dir = 4},/turf/open/floor/plasteel/white,/area/space)
 "yN" = (/obj/effect/turf_decal/tile/yellow{dir = 1},/obj/effect/turf_decal/tile/yellow{dir = 8},/obj/effect/turf_decal/stripes/line,/turf/open/floor/plasteel/white,/area/space)
 "yO" = (/obj/structure/bodycontainer/morgue,/obj/effect/turf_decal/bot_white,/obj/machinery/light/small{brightness = 3; dir = 8},/turf/open/floor/plasteel/dark,/area/space)
@@ -1476,7 +1476,7 @@
 "Ct" = (/obj/structure/table/glass,/obj/item/reagent_containers/syringe,/obj/item/reagent_containers/dropper,/obj/item/reagent_containers/glass/beaker,/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue{dir = 4},/obj/effect/turf_decal/stripes/line{dir = 4},/turf/open/floor/plasteel/white,/area/space)
 "Cu" = (/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/bot,/obj/machinery/smartfridge/organ/preloaded,/turf/open/floor/plasteel/dark,/area/space)
 "Cv" = (/obj/machinery/door/poddoor/shutters,/turf/open/floor/plasteel/dark,/area/space)
-"Cw" = (/obj/machinery/vending/hydronutrients,/turf/open/floor/plasteel/dark,/area/space)
+"Cw" = (/obj/machinery/vending/hydronutrients,/obj/effect/turf_decal/bot,/turf/open/floor/plasteel/dark,/area/space)
 "Cx" = (/obj/structure/table,/obj/item/storage/box/mousetraps,/obj/item/storage/box/mousetraps,/obj/item/storage/bag/trash,/obj/effect/turf_decal/tile/purple{dir = 1},/obj/effect/turf_decal/tile/purple{dir = 4},/obj/effect/turf_decal/tile/green{dir = 4},/obj/effect/turf_decal/stripes/line{dir = 8},/turf/open/floor/plating,/area/space)
 "Cy" = (/obj/effect/turf_decal/stripes/line{dir = 8},/obj/effect/turf_decal/stripes/line{dir = 4},/turf/open/floor/plasteel/white,/area/space)
 "Cz" = (/obj/effect/turf_decal/tile/blue,/obj/effect/turf_decal/tile/blue,/turf/open/floor/plasteel/white,/area/space)
@@ -1551,7 +1551,7 @@
 "DQ" = (/obj/machinery/hydroponics/constructable,/obj/effect/turf_decal/tile/green,/obj/effect/turf_decal/tile/green{dir = 8},/turf/open/floor/plasteel,/area/space)
 "DR" = (/obj/effect/turf_decal/tile/green{dir = 4},/obj/effect/turf_decal/tile/green,/turf/open/floor/plasteel,/area/space)
 "DS" = (/obj/machinery/computer/crew{dir = 2},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/bot,/turf/open/floor/plasteel/dark,/area/space)
-"DT" = (/obj/machinery/vending/hydroseeds,/turf/open/floor/plasteel/dark,/area/space)
+"DT" = (/obj/machinery/vending/hydroseeds,/obj/effect/turf_decal/bot,/turf/open/floor/plasteel/dark,/area/space)
 "DU" = (/obj/effect/turf_decal/tile/green{dir = 4},/obj/effect/turf_decal/tile/green,/mob/living/simple_animal/pet/bumbles,/turf/open/floor/plasteel,/area/space)
 "DV" = (/obj/machinery/button/door{pixel_y = 26},/turf/open/floor/plating,/area/space)
 "DW" = (/obj/effect/turf_decal/bot,/turf/open/floor/plasteel,/area/space)
@@ -1590,8 +1590,8 @@
 "ED" = (/obj/structure/kitchenspike,/turf/open/floor/plasteel/showroomfloor,/area/space)
 "EE" = (/obj/structure/plasticflaps/opaque,/obj/effect/turf_decal/delivery,/turf/open/floor/plasteel,/area/space)
 "EF" = (/obj/structure/window/reinforced{dir = 4},/obj/machinery/door/window/northleft,/obj/effect/turf_decal/delivery,/turf/open/floor/plasteel,/area/space)
-"EG" = (/obj/structure/closet{name = "spare parts locker"},/obj/item/rack_parts,/obj/item/rack_parts,/obj/item/wrench,/obj/item/crowbar,/turf/open/floor/plasteel,/area/space)
-"EH" = (/obj/machinery/gibber,/turf/open/floor/plasteel/showroomfloor,/area/space)
+"EG" = (/obj/structure/closet{name = "spare parts locker"},/obj/item/rack_parts,/obj/item/rack_parts,/obj/item/wrench,/obj/item/crowbar,/obj/effect/turf_decal/bot,/turf/open/floor/plasteel,/area/space)
+"EH" = (/obj/machinery/gibber,/obj/effect/turf_decal/bot,/turf/open/floor/plasteel/showroomfloor,/area/space)
 "EI" = (/obj/structure/kitchenspike,/turf/open/floor/plating,/area/space)
 "EJ" = (/obj/effect/turf_decal/stripes/line{dir = 4},/obj/machinery/conveyor,/obj/machinery/door/window/eastleft,/turf/open/floor/plating,/area/space)
 "EK" = (/obj/effect/spawner/lootdrop/maintenance,/obj/effect/spawner/lootdrop/gloves,/obj/effect/turf_decal/stripes/line{dir = 4},/obj/machinery/conveyor,/obj/structure/window/reinforced{dir = 4},/turf/open/floor/plating,/area/space)
@@ -1604,6 +1604,7 @@
 "ER" = (/obj/structure/window/reinforced{dir = 4; layer = 2.9},/obj/machinery/door/window/northleft,/obj/effect/turf_decal/delivery,/turf/open/floor/plasteel,/area/space)
 "ES" = (/obj/structure/closet/crate/hydroponics,/obj/item/shovel/spade,/obj/item/cultivator,/obj/item/hatchet,/obj/item/wrench,/obj/item/crowbar,/obj/item/wirecutters,/obj/item/screwdriver,/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 1},/turf/open/floor/plasteel/dark,/area/space)
 "ET" = (/obj/structure/table/glass,/obj/item/reagent_containers/spray/plantbgone,/obj/item/reagent_containers/spray/plantbgone{pixel_x = 6; pixel_y = 6},/obj/item/watertank,/obj/item/grenade/chem_grenade/antiweed,/obj/item/grenade/chem_grenade/antiweed{pixel_x = 6; pixel_y = 6},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 1},/turf/open/floor/plasteel/dark,/area/space)
+"EU" = (/obj/effect/turf_decal/bot,/turf/open/floor/plasteel/dark,/area/space)
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
@@ -1714,7 +1715,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasRsRsRsRsRsRsRsRbXCXCYCICZDaDbDcbXsRsRsRbXqssHrArBrCrArDrEpzqaqbsJqqbXxizfsrufyntXtXtNtRbXqtygypbXsRsRbXbXbXbXbFbXbXbXbXflflflflflbXbXtjbXbXgGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabXbXrpufrpbXrpufrpbXDdDeCIDfDgDhDibXsRsRsRrpsirArArGrHrArDrEqJsPrAsQrFbXtSuabXyqqvtMtMtNtRbXygyrqzbXbXbXbXstslqZtVulbXsmbXgGgGgGgGgGeLuesRvmeLgGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabXxYydufufrpyjCIylbXbXbXCvbXbXbXbXbXsRsRsRrIrvsTrArJrHrArKrErOsPsTsQrUbXtSuabXtZqAucucqYtRbXyyyzygbXymytbXsAsAtVtVtVbXqhbXgGaaaaaagGeLuesRvmeLgGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabXyuufufufufCICICIufsRsRsRsRsRsRsRsRsRsRsRrMrCrArArJrHrArKrLsXrtrAsQsjflsnuabXtZuguhuhrybXbXyFyGyzbXxirabXtVtVxZtVtVyaxjbXgGaaaaaagGeLuesRvmeLgGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabXyuufEUufufCICICIufsRsRsRsRsRsRsRsRsRsRsRrMrCrArArJrHrArKrLsXrtrAsQsjflsnuabXtZuguhuhrybXbXyFyGyzbXxirabXtVtVxZtVtVyaxjbXgGaaaaaagGeLuesRvmeLgGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabXELufufufrpEMCIENrpsRsRsRsRsRsRsRsRsRsRsRrpsosarArwrvrAsLtctdterArPtasqtevgbXyOuguhukyPbXyQsRyRySbFyTrzyitVtVtVykrQbXujbXgGgGgGgGgGeLuesRvmeLgGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabXbXsRbXbXbXyAyIrpbXrpufrpbXsRsRsRsRsRsRsRsRsRsRsRbXvirSrTsurCrAsxbXtitgsBsFsIflyNsKbXtZutuuuuuLbFyGyzyZzabXrXtYbXsbwvbXbXbXbXbXbXflflbXflflbXbXtjbXbXgGaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabXCwyUzczczczczczczczczcBGEOsRsRsRsRbXsgsstobXrErEbXrErYrZrEuBzDAObXflflbXyMrLbXvbvbupbXbXsrbXbXbXbXbXbXbXbXsvuobXbXbXbXwtwuwwbXwCwMxyxRzYAEBrbXsRsRflaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
