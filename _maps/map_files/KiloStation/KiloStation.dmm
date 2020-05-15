@@ -64802,7 +64802,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/computer/shuttle/mining/common{
+/obj/machinery/telecomms/server/presets/common{
 	dir = 4
 	},
 /obj/structure/window/reinforced{
