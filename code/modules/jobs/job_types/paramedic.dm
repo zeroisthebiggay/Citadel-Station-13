@@ -13,11 +13,19 @@
 
 	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_MINERAL_STOREROOM, ACCESS_MAINT_TUNNELS, ACCESS_PARAMEDIC)
 
+<<<<<<< HEAD
 	minimal_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_CLONING, ACCESS_MINERAL_STOREROOM, ACCESS_MAINT_TUNNELS, ACCESS_PARAMEDIC)
+=======
+	minimal_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_CLONING, ACCESS_MINERAL_STOREROOM, ACCESS_MAINT_TUNNELS)
+	paycheck = PAYCHECK_MEDIUM
+	paycheck_department = ACCOUNT_MED
+>>>>>>> f0cf2f8cfafebf8d09b37155d29dab5720dd5cd4
 
 	display_order = JOB_DISPLAY_ORDER_PARAMEDIC
 
 	threat = 0.5
+
+	starting_modifiers = list(/datum/skill_modifier/job/surgery, /datum/skill_modifier/job/affinity/surgery)
 
 /datum/outfit/job/paramedic
 	name = "Paramedic"
