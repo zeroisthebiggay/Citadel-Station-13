@@ -34,15 +34,7 @@ GLOBAL_LIST_EMPTY(client_ghost_timeouts)
 	return candidates
 
 /mob/proc/can_reenter_round(silent = FALSE)
-<<<<<<< HEAD
-	var/datum/element/ghost_role_eligibility/eli = SSdcs.GetElement(/datum/element/ghost_role_eligibility)
-	return eli.can_reenter_round(src,silent)
-
-/datum/element/ghost_role_eligibility/proc/can_reenter_round(var/mob/M,silent = FALSE)
-	if(!(M in eligible_mobs))
-=======
 	if(!(src in GLOB.ghost_eligible_mobs))
->>>>>>> f0cf2f8cfafebf8d09b37155d29dab5720dd5cd4
 		return FALSE
 	if(!(ckey in GLOB.client_ghost_timeouts))
 		return TRUE
