@@ -40,6 +40,13 @@
 	glass_type = /obj/machinery/door/airlock/atmos/glass
 	airlock_type = /obj/machinery/door/airlock/atmos
 
+/obj/structure/door_assembly/door_assembly_sub
+	name = "substation airlock assembly"
+	icon = 'icons/obj/doors/airlocks/station/substation.dmi'
+	base_name = "substation airlock"
+	glass_type = /obj/machinery/door/airlock/substation/glass
+	airlock_type = /obj/machinery/door/airlock/substation
+
 /obj/structure/door_assembly/door_assembly_research
 	name = "research airlock assembly"
 	icon = 'icons/obj/doors/airlocks/station/research.dmi'
