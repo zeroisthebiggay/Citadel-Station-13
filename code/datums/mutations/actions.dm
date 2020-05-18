@@ -38,10 +38,6 @@
 
 /obj/effect/proc_holder/spell/aimed/firebreath
 	name = "Fire Breath"
-	desc = "You can breathe fire at a target."
-	school = "evocation"
-	charge_max = 1200
-	clothes_req = FALSE
 	charge_max = 600
 	clothes_req = NONE
 	range = 20
