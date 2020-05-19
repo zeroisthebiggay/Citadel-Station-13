@@ -128,6 +128,10 @@
 	icon_state = "stairs-r"
 /turf/open/floor/plasteel/stairs/old
 	icon_state = "stairs-old"
+/turf/open/floor/plasteel/stairs/faceeast
+	icon_state = "stairs-f-e"
+/turf/open/floor/plasteel/stairs/facewest
+	icon_state = "stairs-f-w"
 
 
 /turf/open/floor/plasteel/rockvault

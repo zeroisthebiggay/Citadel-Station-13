@@ -36,8 +36,10 @@
 		var/obj/effect/proc_holder/spell/aimed/firebreath/S = power
 		S.strength = 4 + GET_MUTATION_POWER(src)
 
-/obj/effect/proc_holder/spell/aimed/firebreath
+obj/effect/proc_holder/spell/aimed/firebreath
 	name = "Fire Breath"
+	desc = "You can breathe fire at a target."
+	school = "evocation"
 	charge_max = 600
 	clothes_req = NONE
 	range = 20
