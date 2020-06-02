@@ -1398,6 +1398,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Pool Area"
 	icon_state = "pool"
 
+/area/crew_quarters/fitness/sauna
+	name = "Sauna"
+	icon_state = "sauna"
+
 /area/crew_quarters/dorms/blue
 	name = "Blue Dorms"
 	icon_state = "Sleep"
