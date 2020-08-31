@@ -395,6 +395,17 @@
 	new /obj/item/clothing/mask/surgical(src)
 	new /obj/item/reagent_containers/medspray/sterilizine(src)
 
+/obj/item/storage/backpack/duffelbag/sec/autopsy
+	name = "autopsy duffel bag"
+	desc = "A large duffel bag for holding extra supplies - this one has a material inlay with space for various sharp-looking tools."
+
+/obj/item/storage/backpack/duffelbag/sec/autopsy/PopulateContents()
+	new /obj/item/surgical_drapes(src)
+	new /obj/item/scalpel (src)
+	new /obj/item/hemostat(src)
+	new /obj/item/retractor(src)
+	new /obj/item/bodybag (src)
+
 /obj/item/storage/backpack/duffelbag/engineering
 	name = "industrial duffel bag"
 	desc = "A large duffel bag for holding extra tools and supplies."
