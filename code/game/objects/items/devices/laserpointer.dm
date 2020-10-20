@@ -128,14 +128,14 @@
 	else if(istype(target, /obj/machinery/camera))
 		var/obj/machinery/camera/C = target
 		if(prob(effectchance * diode.rating))
-			C.emp_act(EMP_HEAVY)
+			C.emp_act(80)
 			outmsg = "<span class='notice'>You hit the lens of [C] with [src], temporarily disabling the camera!</span>"
 			log_combat(user, C, "EMPed", src)
 		else
 			outmsg = "<span class='warning'>You miss the lens of [C] with [src]!</span>"
 
 	//catpeople
-	var/list/viewers = get_actual_viewers(1,targloc)
+	var/list/viewers = fov_viewers(1,targloc)
 	for(var/mob/living/carbon/human/H in viewers)
 		if(!iscatperson(H) || H.incapacitated() || H.eye_blind )
 			continue

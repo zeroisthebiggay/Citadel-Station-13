@@ -8,11 +8,9 @@
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_to_hud(src)
 	faction += "[REF(src)]"
+	stamina_buffer = INFINITY
+	UpdateStaminaBuffer()
 	GLOB.mob_living_list += src
-	initialize_footstep()
-
-/mob/living/proc/initialize_footstep()
-	AddComponent(/datum/component/footstep)
 
 /mob/living/prepare_huds()
 	..()
@@ -23,6 +21,8 @@
 	med_hud_set_status()
 
 /mob/living/Destroy()
+	end_parry_sequence()
+	stop_active_blocking()
 	if(LAZYLEN(status_effects))
 		for(var/s in status_effects)
 			var/datum/status_effect/S = s
@@ -46,7 +46,8 @@
 	return ..()
 
 /mob/living/proc/ZImpactDamage(turf/T, levels)
-	visible_message("<span class='danger'>[src] crashes into [T] with a sickening noise!</span>")
+	visible_message("<span class='danger'>[src] crashes into [T] with a sickening noise!</span>", \
+					"<span class='userdanger'>You crash into [T] with a sickening noise!</span>")
 	adjustBruteLoss((levels * 5) ** 1.5)
 	DefaultCombatKnockdown(levels * 50)
 
@@ -58,7 +59,7 @@
 /mob/living/Bump(atom/A)
 	if(..()) //we are thrown onto something
 		return
-	if (buckled || now_pushing)
+	if(buckled || now_pushing)
 		return
 	if(ismob(A))
 		var/mob/M = A
@@ -124,7 +125,9 @@
 					to_chat(src, "<span class='warning'>You're too exhausted to crawl under [L].</span>")
 					return TRUE
 				ENABLE_BITFIELD(combat_flags, COMBAT_FLAG_ATTEMPTING_CRAWL)
-				visible_message("<span class='notice'>[src] is attempting to crawl under [L].</span>", "<span class='notice'>You are now attempting to crawl under [L].</span>")
+				visible_message("<span class='notice'>[src] is attempting to crawl under [L].</span>",
+					"<span class='notice'>You are now attempting to crawl under [L].</span>",
+					target = L, target_message = "<span class='notice'>[src] is attempting to crawl under you.</span>")
 				if(!do_after(src, CRAWLUNDER_DELAY, target = src) || CHECK_MOBILITY(src, MOBILITY_STAND))
 					DISABLE_BITFIELD(combat_flags, COMBAT_FLAG_ATTEMPTING_CRAWL)
 					return TRUE
@@ -272,11 +275,13 @@
 			return
 		stop_pulling()
 
-	changeNext_move(CLICK_CD_GRABBING)
+	DelayNextAction(CLICK_CD_GRABBING)
 
 	if(AM.pulledby)
 		if(!supress_message)
-			visible_message("<span class='danger'>[src] has pulled [AM] from [AM.pulledby]'s grip.</span>")
+			AM.pulledby.visible_message("<span class='danger'>[src] has pulled [AM] from [AM.pulledby]'s grip.</span>",
+				"<span class='danger'>[src] has pulled [AM] from your grip.</span>", target = src,
+				target_message = "<span class='danger'>You have pulled [AM] from [AM.pulledby]'s grip.</span>")
 		log_combat(AM, AM.pulledby, "pulled from", src)
 		AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
 
@@ -291,7 +296,9 @@
 
 		log_combat(src, M, "grabbed", addition="passive grab")
 		if(!supress_message && !(iscarbon(AM) && HAS_TRAIT(src, TRAIT_STRONG_GRABBER)))
-			visible_message("<span class='warning'>[src] has grabbed [M][(zone_selected == "l_arm" || zone_selected == "r_arm")? " by their hands":" passively"]!</span>")		//Cit change - And they thought ERP was bad.
+			visible_message("<span class='warning'>[src] has grabbed [M][(zone_selected == "l_arm" || zone_selected == "r_arm")? " by [M.p_their()] hands":" passively"]!</span>",
+				"<span class='warning'>You have grabbed [M][(zone_selected == "l_arm" || zone_selected == "r_arm")? " by [M.p_their()] hands":" passively"]!</span>", target = M,
+				target_message = "<span class='warning'>[src] has grabbed you[(zone_selected == "l_arm" || zone_selected == "r_arm")? " by your hands":" passively"]!</span>")
 		if(!iscarbon(src))
 			M.LAssailant = null
 		else
@@ -319,7 +326,7 @@
 		set_pull_offsets(M, state)
 
 /mob/living/proc/set_pull_offsets(mob/living/M, grab_state = GRAB_PASSIVE)
-	if(M.buckled || M.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE)
+	if(M.buckled || SEND_SIGNAL(M, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE))
 		return //don't make them change direction or offset them if they're buckled into something or in combat mode.
 	var/offset = 0
 	switch(grab_state)
@@ -379,7 +386,7 @@
 	stop_pulling()
 
 //same as above
-/mob/living/pointed(atom/A as mob|obj|turf in visible_atoms())
+/mob/living/pointed(atom/A as mob|obj|turf in fov_view())
 	if(incapacitated())
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_DEATHCOMA))
@@ -600,40 +607,54 @@
 		SEND_SIGNAL(item, COMSIG_ITEM_WEARERCROSSED, AM)
 
 /mob/living/proc/makeTrail(turf/target_turf, turf/start, direction)
-	if(!has_gravity())
+	if(!has_gravity() || !isturf(start) || !blood_volume)
 		return
-	var/blood_exists = FALSE
+	var/blood_exists = locate(/obj/effect/decal/cleanable/trail_holder) in start
 
-	for(var/obj/effect/decal/cleanable/trail_holder/C in start) //checks for blood splatter already on the floor
-		blood_exists = TRUE
-	if(isturf(start))
-		var/trail_type = getTrail()
-		if(trail_type)
-			var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
-			if(blood_volume && blood_volume > max((BLOOD_VOLUME_NORMAL*blood_ratio)*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
-				blood_volume = max(blood_volume - max(1, brute_ratio * 2), 0) 					//that depends on our brute damage.
-				var/newdir = get_dir(target_turf, start)
-				if(newdir != direction)
-					newdir = newdir | direction
-					if(newdir == 3) //N + S
-						newdir = NORTH
-					else if(newdir == 12) //E + W
-						newdir = EAST
-				if((newdir in GLOB.cardinals) && (prob(50)))
-					newdir = turn(get_dir(target_turf, start), 180)
-				if(!blood_exists)
-					new /obj/effect/decal/cleanable/trail_holder(start, get_static_viruses())
+	var/trail_type = getTrail()
+	if(!trail_type)
+		return
 
-				for(var/obj/effect/decal/cleanable/trail_holder/TH in start)
-					if((!(newdir in TH.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
-						TH.existing_dirs += newdir
-						TH.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
-						TH.transfer_mob_blood_dna(src)
+	var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
+	if(blood_volume < max(BLOOD_VOLUME_NORMAL*(1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
+		return
+
+	var/bleed_amount = bleedDragAmount()
+	blood_volume = max(blood_volume - bleed_amount, 0) 					//that depends on our brute damage.
+	var/newdir = get_dir(target_turf, start)
+	if(newdir != direction)
+		newdir = newdir | direction
+		if(newdir == (NORTH|SOUTH))
+			newdir = NORTH
+		else if(newdir == (EAST|WEST))
+			newdir = EAST
+	if((newdir in GLOB.cardinals) && (prob(50)))
+		newdir = turn(get_dir(target_turf, start), 180)
+	if(!blood_exists)
+		new /obj/effect/decal/cleanable/trail_holder(start, get_static_viruses())
+
+	for(var/obj/effect/decal/cleanable/trail_holder/TH in start)
+		if((!(newdir in TH.existing_dirs) || trail_type == "trails_1" || trail_type == "trails_2") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
+			TH.existing_dirs += newdir
+			TH.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
+			TH.transfer_mob_blood_dna(src)
 
 /mob/living/carbon/human/makeTrail(turf/T)
-	if((NOBLOOD in dna.species.species_traits) || !bleed_rate || bleedsuppress)
+	if((NOBLOOD in dna.species.species_traits) || !is_bleeding() || bleedsuppress)
 		return
 	..()
+
+///Returns how much blood we're losing from being dragged a tile, from [mob/living/proc/makeTrail]
+/mob/living/proc/bleedDragAmount()
+	var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
+	return max(1, brute_ratio * 2)
+
+/mob/living/carbon/bleedDragAmount()
+	var/bleed_amount = 0
+	for(var/i in all_wounds)
+		var/datum/wound/iter_wound = i
+		bleed_amount += iter_wound.drag_bleed_amount()
+	return bleed_amount
 
 /mob/living/proc/getTrail()
 	if(getBruteLoss() < 300)
@@ -671,7 +692,7 @@
 		..(pressure_difference, direction, pressure_resistance_prob_delta)
 
 /mob/living/can_resist()
-	return !((next_move > world.time) || !CHECK_MOBILITY(src, MOBILITY_RESIST))
+	return CheckResistCooldown() && CHECK_MOBILITY(src, MOBILITY_RESIST)
 
 /// Resist verb for attempting to get out of whatever is restraining your motion. Gives you resist clickdelay if do_resist() returns true.
 /mob/living/verb/resist()
@@ -682,10 +703,12 @@
 		return
 
 	if(do_resist())
-		changeNext_move(CLICK_CD_RESIST)
+		MarkResistTime()
+		DelayNextAction(CLICK_CD_RESIST)
 
-/// The actual proc for resisting. Return TRUE to give clickdelay.
+/// The actual proc for resisting. Return TRUE to give CLICK_CD_RESIST clickdelay.
 /mob/living/proc/do_resist()
+	set waitfor = FALSE			// some of these sleep.
 	SEND_SIGNAL(src, COMSIG_LIVING_RESIST, src)
 	//resisting grabs (as if it helps anyone...)
 	// only works if you're not cuffed.
@@ -696,7 +719,7 @@
 		return old_gs? TRUE : FALSE
 
 	// unbuckling yourself. stops the chain if you try it.
-	if(buckled && last_special <= world.time)
+	if(buckled)
 		log_combat(src, buckled, "resisted buckle")
 		return resist_buckle()
 
@@ -725,13 +748,12 @@
 
 	if(CHECK_MOBILITY(src, MOBILITY_USE) && resist_embedded()) //Citadel Change for embedded removal memes - requires being able to use items.
 		// DO NOT GIVE DEFAULT CLICKDELAY - This is a combat action.
-		changeNext_move(CLICK_CD_MELEE)
+		DelayNextAction(CLICK_CD_MELEE)
 		return FALSE
 
-	if(last_special <= world.time)
-		resist_restraints() //trying to remove cuffs.
-		// DO NOT GIVE CLICKDELAY - last_special handles this.
-		return FALSE
+	resist_restraints() //trying to remove cuffs.
+	// DO NOT GIVE CLICKDELAY
+	return FALSE
 
 /// Proc to resist a grab. moving_resist is TRUE if this began by someone attempting to move. Return FALSE if still grabbed/failed to break out. Use this instead of resist_grab() directly.
 /mob/proc/attempt_resist_grab(moving_resist, forced, log = TRUE)
@@ -756,12 +778,16 @@
 	. = ..()
 	if(pulledby.grab_state > GRAB_PASSIVE)
 		if(CHECK_MOBILITY(src, MOBILITY_RESIST) && prob(30/pulledby.grab_state))
-			visible_message("<span class='danger'>[src] has broken free of [pulledby]'s grip!</span>")
+			pulledby.visible_message("<span class='danger'>[src] has broken free of [pulledby]'s grip!</span>",
+				"<span class='danger'>[src] has broken free of your grip!</span>", target = src,
+				target_message = "<span class='danger'>You have broken free of [pulledby]'s grip!</span>")
 			pulledby.stop_pulling()
 			return TRUE
 		else if(moving_resist && client) //we resisted by trying to move // this is a horrible system and whoever thought using client instead of mob is okay is not an okay person
 			client.move_delay = world.time + 20
-		visible_message("<span class='danger'>[src] resists against [pulledby]'s grip!</span>")
+		pulledby.visible_message("<span class='danger'>[src] resists against [pulledby]'s grip!</span>",
+			"<span class='danger'>[src] resists against your grip!</span>", target = src,
+			target_message = "<span class='danger'>You resist against [pulledby]'s grip!</span>")
 	else
 		pulledby.stop_pulling()
 		return TRUE
@@ -793,7 +819,7 @@
 	else
 		throw_alert("gravity", /obj/screen/alert/weightless)
 	if(!override && !is_flying())
-		float(!has_gravity)
+		INVOKE_ASYNC(src, /atom/movable.proc/float, !has_gravity)
 
 /mob/living/float(on)
 	if(throwing)
@@ -818,15 +844,16 @@
 		return
 	var/strip_mod = 1
 	var/strip_silence = FALSE
-	if (ishuman(src)) //carbon doesn't actually wear gloves
+	if(ishuman(src)) //carbon doesn't actually wear gloves
 		var/mob/living/carbon/C = src
-		var/obj/item/clothing/gloves/g = C.gloves
-		if (istype(g))
-			strip_mod = g.strip_mod
-			strip_silence = g.strip_silence
+		var/obj/item/clothing/gloves/G = C.gloves
+		if(istype(G))
+			strip_mod = G.strip_mod
+			strip_silence = G.strip_silence
 	if (!strip_silence)
 		who.visible_message("<span class='danger'>[src] tries to remove [who]'s [what.name].</span>", \
-					"<span class='userdanger'>[src] tries to remove [who]'s [what.name].</span>")
+					"<span class='userdanger'>[src] tries to remove your [what.name].</span>", target = src,
+					target_message = "<span class='danger'>You try to remove [who]'s [what.name].</span>")
 		what.add_fingerprint(src)
 	else
 		to_chat(src,"<span class='notice'>You try to remove [who]'s [what.name].</span>")
@@ -874,7 +901,9 @@
 			to_chat(src, "<span class='warning'>\The [what.name] doesn't fit in that place!</span>")
 			return
 
-		visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>")
+		who.visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>",
+			"<span class='notice'>[src] tries to put [what] on you.</span>", target = src,
+			target_message = "<span class='notice'>You try to put [what] on [who].</span>")
 		if(do_mob(src, who, what.equip_delay_other))
 			if(what && Adjacent(who) && what.mob_can_equip(who, src, final_where, TRUE, TRUE))
 				if(temporarilyRemoveItemFromInventory(what))
@@ -899,10 +928,10 @@
 	var/final_pixel_y = get_standard_pixel_y_offset(lying)
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = 6)
 	animate(pixel_x = final_pixel_x , pixel_y = final_pixel_y , time = 2)
-	setMovetype(movement_type & ~FLOATING) // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().
+	floating_need_update = TRUE
 
 /mob/living/proc/get_temperature(datum/gas_mixture/environment)
-	var/loc_temp = environment ? environment.temperature : T0C
+	var/loc_temp = environment ? environment.return_temperature() : T0C
 	if(isobj(loc))
 		var/obj/oloc = loc
 		var/obj_temp = oloc.return_temperature()
@@ -1003,7 +1032,7 @@
 		return TRUE
 	return FALSE
 
-/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
+/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force)
 	stop_pulling()
 	. = ..()
 
@@ -1058,7 +1087,7 @@
 /mob/living/proc/IgniteMob()
 	if(fire_stacks > 0 && !on_fire)
 		on_fire = 1
-		src.visible_message("<span class='warning'>[src] catches fire!</span>", \
+		visible_message("<span class='warning'>[src] catches fire!</span>", \
 						"<span class='userdanger'>You're set on fire!</span>")
 		new/obj/effect/dummy/lighting_obj/moblight/fire(src)
 		throw_alert("fire", /obj/screen/alert/fire)
@@ -1136,8 +1165,10 @@
 		A.action.Remove(src)
 
 /mob/living/proc/add_abilities_to_panel()
+	var/list/L = list()
 	for(var/obj/effect/proc_holder/A in abilities)
-		statpanel("[A.panel]",A.get_panel_text(),A)
+		L[++L.len] = list("[A.panel]",A.get_panel_text(),A.name,"[REF(A)]")
+	return L
 
 /mob/living/lingcheck()
 	if(mind)
@@ -1184,30 +1215,29 @@
 
 /mob/living/vv_edit_var(var_name, var_value)
 	switch(var_name)
-		if ("maxHealth")
+		if (NAMEOF(src, maxHealth))
 			if (!isnum(var_value) || var_value <= 0)
 				return FALSE
-		if("stat")
+		if(NAMEOF(src, stat))
 			if((stat == DEAD) && (var_value < DEAD))//Bringing the dead back to life
 				GLOB.dead_mob_list -= src
 				GLOB.alive_mob_list += src
 			if((stat < DEAD) && (var_value == DEAD))//Kill he
 				GLOB.alive_mob_list -= src
 				GLOB.dead_mob_list += src
+		if(NAMEOF(src, health)) //this doesn't work. gotta use procs instead.
+			return FALSE
 	. = ..()
 	switch(var_name)
-		if("eye_blind")
+		if(NAMEOF(src, eye_blind))
 			set_blindness(var_value)
-		if("eye_damage")
-			var/obj/item/organ/eyes/E = getorganslot(ORGAN_SLOT_EYES)
-			E?.setOrganDamage(var_value)
-		if("eye_blurry")
+		if(NAMEOF(src, eye_blurry))
 			set_blurriness(var_value)
-		if("maxHealth")
+		if(NAMEOF(src, maxHealth))
 			updatehealth()
-		if("resize")
+		if(NAMEOF(src, resize))
 			update_transform()
-		if("lighting_alpha")
+		if(NAMEOF(src, lighting_alpha))
 			sync_lighting_plane_alpha()
 
 /mob/living/proc/do_adrenaline(
@@ -1229,7 +1259,7 @@
 		SetUnconscious(clamp_unconscious_to)
 	HealAllImmobilityUpTo(clamp_immobility_to)
 	adjustStaminaLoss(min(0, -stamina_boost))
-	adjustStaminaLossBuffered(min(0, -stamina_buffer_boost))
+	RechargeStaminaBuffer(stamina_buffer_boost)		// this MUST GO AFTER ADJUSTSTAMINALOSS.
 	if(scale_stamina_loss_recovery)
 		adjustStaminaLoss(min(-((getStaminaLoss() - stamina_loss_recovery_bypass) * scale_stamina_loss_recovery), 0))
 	if(put_on_feet)

@@ -37,11 +37,14 @@
 #define FIELD_OF_VISION_VISUAL_RENDER_TARGET "FIELD_OF_VISION_VISUAL_PLANE"
 
 #define CHAT_PLANE -1 //We don't want heard messages to be hidden by FoV.
-#define CHAT_LAYER 12.1 //Legacy, it doesn't matter that much because we are displayed above the game plane anyway.
+
+#define CHAT_LAYER 12.0001 // Do not insert layers between these two values
+#define CHAT_LAYER_MAX 12.9999
 
 #define BLACKNESS_PLANE 0 //To keep from conflicts with SEE_BLACKNESS internals
 #define BLACKNESS_PLANE_RENDER_TARGET "BLACKNESS_PLANE"
 
+///Layers most often used by atoms of plane lower than GAME_PLANE
 #define SPACE_LAYER 1.8
 //#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define
 #define MID_TURF_LAYER 2.02
@@ -61,11 +64,12 @@
 #define GAS_PIPE_VISIBLE_LAYER 2.47
 #define GAS_FILTER_LAYER 2.48
 #define GAS_PUMP_LAYER 2.49
+
 #define LOW_OBJ_LAYER 2.5
 #define LOW_SIGIL_LAYER 2.52
 #define SIGIL_LAYER 2.54
 #define HIGH_SIGIL_LAYER 2.56
-
+///Layers most often used by atoms of plane equal or higher than GAME_PLANE
 #define BELOW_OPEN_DOOR_LAYER 2.6
 #define BLASTDOOR_LAYER 2.65
 #define OPEN_DOOR_LAYER 2.7
@@ -128,6 +132,8 @@
 #define LIGHTING_PLANE 15
 #define LIGHTING_LAYER 15
 #define LIGHTING_RENDER_TARGET "LIGHT_PLANE"
+
+#define RAD_TEXT_LAYER 15.1
 
 #define ABOVE_LIGHTING_PLANE 16
 #define ABOVE_LIGHTING_LAYER 16

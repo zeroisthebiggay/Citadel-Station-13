@@ -92,6 +92,7 @@
 					/obj/item/storage/backpack/medic = 5,
 					/obj/item/storage/backpack/satchel/med = 5,
 					/obj/item/clothing/suit/hooded/wintercoat/medical = 5,
+					/obj/item/clothing/suit/hooded/wintercoat/paramedic = 2,
 					/obj/item/clothing/under/rank/medical/doctor/nurse = 5,
 					/obj/item/clothing/head/nursehat = 5,
 					/obj/item/clothing/under/rank/medical/doctor/skirt= 5,
@@ -99,41 +100,28 @@
 					/obj/item/clothing/under/rank/medical/doctor/green = 5,
 					/obj/item/clothing/under/rank/medical/doctor/purple = 5,
 					/obj/item/clothing/under/rank/medical/doctor = 5,
-					/obj/item/clothing/suit/toggle/labcoat = 5,,
+					/obj/item/clothing/under/rank/medical/paramedic = 5,
+					/obj/item/clothing/under/rank/medical/paramedic/light = 5,
+					/obj/item/clothing/under/rank/medical/paramedic/skirt = 5,
+					/obj/item/clothing/under/rank/medical/paramedic/skirt/light = 5,
+					/obj/item/clothing/suit/toggle/labcoat = 5,
+					/obj/item/clothing/suit/toggle/labcoat/paramedic = 5,
+					/obj/item/clothing/suit/toggle/labcoat/emt = 5,
+					/obj/item/clothing/suit/toggle/labcoat/depjacket/med = 5,
 					/obj/item/clothing/shoes/sneakers/white = 5,
+					/obj/item/clothing/head/soft/emt = 5,
 					/obj/item/clothing/suit/apron/surgical = 5,
-					/obj/item/clothing/mask/surgical = 5)
+					/obj/item/clothing/mask/surgical = 5,
+					/obj/item/clothing/under/rank/medical/doctor/util = 5,
+					/obj/item/clothing/under/rank/medical/paramedic/red = 5,
+					/obj/item/clothing/suit/toggle/labcoat/emt/red = 5,
+					/obj/item/clothing/suit/toggle/labcoat/emt/highvis = 5)
 	refill_canister = /obj/item/vending_refill/wardrobe/medi_wardrobe
 	payment_department = ACCOUNT_MED
 	cost_multiplier_per_dept = list(ACCOUNT_MED = 0)
 
 /obj/item/vending_refill/wardrobe/medi_wardrobe
 	machine_name = "MediDrobe"
-
-/obj/machinery/vending/wardrobe/para_wardrobe
-	name = "\improper ParaDrobe"
-	desc = "A vending machine rumoured to be capable of dispensing clothing for paramedical personnel."
-	icon_state = "paradrobe"
-	product_ads = "Patient dying in your arms? Better look good!!"
-	vend_reply = "Thank you for using the ParaDrobe!"
-	products = list(/obj/item/clothing/accessory/pocketprotector = 5,
-					/obj/item/storage/backpack/duffelbag/med = 5,
-					/obj/item/storage/backpack/medic = 5,
-					/obj/item/storage/backpack/satchel/med = 5,
-					/obj/item/clothing/under/rank/medical/paramedic = 5,
-					/obj/item/clothing/under/rank/medical/paramedic/light = 5,
-					/obj/item/clothing/under/rank/medical/paramedic/skirt = 5,
-					/obj/item/clothing/under/rank/medical/paramedic/skirt/light = 5,
-					/obj/item/clothing/suit/toggle/labcoat/paramedic = 5,
-					/obj/item/clothing/suit/toggle/labcoat/emt = 5,
-					/obj/item/clothing/shoes/sneakers/white = 5,
-					/obj/item/clothing/head/soft/emt = 5)
-	refill_canister = /obj/item/vending_refill/wardrobe/para_wardrobe
-	payment_department = ACCOUNT_MED
-	cost_multiplier_per_dept = list(ACCOUNT_MED = 0)
-
-/obj/item/vending_refill/wardrobe/para_wardrobe
-	machine_name = "ParaDrobe"
 
 /obj/machinery/vending/wardrobe/engi_wardrobe
 	name = "EngiDrobe"

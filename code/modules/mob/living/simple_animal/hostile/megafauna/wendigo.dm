@@ -11,7 +11,8 @@ Difficulty: Hard
 	icon_living = "wendigo"
 	icon_dead = "wendigo_dead"
 	icon = 'icons/mob/icemoon/64x64megafauna.dmi'
-	attacktext = "claws"
+	attack_verb_continuous = "claws"
+	attack_verb_simple = "claw"
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	weather_immunities = list("snow")
 	speak_emote = list("roars")
@@ -128,7 +129,7 @@ Difficulty: Hard
 				to_chat(L, "<span class='userdanger'>[src]'s ground slam shockwave sends you flying!</span>")
 				var/turf/thrownat = get_ranged_target_turf_direct(src, L, 8, rand(-10, 10))
 				L.throw_at(thrownat, 8, 2, src, TRUE)		//, force = MOVE_FORCE_OVERPOWERING, gentle = TRUE)
-				L.apply_damage(20, BRUTE)
+				L.apply_damage(20, BRUTE, wound_bonus=CANT_WOUND)
 				shake_camera(L, 2, 1)
 			all_turfs -= T
 		sleep(delay)

@@ -9,7 +9,12 @@
 #define DISABLE_BITFIELD(variable, flag) (variable &= ~(flag))
 #define CHECK_BITFIELD(variable, flag) (variable & (flag))
 #define TOGGLE_BITFIELD(variable, flag) (variable ^= (flag))
-
+#define COPY_SPECIFIC_BITFIELDS(a,b,flags)\
+	do{\
+		var/_old = a & ~(flags);\
+		var/_cleaned = b & (flags);\
+		a = _old | _cleaned;\
+	} while(0);
 #define CHECK_MULTIPLE_BITFIELDS(flagvar, flags) (((flagvar) & (flags)) == (flags))
 
 GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768))
@@ -98,7 +103,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ZAP_MOB_DAMAGE			(1<<3)
 #define ZAP_MOB_STUN			(1<<4)
 
-#define ZAP_DEFAULT_FLAGS ALL
+#define ZAP_DEFAULT_FLAGS ZAP_MOB_STUN | ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
 #define ZAP_FUSION_FLAGS ZAP_OBJ_DAMAGE | ZAP_MOB_DAMAGE | ZAP_MOB_STUN
 #define ZAP_SUPERMATTER_FLAGS NONE
 
@@ -137,14 +142,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 #define MOBILITY_FLAGS_DEFAULT (MOBILITY_MOVE | MOBILITY_STAND | MOBILITY_PICKUP | MOBILITY_USE | MOBILITY_UI | MOBILITY_STORAGE | MOBILITY_PULL | MOBILITY_RESIST)
 #define MOBILITY_FLAGS_ANY_INTERACTION (MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_UI | MOBILITY_STORAGE)
-
-// melee_attack_chain() attackchain_flags
-/// The attack is from a parry counterattack.
-#define ATTACKCHAIN_PARRY_COUNTERATTACK			(1<<0)
-
-// UnarmedAttack() flags
-/// Attack is from a parry counterattack
-#define UNARMED_ATTACK_PARRY					(1<<0)
 
 /// If the thing can reflect light (lasers/energy)
 #define RICOCHET_SHINY			(1<<0)

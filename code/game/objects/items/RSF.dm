@@ -7,7 +7,7 @@ RSF
 	name = "\improper Rapid-Service-Fabricator"
 	desc = "A device used to rapidly deploy service items."
 	icon = 'icons/obj/tools.dmi'
-	icon_state = "rcd"
+	icon_state = "rsf"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	opacity = 0
@@ -25,6 +25,7 @@ RSF
 
 /obj/item/rsf/cyborg
 	matter = 30
+
 
 /obj/item/rsf/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/rcd_ammo))
@@ -64,15 +65,16 @@ RSF
 		return
 	if (!(istype(A, /obj/structure/table) || isfloorturf(A)))
 		return
-
-	if(matter < 1)
-		to_chat(user, "<span class='warning'>\The [src] doesn't have enough matter left.</span>")
-		return
 	if(iscyborg(user))
+		matter = 30 //borgs dont actually use the matter so this is mostly just so it doesnt fail the next check incase of shennanigans
 		var/mob/living/silicon/robot/R = user
 		if(!R.cell || R.cell.charge < 200)
 			to_chat(user, "<span class='warning'>You do not have enough power to use [src].</span>")
 			return
+	if(matter < 1)
+		to_chat(user, "<span class='warning'>\The [src] doesn't have enough matter left.</span>")
+		return
+
 
 	var/turf/T = get_turf(A)
 	playsound(src.loc, 'sound/machines/click.ogg', 10, 1)
@@ -91,7 +93,7 @@ RSF
 			use_matter(50, user)
 		if(4)
 			to_chat(user, "Dispensing Dice Pack...")
-			new /obj/item/storage/pill_bottle/dice(T)
+			new /obj/item/storage/box/dice(T)
 			use_matter(200, user)
 		if(5)
 			to_chat(user, "Dispensing Cigarette...")
@@ -110,7 +112,7 @@ RSF
 	name = "Cookie Synthesizer"
 	desc = "A self-recharging device used to rapidly deploy cookies."
 	icon = 'icons/obj/tools.dmi'
-	icon_state = "rcd"
+	icon_state = "rsf"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	var/matter = 10
