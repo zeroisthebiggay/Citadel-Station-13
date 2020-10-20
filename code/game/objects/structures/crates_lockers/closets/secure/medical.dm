@@ -49,7 +49,7 @@
 
 /obj/structure/closet/secure_closet/medical4
 	name = "EMT locker"
-	req_access = list(ACCESS_PARAMEDIC)
+	req_access = list(ACCESS_MEDICAL)
 	icon_state = "emt_secure"
 
 /obj/structure/closet/secure_closet/medical4/PopulateContents()

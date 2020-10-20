@@ -705,7 +705,7 @@
 	name = "Prisoner #13-007"
 	registered_name = "Prisoner #13-007"
 
-/obj/item/card/id/prisoner/seven
+/obj/item/card/id/prisoner/eight
 	icon_state = "prisoner_008"
 	name = "Prisoner #13-008"
 	registered_name = "Prisoner #13-008"
