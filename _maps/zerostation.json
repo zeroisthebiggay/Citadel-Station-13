@@ -1,0 +1,11 @@
+{
+    "map_name": "Zero Station",
+    "map_path": "map_files/ZeroStation",
+    "map_file": "ZeroStation.dmm",
+	"shuttles": {
+	    "cargo": "cargo_box",
+	    "ferry": "ferry_fancy",
+	    "whiteship": "whiteship_meta",
+	    "emergency": "emergency_meta"
+    }
+}
