@@ -119,7 +119,6 @@
 	icon_state = "plasmaman"
 	item_state = "plasmaman"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 95, "acid" = 95)
-	slowdown = 1
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	mutantrace_variation = USE_TAUR_CLIP_MASK
 	can_adjust = FALSE
@@ -309,3 +308,43 @@
 	icon_state = "polyfemtankpantsu"
 	poly_states = 2
 	poly_colors = list("#808080", "#FF3535")
+<<<<<<< HEAD
+=======
+
+/obj/item/clothing/under/misc/black_dress
+	name = "little black dress"
+	desc = "A small black dress"
+	icon_state = "littleblackdress_s"
+	item_state = "littleblackdress_s"
+
+/obj/item/clothing/under/misc/pinktutu
+	name = "pink tutu"
+	desc = "A pink tutu"
+	icon_state = "pinktutu_s"
+	item_state = "pinktutu_s"
+
+/obj/item/clothing/under/misc/bathrobe
+	name = "bathrobe"
+	desc = "A blue bathrobe."
+	icon_state = "bathrobe"
+	item_state = "bathrobe"
+	
+/obj/item/clothing/under/misc/mechsuitred
+	name = "red mech suit"
+	desc = "What are you, stupid?"
+	icon_state = "red_mech_suit"
+	item_state = "red_mech_suit"
+
+/obj/item/clothing/under/misc/mechsuitwhite
+	name = "white mech suit"
+	desc = "...Mom?"
+	icon_state = "white_mech_suit"
+	item_state = "white_mech_suit"
+	
+/obj/item/clothing/under/misc/mechsuitblue
+	name = "blue mech suit"
+	desc = "Get in the damn robot already!"
+	icon_state = "blue_mech_suit"
+	item_state = "blue_mech_suit"
+	
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

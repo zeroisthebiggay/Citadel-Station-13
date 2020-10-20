@@ -1,6 +1,7 @@
 // /program/ files are executable programs that do things.
 /datum/computer_file/program
 	filetype = "PRG"
+<<<<<<< HEAD
 	filename = "UnknownProgram"				// File name. FILE NAME MUST BE UNIQUE IF YOU WANT THE PROGRAM TO BE DOWNLOADABLE FROM NTNET!
 	var/required_access = null				// List of required accesses to *run* the program.
 	var/transfer_access = null				// List of required access to download or file host the program
@@ -21,6 +22,40 @@
 	var/ui_x = 575							// Default size of TGUI window, in pixels
 	var/ui_y = 700
 	var/ui_header = null					// Example: "something.gif" - a header image that will be rendered in computer's UI when this program is running at background. Images are taken from /icons/program_icons. Be careful not to use too large images!
+=======
+	/// File name. FILE NAME MUST BE UNIQUE IF YOU WANT THE PROGRAM TO BE DOWNLOADABLE FROM NTNET!
+	filename = "UnknownProgram"
+	/// List of required accesses to *run* the program.
+	var/required_access = null
+	/// List of required access to download or file host the program
+	var/transfer_access = null
+	/// PROGRAM_STATE_KILLED or PROGRAM_STATE_BACKGROUND or PROGRAM_STATE_ACTIVE - specifies whether this program is running.
+	var/program_state = PROGRAM_STATE_KILLED
+	/// Device that runs this program.
+	var/obj/item/modular_computer/computer
+	/// User-friendly name of this program.
+	var/filedesc = "Unknown Program"
+	/// Short description of this program's function.
+	var/extended_desc = "N/A"
+	/// Program-specific screen icon state
+	var/program_icon_state = null
+	/// Set to 1 for program to require nonstop NTNet connection to run. If NTNet connection is lost program crashes.
+	var/requires_ntnet = FALSE
+	/// Optional, if above is set to 1 checks for specific function of NTNet (currently NTNET_SOFTWAREDOWNLOAD, NTNET_PEERTOPEER, NTNET_SYSTEMCONTROL and NTNET_COMMUNICATION)
+	var/requires_ntnet_feature = 0
+	/// NTNet status, updated every tick by computer running this program. Don't use this for checks if NTNet works, computers do that. Use this for calculations, etc.
+	var/ntnet_status = 1
+	/// Bitflags (PROGRAM_CONSOLE, PROGRAM_LAPTOP, PROGRAM_TABLET combination) or PROGRAM_ALL
+	var/usage_flags = PROGRAM_ALL
+	/// Whether the program can be downloaded from NTNet. Set to 0 to disable.
+	var/available_on_ntnet = 1
+	/// Whether the program can be downloaded from SyndiNet (accessible via emagging the computer). Set to 1 to enable.
+	var/available_on_syndinet = 0
+	/// Name of the tgui interface
+	var/tgui_id
+	/// Example: "something.gif" - a header image that will be rendered in computer's UI when this program is running at background. Images are taken from /icons/program_icons. Be careful not to use too large images!
+	var/ui_header = null
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /datum/computer_file/program/New(obj/item/modular_computer/comp = null)
 	..()
@@ -68,10 +103,18 @@
 /datum/computer_file/program/proc/process_tick()
 	return 1
 
-// Check if the user can run program. Only humans can operate computer. Automatically called in run_program()
-// User has to wear their ID for ID Scan to work.
-// Can also be called manually, with optional parameter being access_to_check to scan the user's ID
-/datum/computer_file/program/proc/can_run(mob/user, loud = FALSE, access_to_check, transfer = FALSE)
+/**
+  *Check if the user can run program. Only humans can operate computer. Automatically called in run_program()
+  *ID must be inserted into a card slot to be read. If the program is not currently installed (as is the case when
+  *NT Software Hub is checking available software), a list can be given to be used instead.
+  *Arguments:
+  *user is a ref of the mob using the device.
+  *loud is a bool deciding if this proc should use to_chats
+  *access_to_check is an access level that will be checked against the ID
+  *transfer, if TRUE and access_to_check is null, will tell this proc to use the program's transfer_access in place of access_to_check
+  *access can contain a list of access numbers to check against. If access is not empty, it will be used istead of checking any inserted ID.
+*/
+/datum/computer_file/program/proc/can_run(mob/user, loud = FALSE, access_to_check, transfer = FALSE, var/list/access)
 	// Defaults to required_access
 	if(!access_to_check)
 		if(transfer && transfer_access)
@@ -90,19 +133,27 @@
 	if(computer && computer.hasSiliconAccessInArea(user))
 		return TRUE
 
-	if(ishuman(user))
+	if(!length(access))
 		var/obj/item/card/id/D
 		var/obj/item/computer_hardware/card_slot/card_slot
-		if(computer && card_slot)
+		if(computer)
 			card_slot = computer.all_components[MC_CARD]
+<<<<<<< HEAD
 			D = card_slot.GetID()
 		var/mob/living/carbon/human/h = user
 		var/obj/item/card/id/I = h.get_idcard(TRUE)
 		if(!I && !D)
+=======
+			D = card_slot?.GetID()
+
+		if(!D)
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 			if(loud)
 				to_chat(user, "<span class='danger'>\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning.</span>")
 			return FALSE
+		access = D.GetAccess()
 
+<<<<<<< HEAD
 		if(I)
 			if(access_to_check in I.GetAccess())
 				return TRUE
@@ -111,6 +162,12 @@
 				return TRUE
 		if(loud)
 			to_chat(user, "<span class='danger'>\The [computer] flashes an \"Access Denied\" warning.</span>")
+=======
+	if(access_to_check in access)
+		return TRUE
+	if(loud)
+		to_chat(user, "<span class='danger'>\The [computer] flashes an \"Access Denied\" warning.</span>")
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	return FALSE
 
 // This attempts to retrieve header data for UIs. If implementing completely new device of different type than existing ones
@@ -124,8 +181,12 @@
 // When implementing new program based device, use this to run the program.
 /datum/computer_file/program/proc/run_program(mob/living/user)
 	if(can_run(user, 1))
-		if(requires_ntnet && network_destination)
-			generate_network_log("Connection opened to [network_destination].")
+		if(requires_ntnet)
+			var/obj/item/card/id/ID
+			var/obj/item/computer_hardware/card_slot/card_holder = computer.all_components[MC_CARD]
+			if(card_holder)
+				ID = card_holder.GetID()
+			generate_network_log("Connection opened -- Program ID: [filename] User:[ID?"[ID.registered_name]":"None"]")
 		program_state = PROGRAM_STATE_ACTIVE
 		return TRUE
 	return FALSE
@@ -133,9 +194,19 @@
 // Use this proc to kill the program. Designed to be implemented by each program if it requires on-quit logic, such as the NTNRC client.
 /datum/computer_file/program/proc/kill_program(forced = FALSE)
 	program_state = PROGRAM_STATE_KILLED
+<<<<<<< HEAD
 	if(network_destination)
 		generate_network_log("Connection to [network_destination] closed.")
 	return TRUE
+=======
+	if(requires_ntnet)
+		var/obj/item/card/id/ID
+		var/obj/item/computer_hardware/card_slot/card_holder = computer.all_components[MC_CARD]
+		if(card_holder)
+			ID = card_holder.GetID()
+		generate_network_log("Connection closed -- Program ID: [filename] User:[ID?"[ID.registered_name]":"None"]")
+	return 1
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 
 /datum/computer_file/program/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)

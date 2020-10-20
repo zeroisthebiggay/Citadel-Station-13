@@ -32,6 +32,7 @@
 			RegisterSignal(A, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_react)
 		if(description)
 			RegisterSignal(A, COMSIG_PARENT_EXAMINE, .proc/examine)
+		RegisterSignal(A, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/apply_overlay, TRUE)
 
 	apply(A, TRUE)
 
@@ -39,6 +40,7 @@
 
 /datum/element/decal/Detach(datum/target)
 	var/atom/A = target
+<<<<<<< HEAD
 	remove(A, A.dir)
 	UnregisterSignal(A, list(COMSIG_ATOM_DIR_CHANGE, COMSIG_COMPONENT_CLEAN_ACT, COMSIG_PARENT_EXAMINE))
 	LAZYREMOVE(num_decals_per_atom, A)
@@ -60,6 +62,33 @@
 			target.add_overlay(pic, TRUE)
 	if(isitem(target))
 		addtimer(CALLBACK(target, /obj/item/.proc/update_slot_icon), 0, TIMER_UNIQUE)
+=======
+	num_decals_per_atom[A]--
+	if(!num_decals_per_atom[A])
+		UnregisterSignal(A, list(COMSIG_ATOM_DIR_CHANGE, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE,
+								COMSIG_COMPONENT_CLEAN_ACT, COMSIG_PARENT_EXAMINE, COMSIG_ATOM_UPDATE_OVERLAYS))
+		LAZYREMOVE(num_decals_per_atom, A)
+	apply(A)
+	return ..()
+
+/datum/element/decal/proc/apply(atom/target)
+	if(target.flags_1 & INITIALIZED_1)
+		target.update_icon() //could use some queuing here now maybe.
+	else if(!QDELETED(target) && num_decals_per_atom[target] == 1)
+		RegisterSignal(target, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE, .proc/late_update_icon)
+	if(isitem(target))
+		addtimer(CALLBACK(target, /obj/item/.proc/update_slot_icon), 0, TIMER_UNIQUE)
+
+/datum/element/decal/proc/late_update_icon(atom/source)
+	source.update_icon()
+	UnregisterSignal(source,COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE)
+
+/datum/element/decal/proc/apply_overlay(atom/source, list/overlay_list)
+	if(first_dir)
+		pic.dir = first_dir == SOUTH ? source.dir : turn(first_dir, dir2angle(source.dir)-180) //Never turn a dir by 0.
+	for(var/i in 1 to num_decals_per_atom[source])
+		overlay_list += pic
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /datum/element/decal/proc/rotate_react(datum/source, old_dir, new_dir)
 	if(old_dir == new_dir)

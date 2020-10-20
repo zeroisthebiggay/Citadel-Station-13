@@ -33,7 +33,18 @@
 	create_reagents(REAGENTS_BASE_VOLUME)
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
 		reagents.maximum_volume += REAGENTS_BASE_VOLUME * B.rating
+	AddComponent(/datum/component/plumbing/simple_demand)
 
+<<<<<<< HEAD
+=======
+/obj/machinery/smoke_machine/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/simple_rotation, ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS, null, CALLBACK(src, .proc/can_be_rotated))
+
+/obj/machinery/smoke_machine/proc/can_be_rotated(mob/user, rotation_type)
+	return !anchored
+
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 /obj/machinery/smoke_machine/update_icon_state()
 	if((!is_operational()) || (!on) || (reagents.total_volume == 0))
 		if (panel_open)

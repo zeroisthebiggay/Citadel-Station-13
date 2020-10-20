@@ -5,9 +5,14 @@
 	icon_state_unpowered = "tablet"
 	icon_state_powered = "tablet"
 	icon_state_menu = "menu"
+<<<<<<< HEAD
+=======
+	// worn_icon_state = "tablet"
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	hardware_flag = PROGRAM_TABLET
 	max_hardware_size = 1
 	w_class = WEIGHT_CLASS_SMALL
+	max_bays = 3
 	steel_sheet_cost = 1
 	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
 	has_light = TRUE //LED flashlight!

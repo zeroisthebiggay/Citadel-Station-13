@@ -3,7 +3,7 @@
 /datum/species/zombie
 	// 1spooky
 	name = "High-Functioning Zombie"
-	id = "zombie"
+	id = SPECIES_ZOMBIE
 	say_mod = "moans"
 	sexes = 0
 	blacklisted = 1
@@ -15,10 +15,14 @@
 	var/static/list/spooks = list('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')
 	disliked_food = NONE
 	liked_food = GROSS | MEAT | RAW
+<<<<<<< HEAD
+=======
+	species_category = SPECIES_CATEGORY_UNDEAD
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /datum/species/zombie/notspaceproof
 	id = "notspaceproofzombie"
-	limbs_id = "zombie"
+	limbs_id = SPECIES_ZOMBIE
 	blacklisted = 0
 	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RADIMMUNE,TRAIT_EASYDISMEMBER,TRAIT_LIMBATTACHMENT,TRAIT_NOBREATH,TRAIT_NODEATH,TRAIT_FAKEDEATH)
 
@@ -30,7 +34,12 @@
 /datum/species/zombie/infectious
 	name = "Infectious Zombie"
 	id = "memezombies"
+<<<<<<< HEAD
 	limbs_id = "zombie"
+=======
+	limbs_id = SPECIES_ZOMBIE
+	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RADIMMUNE,TRAIT_EASYDISMEMBER,TRAIT_LIMBATTACHMENT,TRAIT_NOBREATH,TRAIT_NODEATH,TRAIT_NOSOFTCRIT, TRAIT_FAKEDEATH)
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	mutanthands = /obj/item/zombie_hand
 	armor = 20 // 120 damage to KO a zombie, which kills it
 	speedmod = 1.6
@@ -88,9 +97,9 @@
 
 // Your skin falls off
 /datum/species/krokodil_addict
-	name = "Human"
+	name = SPECIES_HUMAN
 	id = "goofzombies"
-	limbs_id = "zombie" //They look like zombies
+	limbs_id = SPECIES_ZOMBIE //They look like zombies
 	sexes = 0
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
 	mutanttongue = /obj/item/organ/tongue/zombie

@@ -1,8 +1,20 @@
+<<<<<<< HEAD:tgui-next/packages/tgui/hotkeys.js
+=======
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
+import { KEY_CTRL, KEY_ENTER, KEY_ESCAPE, KEY_F, KEY_F5, KEY_R, KEY_SHIFT, KEY_SPACE, KEY_TAB } from 'common/keycodes';
+import { globalEvents } from './events';
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d:tgui/packages/tgui/hotkeys.js
 import { createLogger } from './logging';
 import { callByond, tridentVersion } from './byond';
 
 const logger = createLogger('hotkeys');
 
+<<<<<<< HEAD:tgui-next/packages/tgui/hotkeys.js
 // Key codes
 export const KEY_BACKSPACE = 8;
 export const KEY_TAB = 9;
@@ -50,82 +62,86 @@ export const KEY_Y = 89;
 export const KEY_Z = 90;
 export const KEY_EQUAL = 187;
 export const KEY_MINUS = 189;
+=======
+// BYOND macros, in `key: command` format.
+const byondMacros = {};
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d:tgui/packages/tgui/hotkeys.js
 
-const MODIFIER_KEYS = [
-  KEY_CTRL,
-  KEY_ALT,
-  KEY_SHIFT,
-];
-
-const NO_PASSTHROUGH_KEYS = [
+// Array of acquired keys, which will not be sent to BYOND.
+const hotKeysAcquired = [
+  // Default set of acquired keys
   KEY_ESCAPE,
   KEY_ENTER,
   KEY_SPACE,
   KEY_TAB,
   KEY_CTRL,
   KEY_SHIFT,
+<<<<<<< HEAD:tgui-next/packages/tgui/hotkeys.js
+=======
+  KEY_F5,
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d:tgui/packages/tgui/hotkeys.js
 ];
 
-// Tracks the "pressed" state of keys
+// State of passed-through keys.
 const keyState = {};
 
-const createHotkeyString = (ctrlKey, altKey, shiftKey, keyCode) => {
-  let str = '';
-  if (ctrlKey) {
-    str += 'Ctrl+';
+/**
+ * Converts a browser keycode to BYOND keycode.
+ */
+const keyCodeToByond = keyCode => {
+  if (keyCode === 16) return 'Shift';
+  if (keyCode === 17) return 'Ctrl';
+  if (keyCode === 18) return 'Alt';
+  if (keyCode === 33) return 'Northeast';
+  if (keyCode === 34) return 'Southeast';
+  if (keyCode === 35) return 'Southwest';
+  if (keyCode === 36) return 'Northwest';
+  if (keyCode === 37) return 'West';
+  if (keyCode === 38) return 'North';
+  if (keyCode === 39) return 'East';
+  if (keyCode === 40) return 'South';
+  if (keyCode === 45) return 'Insert';
+  if (keyCode === 46) return 'Delete';
+  if (keyCode >= 48 && keyCode <= 57 || keyCode >= 65 && keyCode <= 90) {
+    return String.fromCharCode(keyCode);
   }
-  if (altKey) {
-    str += 'Alt+';
-  }
-  if (shiftKey) {
-    str += 'Shift+';
-  }
-  if (keyCode >= 48 && keyCode <= 90) {
-    str += String.fromCharCode(keyCode);
-  }
+<<<<<<< HEAD:tgui-next/packages/tgui/hotkeys.js
   else {
     str += '[' + keyCode + ']';
+=======
+  if (keyCode >= 96 && keyCode <= 105) {
+    return 'Numpad' + (keyCode - 96);
   }
-  return str;
-};
-
-/**
- * Parses the event and compiles information about the keypress.
- */
-const getKeyData = e => {
-  const keyCode = window.event ? e.which : e.keyCode;
-  const { ctrlKey, altKey, shiftKey } = e;
-  return {
-    keyCode,
-    ctrlKey,
-    altKey,
-    shiftKey,
-    hasModifierKeys: ctrlKey || altKey || shiftKey,
-    keyString: createHotkeyString(ctrlKey, altKey, shiftKey, keyCode),
-  };
+  if (keyCode >= 112 && keyCode <= 123) {
+    return 'F' + (keyCode - 111);
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d:tgui/packages/tgui/hotkeys.js
+  }
+  if (keyCode === 188) return ',';
+  if (keyCode === 189) return '-';
+  if (keyCode === 190) return '.';
 };
 
 /**
  * Keyboard passthrough logic. This allows you to keep doing things
  * in game while the browser window is focused.
  */
-const handlePassthrough = (e, eventType) => {
-  if (e.defaultPrevented) {
+const handlePassthrough = key => {
+  // In addition to F5, support reloading with Ctrl+R and Ctrl+F5
+  if (key.ctrl && (key.code === KEY_F5 || key.code === KEY_R)) {
+    location.reload();
     return;
   }
-  const targetName = e.target && e.target.localName;
-  if (targetName === 'input' || targetName === 'textarea') {
+  // Prevent passthrough on Ctrl+F
+  if (key.ctrl && key.code === KEY_F) {
     return;
   }
-  const keyData = getKeyData(e);
-  const { keyCode, ctrlKey, shiftKey } = keyData;
-  // NOTE: We pass through only Alt of all modifier keys, because Alt
-  // modifier (for toggling run/walk) is implemented very shittily
-  // in our codebase. We pass no other modifier keys, because they can
-  // be used internally as tgui hotkeys.
-  if (ctrlKey || shiftKey || NO_PASSTHROUGH_KEYS.includes(keyCode)) {
+  // NOTE: Alt modifier is pretty bad and sticky in IE11.
+  if (key.event.defaultPrevented
+      || key.isModifierKey()
+      || hotKeysAcquired.includes(key.code)) {
     return;
   }
+<<<<<<< HEAD:tgui-next/packages/tgui/hotkeys.js
   // Send this keypress to BYOND
   if (eventType === 'keydown' && !keyState[keyCode]) {
     logger.debug('passthrough', eventType, keyData);
@@ -134,13 +150,39 @@ const handlePassthrough = (e, eventType) => {
   if (eventType === 'keyup' && keyState[keyCode]) {
     logger.debug('passthrough', eventType, keyData);
     return callByond('', { __keyup: keyCode });
+=======
+  const byondKeyCode = keyCodeToByond(key.code);
+  if (!byondKeyCode) {
+    return;
+  }
+  // Macro
+  const macro = byondMacros[byondKeyCode];
+  if (macro) {
+    logger.debug('macro', macro);
+    return Byond.command(macro);
+  }
+  // KeyDown
+  if (key.isDown() && !keyState[byondKeyCode]) {
+    keyState[byondKeyCode] = true;
+    const command = `KeyDown "${byondKeyCode}"`;
+    logger.debug(command);
+    return Byond.command(command);
+  }
+  // KeyUp
+  if (key.isUp() && keyState[byondKeyCode]) {
+    keyState[byondKeyCode] = false;
+    const command = `KeyUp "${byondKeyCode}"`;
+    logger.debug(command);
+    return Byond.command(command);
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d:tgui/packages/tgui/hotkeys.js
   }
 };
 
 /**
- * Cleanup procedure for keyboard passthrough, which should be called
- * whenever you're unloading tgui.
+ * Acquires a lock on the hotkey, which prevents it from being
+ * passed through to BYOND.
  */
+<<<<<<< HEAD:tgui-next/packages/tgui/hotkeys.js
 export const releaseHeldKeys = () => {
   for (let keyCode of Object.keys(keyState)) {
     if (keyState[keyCode]) {
@@ -176,6 +218,28 @@ const handleHotKey = (e, eventType, dispatch) => {
           + ' fucko boingo! The code monkeys at our headquarters are'
           + ' working VEWY HAWD to fix this!');
       });
+=======
+export const acquireHotKey = keyCode => {
+  hotKeysAcquired.push(keyCode);
+};
+
+/**
+ * Makes the hotkey available to BYOND again.
+ */
+export const releaseHotKey = keyCode => {
+  const index = hotKeysAcquired.indexOf(keyCode);
+  if (index >= 0) {
+    hotKeysAcquired.splice(index, 1);
+  }
+};
+
+export const releaseHeldKeys = () => {
+  for (let byondKeyCode of Object.keys(keyState)) {
+    if (keyState[byondKeyCode]) {
+      keyState[byondKeyCode] = false;
+      logger.log(`releasing key "${byondKeyCode}"`);
+      Byond.command(`KeyUp "${byondKeyCode}"`);
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d:tgui/packages/tgui/hotkeys.js
     }
     dispatch({
       type: 'hotKey',
@@ -184,36 +248,39 @@ const handleHotKey = (e, eventType, dispatch) => {
   }
 };
 
-/**
- * Subscribe to an event when browser window has been completely
- * unfocused. Conveniently fires events when the browser window
- * is closed from the outside.
- */
-const subscribeToLossOfFocus = listenerFn => {
-  let timeout;
-  document.addEventListener('focusout', () => {
-    timeout = setTimeout(listenerFn);
+export const setupHotKeys = () => {
+  // Read macros
+  Byond.winget('default.*').then(data => {
+    // Group each macro by ref
+    const groupedByRef = {};
+    for (let key of Object.keys(data)) {
+      const keyPath = key.split('.');
+      const ref = keyPath[1];
+      const prop = keyPath[2];
+      if (ref && prop) {
+        if (!groupedByRef[ref]) {
+          groupedByRef[ref] = {};
+        }
+        groupedByRef[ref][prop] = data[key];
+      }
+    }
+    // Insert macros
+    const escapedQuotRegex = /\\"/g;
+    const unescape = str => str
+      .substring(1, str.length - 1)
+      .replace(escapedQuotRegex, '"');
+    for (let ref of Object.keys(groupedByRef)) {
+      const macro = groupedByRef[ref];
+      const byondKeyName = unescape(macro.name);
+      byondMacros[byondKeyName] = unescape(macro.command);
+    }
+    logger.debug('loaded macros', byondMacros);
   });
-  document.addEventListener('focusin', () => {
-    clearTimeout(timeout);
+  // Setup event handlers
+  globalEvents.on('window-blur', () => {
+    releaseHeldKeys();
   });
-  window.addEventListener('beforeunload', listenerFn);
-};
-
-/**
- * Subscribe to keydown/keyup events with globally tracked key state.
- */
-const subscribeToKeyPresses = listenerFn => {
-  document.addEventListener('keydown', e => {
-    const keyCode = window.event ? e.which : e.keyCode;
-    listenerFn(e, 'keydown');
-    keyState[keyCode] = true;
-  });
-  document.addEventListener('keyup', e => {
-    const keyCode = window.event ? e.which : e.keyCode;
-    listenerFn(e, 'keyup');
-    keyState[keyCode] = false;
-  });
+<<<<<<< HEAD:tgui-next/packages/tgui/hotkeys.js
 };
 
 // Middleware
@@ -237,6 +304,11 @@ export const hotKeyMiddleware = store => {
   }
   // Pass through store actions (do nothing)
   return next => action => next(action);
+=======
+  globalEvents.on('key', key => {
+    handlePassthrough(key);
+  });
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d:tgui/packages/tgui/hotkeys.js
 };
 
 // Reducer

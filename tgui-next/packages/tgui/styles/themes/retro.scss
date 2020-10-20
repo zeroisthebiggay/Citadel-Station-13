@@ -28,11 +28,20 @@
   ));
   @include meta.load-css('../components/Layout.scss');
   @include meta.load-css('../components/ProgressBar.scss', $with: (
-    'color-background': rgba(0, 0, 0, 0.5),
+    'background-color': rgba(0, 0, 0, 0.5),
   ));
   @include meta.load-css('../components/Section.scss');
+<<<<<<< HEAD:tgui-next/packages/tgui/styles/themes/retro.scss
   @include meta.load-css('../components/TitleBar.scss', $with: (
     'color-background': #585337,
+=======
+
+  // Layouts
+  @include meta.load-css('../layouts/Layout.scss');
+  @include meta.load-css('../layouts/Window.scss');
+  @include meta.load-css('../layouts/TitleBar.scss', $with: (
+    'background-color': #585337,
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d:tgui/packages/tgui/styles/themes/retro.scss
   ));
 
   .Button {

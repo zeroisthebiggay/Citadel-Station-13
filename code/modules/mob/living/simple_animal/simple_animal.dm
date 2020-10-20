@@ -4,7 +4,13 @@
 	health = 20
 	maxHealth = 20
 	gender = PLURAL //placeholder
+<<<<<<< HEAD
 	blood_volume = 550   //How much blud it has for bloodsucking
+=======
+	///How much blud it has for bloodsucking
+	blood_volume = 550
+	rad_flags = RAD_NO_CONTAMINATE
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 	status_flags = CANPUSH
 
@@ -295,11 +301,10 @@
 		remove_movespeed_modifier(/datum/movespeed_modifier/simplemob_varspeed)
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/simplemob_varspeed, multiplicative_slowdown = speed)
 
-/mob/living/simple_animal/Stat()
-	..()
-	if(statpanel("Status"))
-		stat(null, "Health: [round((health / maxHealth) * 100)]%")
-		return 1
+/mob/living/simple_animal/get_status_tab_items()
+	. = ..()
+	. += ""
+	. += "Health: [round((health / maxHealth) * 100)]%"
 
 /mob/living/simple_animal/proc/drop_loot()
 	if(loot.len)

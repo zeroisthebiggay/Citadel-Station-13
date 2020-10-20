@@ -26,6 +26,7 @@
 
 #define DEF_SKILL_GAIN					1
 #define SKILL_GAIN_SURGERY_PER_STEP		0.25
+<<<<<<< HEAD
 
 #define SKILL_AFFINITY_MOOD_BONUS 		1.25
 
@@ -46,6 +47,36 @@
 #define THRESHOLD_COMPETENT	1
 #define THRESHOLD_EXPERT	2
 #define THRESHOLD_MASTER	3
+=======
+#define STD_USE_TOOL_MULT				1
+#define EASY_USE_TOOL_MULT				0.75
+#define TRIVIAL_USE_TOOL_MULT			0.5
+#define BARE_USE_TOOL_MULT				0.25
+
+//multiplier of the difference of max_value and min_value. Mostly for balance purposes between numerical and level-based skills.
+#define STD_NUM_SKILL_ITEM_GAIN_MULTI	0.002
+
+//An extra point for each few seconds of delay when using a tool. Before the multiplier.
+#define SKILL_GAIN_DELAY_DIVISOR		3 SECONDS
+
+///Items skill_traits and other defines
+#define SKILL_USE_TOOL			"use_tool"
+#define SKILL_TRAINING_TOOL		"training_tool"
+#define SKILL_ATTACK_MOB		"attack_mob"
+#define SKILL_TRAIN_ATTACK_MOB	"train_attack_mob"
+#define SKILL_ATTACK_OBJ		"attack_obj"
+#define SKILL_TRAIN_ATTACK_OBJ	"train_attack_obj"
+#define SKILL_STAMINA_COST		"stamina_cost" //Influences the stamina cost from weapon usage.
+#define SKILL_THROW_STAM_COST	"throw_stam_cost"
+#define SKILL_SANITY			"sanity" //Is the skill affected by (in)sanity.
+#define SKILL_INTELLIGENCE		"intelligence" //Is the skill affected by brain damage?
+
+///competency_threshold  defines
+#define THRESHOLD_UNTRAINED "untrained"
+#define THRESHOLD_COMPETENT	"competent"
+#define THRESHOLD_EXPERT	"expert"
+#define THRESHOLD_MASTER	"master"
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /// Level/Experience skills defines.
 #define STD_XP_LVL_UP 100

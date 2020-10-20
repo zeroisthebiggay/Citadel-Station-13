@@ -173,3 +173,26 @@
 	name = "double emergency oxygen tank"
 	icon_state = "emergency_double"
 	volume = 10
+<<<<<<< HEAD
+=======
+
+/obj/item/tank/internals/emergency_oxygen/double/empty/populate_gas()
+	return
+
+/*
+ * Methyl Bromide
+ */
+/obj/item/tank/internals/methyl_bromide
+	name = "mantid gas reactor"
+	desc = "A mantid gas processing plant that continuously synthesises 'breathable' atmosphere."
+	icon_state = "methyl_bromide"
+	slot_flags = ITEM_SLOT_BELT
+	w_class = WEIGHT_CLASS_SMALL
+	force = 6
+	distribute_pressure = 14
+	volume = 10
+
+/obj/item/tank/internals/methyl_bromide/populate_gas()
+	air_contents.set_moles(/datum/gas/methyl_bromide, (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
+	return
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

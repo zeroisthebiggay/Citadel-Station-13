@@ -1,6 +1,6 @@
 /datum/species/mush //mush mush codecuck
 	name = "Anthromorphic Mushroom"
-	id = "mush"
+	id = SPECIES_MUSHROOM
 	mutant_bodyparts = list("caps" = "Round")
 
 	fixed_mut_color = "DBBF92"
@@ -21,6 +21,11 @@
 	burnmod = 1.25
 	heatmod = 1.5
 
+<<<<<<< HEAD
+=======
+	species_category = SPECIES_CATEGORY_PLANT
+
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	mutanteyes = /obj/item/organ/eyes/night_vision/mushroom
 	var/datum/martial_art/mushpunch/mush
 	species_language_holder = /datum/language_holder/mushroom

@@ -207,6 +207,7 @@ Code:
 	else
 		return ..()
 
+<<<<<<< HEAD
 /obj/item/electropack/shockcollar/ui_interact(mob/user) //on_click calls this
 	var/dat = {"
 <TT>
@@ -221,3 +222,9 @@ Code:
 	user << browse(dat, "window=radio")
 	onclose(user, "radio")
 	return
+=======
+/obj/item/electropack/ui_act(action, params)
+	if(action == "power") // DO. NOT.
+		return FALSE
+	return ..()
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

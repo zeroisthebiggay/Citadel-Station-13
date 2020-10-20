@@ -94,8 +94,13 @@
 	send_item_attack_message(I, user, affecting.name)
 	I.do_stagger_action(src, user, totitemdamage)
 	if(I.force)
+<<<<<<< HEAD
 		apply_damage(totitemdamage, I.damtype, affecting) //CIT CHANGE - replaces I.force with totitemdamage
 		if(I.damtype == BRUTE && affecting.status == BODYPART_ORGANIC)
+=======
+		apply_damage(totitemdamage, I.damtype, affecting, wound_bonus = I.wound_bonus, bare_wound_bonus = I.bare_wound_bonus, sharpness = I.get_sharpness()) //CIT CHANGE - replaces I.force with totitemdamage
+		if(I.damtype == BRUTE && affecting.is_organic_limb(FALSE))
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 			var/basebloodychance = affecting.brute_dam + totitemdamage
 			if(prob(basebloodychance))
 				I.add_mob_blood(src)
@@ -437,13 +442,13 @@
 /mob/living/carbon/getBruteLoss_nonProsthetic()
 	var/amount = 0
 	for(var/obj/item/bodypart/BP in bodyparts)
-		if (BP.status < 2)
+		if (BP.is_organic_limb())
 			amount += BP.brute_dam
 	return amount
 
 /mob/living/carbon/getFireLoss_nonProsthetic()
 	var/amount = 0
 	for(var/obj/item/bodypart/BP in bodyparts)
-		if (BP.status < 2)
+		if (BP.is_organic_limb())
 			amount += BP.burn_dam
 	return amount

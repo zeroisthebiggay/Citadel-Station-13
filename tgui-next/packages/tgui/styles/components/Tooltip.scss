@@ -1,7 +1,7 @@
 @use '../base.scss';
 @use '../functions.scss' as *;
 
-$color-background: #000000 !default;
+$background-color: #000000 !default;
 $border-radius: base.$border-radius !default;
 
 .Tooltip {
@@ -26,8 +26,13 @@ $border-radius: base.$border-radius !default;
     text-align: left;
     content: attr(data-tooltip);
     transition: all 150ms;
+<<<<<<< HEAD:tgui-next/packages/tgui/styles/components/Tooltip.scss
     background-color: $color-background;
     box-shadow: 1px 1px 15px -1px rgba(0, 0, 0, 0.5);
+=======
+    background-color: $background-color;
+    box-shadow: 0.1em 0.1em 1.25em -0.1em rgba(0, 0, 0, 0.5);
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d:tgui/packages/tgui/styles/components/Tooltip.scss
     border-radius: $border-radius;
   }
 

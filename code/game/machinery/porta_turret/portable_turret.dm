@@ -256,6 +256,7 @@
 				else
 					to_chat(user, "<span class='notice'>You remove the turret but did not manage to salvage anything.</span>")
 				qdel(src)
+				return
 
 	else if((istype(I, /obj/item/wrench)) && (!on))
 		if(raised)
@@ -679,7 +680,17 @@
 
 /obj/machinery/porta_turret/syndicate/ComponentInitialize()
 	. = ..()
+<<<<<<< HEAD
 	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
+=======
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
+
+/obj/machinery/porta_turret/syndicate/setup()
+	return
+
+/obj/machinery/porta_turret/syndicate/assess_perp(mob/living/carbon/human/perp)
+	return 10 //Syndicate turrets shoot everything not in their faction
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /obj/machinery/porta_turret/syndicate/energy
 	icon_state = "standard_stun"

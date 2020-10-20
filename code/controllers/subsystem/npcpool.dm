@@ -5,13 +5,17 @@ SUBSYSTEM_DEF(npcpool)
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	var/list/currentrun = list()
+	/// catches sleeping
+	var/invoking = FALSE
+	/// Invoke start time
+	var/invoke_start = 0
 
-/datum/controller/subsystem/npcpool/stat_entry()
+/datum/controller/subsystem/npcpool/stat_entry(msg)
 	var/list/activelist = GLOB.simple_animals[AI_ON]
-	..("NPCS:[activelist.len]")
+	msg = "NPCS:[length(activelist)]"
+	return ..()
 
 /datum/controller/subsystem/npcpool/fire(resumed = FALSE)
-
 	if (!resumed)
 		var/list/activelist = GLOB.simple_animals[AI_ON]
 		src.currentrun = activelist.Copy()
@@ -23,6 +27,7 @@ SUBSYSTEM_DEF(npcpool)
 		var/mob/living/simple_animal/SA = currentrun[currentrun.len]
 		--currentrun.len
 
+<<<<<<< HEAD
 		if(!SA.ckey && !SA.notransform)
 			if(SA.stat != DEAD)
 				SA.handle_automated_movement()
@@ -30,5 +35,24 @@ SUBSYSTEM_DEF(npcpool)
 				SA.handle_automated_action()
 			if(SA.stat != DEAD)
 				SA.handle_automated_speech()
+=======
+		invoking = TRUE
+		invoke_start = world.time
+		INVOKE_ASYNC(src, .proc/invoke_process, SA)
+		if(invoking)
+			stack_trace("WARNING: [SA] ([SA.type]) slept during NPCPool processing.")
+			invoking = FALSE
+
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 		if (MC_TICK_CHECK)
 			return
+
+/datum/controller/subsystem/npcpool/proc/invoke_process(mob/living/simple_animal/SA)
+	if(!SA.ckey && !SA.mob_transforming)
+		if(SA.stat != DEAD)
+			SA.handle_automated_movement()
+		if(SA.stat != DEAD)
+			SA.handle_automated_action()
+		if(SA.stat != DEAD)
+			SA.handle_automated_speech()
+	invoking = FALSE

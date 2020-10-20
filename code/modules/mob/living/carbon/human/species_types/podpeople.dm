@@ -1,7 +1,7 @@
 /datum/species/pod
 	// A mutation caused by a human being ressurected in a revival pod. These regain health in light, and begin to wither in darkness.
 	name = "Anthromorphic Plant"
-	id = "pod"
+	id = SPECIES_POD
 	default_color = "59CE00"
 	species_traits = list(MUTCOLORS,EYECOLOR)
 	attack_verb = "slash"
@@ -13,11 +13,23 @@
 	disliked_food = MEAT | DAIRY
 	liked_food = VEGETABLES | FRUIT | GRAIN
 	species_language_holder = /datum/language_holder/sylvan
+<<<<<<< HEAD
 	var/light_nutrition_gain_factor = 10
 	var/light_toxheal = 1
 	var/light_oxyheal = 1
 	var/light_burnheal = 1
 	var/light_bruteheal = 1
+=======
+	var/light_nutrition_gain_factor = 4
+	var/light_toxheal = -1
+	var/light_oxyheal = -1
+	var/light_burnheal = -1
+	var/light_bruteheal = -1
+
+	species_category = SPECIES_CATEGORY_PLANT
+
+	allowed_limb_ids = list("pod","mush")
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /datum/species/pod/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
@@ -72,8 +84,9 @@
 
 /datum/species/pod/pseudo_weak
 	name = "Anthromorphic Plant"
-	id = "podweak"
+	id = SPECIES_POD_WEAK
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,MUTCOLORS)
+<<<<<<< HEAD
 	mutant_bodyparts = list("mcolor" = "FFF","mcolor2" = "FFF","mcolor3" = "FFF", "mam_snouts" = "Husky", "mam_tail" = "Husky", "mam_ears" = "Husky", "mam_body_markings" = "Husky", "taur" = "None", "legs" = "Normal Legs")
 	limbs_id = "pod"
 	light_nutrition_gain_factor = 7.5
@@ -101,6 +114,14 @@
 		mutant_bodyparts["mam_waggingtail"] = mutant_bodyparts["mam_tail"]
 		mutant_bodyparts -= "mam_tail"
 	H.update_body()
+=======
+	mutant_bodyparts = list("mcolor" = "FFFFFF","mcolor2" = "FFFFFF","mcolor3" = "FFFFFF", "mam_snouts" = "Husky", "mam_tail" = "Husky", "mam_ears" = "Husky", "mam_body_markings" = "Husky", "taur" = "None", "legs" = "Normal Legs")
+	limbs_id = SPECIES_POD
+	light_nutrition_gain_factor = 3
+	light_bruteheal = -0.2
+	light_burnheal = -0.2
+	light_toxheal = -0.7
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /datum/species/pod/pseudo_weak/stop_wagging_tail(mob/living/carbon/human/H)
 	if(mutant_bodyparts["mam_waggingtail"])

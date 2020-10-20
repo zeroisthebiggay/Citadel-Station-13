@@ -1,4 +1,14 @@
+<<<<<<< HEAD:tgui-next/packages/tgui/components/Box.js
 import { classes, isFalsy, pureComponentHooks } from 'common/react';
+=======
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
+import { classes, pureComponentHooks } from 'common/react';
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d:tgui/packages/tgui/components/Box.js
 import { createVNode } from 'inferno';
 import { ChildFlags, VNodeFlags } from 'inferno-vnode-flags';
 import { CSS_COLORS } from '../constants';
@@ -23,25 +33,35 @@ const isColorClass = str => typeof str === 'string'
   && CSS_COLORS.includes(str);
 
 const mapRawPropTo = attrName => (style, value) => {
-  if (!isFalsy(value)) {
+  if (typeof value === 'number' || typeof value === 'string') {
     style[attrName] = value;
   }
 };
 
+<<<<<<< HEAD:tgui-next/packages/tgui/components/Box.js
 const mapUnitPropTo = attrName => (style, value) => {
   if (!isFalsy(value)) {
+=======
+const mapUnitPropTo = (attrName, unit) => (style, value) => {
+  if (typeof value === 'number' || typeof value === 'string') {
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d:tgui/packages/tgui/components/Box.js
     style[attrName] = unit(value);
   }
 };
 
 const mapBooleanPropTo = (attrName, attrValue) => (style, value) => {
-  if (!isFalsy(value)) {
+  if (value) {
     style[attrName] = attrValue;
   }
 };
 
+<<<<<<< HEAD:tgui-next/packages/tgui/components/Box.js
 const mapDirectionalUnitPropTo = (attrName, dirs) => (style, value) => {
   if (!isFalsy(value)) {
+=======
+const mapDirectionalUnitPropTo = (attrName, unit, dirs) => (style, value) => {
+  if (typeof value === 'number' || typeof value === 'string') {
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d:tgui/packages/tgui/components/Box.js
     for (let i = 0; i < dirs.length; i++) {
       style[attrName + '-' + dirs[i]] = unit(value);
     }
@@ -72,7 +92,18 @@ const styleMapperByPropName = {
   maxHeight: mapUnitPropTo('max-height'),
   fontSize: mapUnitPropTo('font-size'),
   fontFamily: mapRawPropTo('font-family'),
+<<<<<<< HEAD:tgui-next/packages/tgui/components/Box.js
   lineHeight: mapUnitPropTo('line-height'),
+=======
+  lineHeight: (style, value) => {
+    if (typeof value === 'number') {
+      style['line-height'] = value;
+    }
+    else if (typeof value === 'string') {
+      style['line-height'] = unit(value);
+    }
+  },
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d:tgui/packages/tgui/components/Box.js
   opacity: mapRawPropTo('opacity'),
   textAlign: mapRawPropTo('text-align'),
   verticalAlign: mapRawPropTo('vertical-align'),
@@ -111,6 +142,11 @@ export const computeBoxProps = props => {
   // Compute props
   for (let propName of Object.keys(props)) {
     if (propName === 'style') {
+      continue;
+    }
+    // IE8: onclick workaround
+    if (Byond.IS_LTE_IE8 && propName === 'onClick') {
+      computedProps.onclick = props[propName];
       continue;
     }
     const propValue = props[propName];

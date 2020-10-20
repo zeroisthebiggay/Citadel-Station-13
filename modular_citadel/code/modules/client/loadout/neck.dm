@@ -92,3 +92,14 @@
 	name = "Headphones"
 	category = SLOT_NECK
 	path = /obj/item/clothing/ears/headphones
+<<<<<<< HEAD
+=======
+
+/datum/gear/neck/polycloak
+	name = "Polychromatic Cloak"
+	path = /obj/item/clothing/neck/cloak/polychromic
+
+/datum/gear/neck/altpolycloak
+	name = "Alternate Cloak"
+	path = /obj/item/clothing/neck/cloak/alt/polychromic
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

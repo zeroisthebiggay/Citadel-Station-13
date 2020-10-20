@@ -11,12 +11,19 @@
 // Set a client's focus to an object and override these procs on that object to let it handle keypresses
 
 /datum/proc/key_down(key, client/user) // Called when a key is pressed down initially
+<<<<<<< HEAD
 	return
 /datum/proc/key_up(key, client/user) // Called when a key is released
 	return
+=======
+	SHOULD_NOT_SLEEP(TRUE)
+
+/datum/proc/key_up(key, client/user) // Called when a key is released
+	SHOULD_NOT_SLEEP(TRUE)
+
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 /datum/proc/keyLoop(client/user) // Called once every frame
-	set waitfor = FALSE
-	return
+	SHOULD_NOT_SLEEP(TRUE)
 
 // removes all the existing macros
 /client/proc/erase_all_macros()

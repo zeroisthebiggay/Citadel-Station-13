@@ -7,7 +7,11 @@
 	buckle_lying = FALSE
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	/// Enable stamina combat
+<<<<<<< HEAD
 	combat_flags = COMBAT_FLAGS_DEFAULT
+=======
+	combat_flags = COMBAT_FLAGS_STAMINA_COMBAT | COMBAT_FLAG_UNARMED_PARRY
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH|CANSTAGGER
 	has_field_of_vision = FALSE //Handled by species.
 
@@ -22,7 +26,8 @@
 	var/facial_hair_style = "Shaved"
 
 	//Eye colour
-	var/eye_color = "000"
+	var/left_eye_color = "000"
+	var/right_eye_color = "000"
 
 	var/skin_tone = "caucasian1"	//Skin tone
 

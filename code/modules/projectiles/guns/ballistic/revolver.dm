@@ -8,7 +8,7 @@
 /obj/item/gun/ballistic/revolver/Initialize()
 	. = ..()
 	if(!istype(magazine, /obj/item/ammo_box/magazine/internal/cylinder))
-		verbs -= /obj/item/gun/ballistic/revolver/verb/spin
+		verbs += /obj/item/gun/ballistic/revolver/verb/spin
 
 /obj/item/gun/ballistic/revolver/chamber_round(spin = 1)
 	if(spin)
@@ -84,6 +84,19 @@
 	. = ..()
 	. += "[get_ammo(0,0)] of those are live rounds."
 
+<<<<<<< HEAD
+=======
+/obj/item/gun/ballistic/revolver/syndicate
+	obj_flags = UNIQUE_RENAME
+	unique_reskin = list("Default" = "revolver",
+						"Silver" = "russianrevolver",
+						"Robust" = "revolvercit",
+						"Bulky" = "revolverhakita",
+						"Polished" = "revolvertoriate",
+						"Soulless" = "revolveroldflip",
+						"Soul" = "revolverold")
+
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 /obj/item/gun/ballistic/revolver/detective
 	name = "\improper .38 Mars Special"
 	desc = "A cheap Martian knock-off of a classic law enforcement firearm. Uses .38-special rounds."

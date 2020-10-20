@@ -1,6 +1,6 @@
 /datum/species/human
 	name = "Human"
-	id = "human"
+	id = SPECIES_HUMAN
 	default_color = "FFFFFF"
 
 	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,MUTCOLORS_PARTSONLY,WINGCOLOR)
@@ -10,8 +10,14 @@
 	disliked_food = GROSS | RAW
 	liked_food = JUNKFOOD | FRIED
 
+<<<<<<< HEAD
 /datum/species/human/qualifies_for_rank(rank, list/features)
 	return TRUE	//Pure humans are always allowed in all roles.
+=======
+	tail_type = "tail_human"
+	wagging_type = "waggingtail_human"
+	species_category = SPECIES_CATEGORY_BASIC
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /datum/species/human/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)

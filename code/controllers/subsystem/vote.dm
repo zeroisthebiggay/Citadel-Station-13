@@ -15,6 +15,12 @@ SUBSYSTEM_DEF(vote)
 	var/vote_system = PLURALITY_VOTING
 	var/question = null
 	var/list/choices = list()
+<<<<<<< HEAD
+=======
+	/// List of choice = object for statclick objects for statpanel voting
+	/// statclick rework? 2: list("name"="id")
+	var/list/choice_statclicks = list()
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	var/list/scores = list()
 	var/list/choice_descs = list() // optional descriptions
 	var/list/voted = list()
@@ -47,8 +53,11 @@ SUBSYSTEM_DEF(vote)
 				client_popup.open(0)
 			next_pop = world.time+VOTE_COOLDOWN
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 /datum/controller/subsystem/vote/proc/reset()
 	initiator = null
 	end_time = 0
@@ -59,6 +68,10 @@ SUBSYSTEM_DEF(vote)
 	voted.Cut()
 	voting.Cut()
 	scores.Cut()
+<<<<<<< HEAD
+=======
+	choice_statclicks = list()
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	display_votes = initial(display_votes) //CIT CHANGE - obfuscated votes
 	remove_action_buttons()
 
@@ -536,6 +549,15 @@ SUBSYSTEM_DEF(vote)
 			vp = CONFIG_GET(number/vote_period)
 		to_chat(world, "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=[REF(src)]'>here</a> to place your votes.\nYou have [DisplayTimeText(vp)] to vote.</font>")
 		end_time = started_time+vp
+<<<<<<< HEAD
+=======
+		// generate statclick list
+		choice_statclicks = list()
+		for(var/i in 1 to choices.len)
+			var/choice = choices[i]
+			choice_statclicks[choice] = "[i]"
+		//
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 		for(var/c in GLOB.clients)
 			SEND_SOUND(c, sound('sound/misc/server-ready.ogg'))
 			var/client/C = c
@@ -734,7 +756,8 @@ SUBSYSTEM_DEF(vote)
 				submit_vote(round(text2num(href_list["vote"])),round(text2num(href_list["score"])))
 			else
 				submit_vote(round(text2num(href_list["vote"])))
-	usr.vote()
+	if(!href_list["statpannel"])
+		usr.vote()
 
 /datum/controller/subsystem/vote/proc/remove_action_buttons()
 	for(var/v in generated_actions)

@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+=======
+/**
+  * Called by SSmobs at an interval of 2 seconds.
+  * Splits off into PhysicalLife() and BiologicalLife(). Override those instead of this.
+  */
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 /mob/living/proc/Life(seconds, times_fired)
 	set waitfor = FALSE
 	set invisibility = 0
@@ -30,11 +37,23 @@
 		log_game("Z-TRACKING: [src] of type [src.type] has a Z-registration despite not having a client.")
 		update_z(null)
 
+<<<<<<< HEAD
 	if (notransform)
 		return
 	if(!loc)
 		return
 	var/datum/gas_mixture/environment = loc.return_air()
+=======
+/**
+  * Handles biological life processes like chemical metabolism, breathing, etc
+  * Returns TRUE or FALSE based on if we were interrupted. This is used by overridden variants to check if they should stop.
+  */
+/mob/living/proc/BiologicalLife(seconds, times_fired)
+	SEND_SIGNAL(src,COMSIG_LIVING_BIOLOGICAL_LIFE, seconds, times_fired)
+	handle_diseases()// DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
+
+	handle_wounds()
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 	if(stat != DEAD)
 		//Mutations and radiation
@@ -47,7 +66,39 @@
 	handle_diseases()// DEAD check is in the proc itself; we want it to spread even if the mob is dead, but to handle its disease-y properties only if you're not.
 
 	if (QDELETED(src)) // diseases can qdel the mob via transformations
+<<<<<<< HEAD
 		return
+=======
+		return FALSE
+
+	//Random events (vomiting etc)
+	handle_random_events()
+
+	//stuff in the stomach
+	handle_stomach()
+
+	handle_block_parry(seconds)
+
+	// These two MIGHT need to be moved to base Life() if we get any in the future that's a "physical" effect that needs to fire even while in stasis.
+	handle_traits() // eye, ear, brain damages
+	handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
+	return TRUE
+
+/**
+  * Handles physical life processes like being on fire. Don't ask why this is considered "Life".
+  * Returns TRUE or FALSE based on if we were interrupted. This is used by overridden variants to check if they should stop.
+  */
+/mob/living/proc/PhysicalLife(seconds, times_fired)
+	SEND_SIGNAL(src,COMSIG_LIVING_PHYSICAL_LIFE, seconds, times_fired)
+	if(digitalinvis)
+		handle_diginvis() //AI becomes unable to see mob
+
+	if((movement_type & FLYING) && !(movement_type & FLOATING))	//TODO: Better floating
+		INVOKE_ASYNC(src, /atom/movable.proc/float, TRUE)
+
+	if(!loc)
+		return FALSE
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 	if(stat != DEAD)
 		//Random events (vomiting etc)

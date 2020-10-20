@@ -89,7 +89,7 @@
 	icon_state = "nettlesoup"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/medicine/omnizine = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("nettles" = 1)
-	foodtype = VEGETABLES
+	foodtype = VEGETABLES | ANTITOXIC
 
 /obj/item/reagent_containers/food/snacks/soup/mystery
 	name = "mystery soup"
@@ -262,3 +262,25 @@
 	tastes = list("bungo" = 2, "hot curry" = 4, "tropical sweetness" = 1)
 	filling_color = "#E6A625"
 	foodtype = VEGETABLES | FRUIT | DAIRY
+<<<<<<< HEAD
+=======
+
+/obj/item/reagent_containers/food/snacks/soup/peasoup
+	name = "pea soup"
+	desc = "A humble split pea soup."
+	icon_state = "peasoup"
+	bonus_reagents = list (/datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/medicine/oculine = 2)
+	list_reagents = list (/datum/reagent/consumable/nutriment = 8)
+	tastes = list("creamy peas"= 2, "parsnip" = 1)
+	filling_color = "#9dc530"
+	foodtype = VEGETABLES
+
+/obj/item/reagent_containers/food/snacks/soup/facehuggerpot
+	name = "pot of face hugger jambalaya"
+	desc = "An entire pot of an extremely spicy dish made using extremely exotic ingredients. Highly recommend by an interdimensional businessman."
+	icon_state = "facehuggerpot"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 4)
+	tastes = list("face huggers" = 1)
+	foodtype = MEAT
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

@@ -29,23 +29,37 @@
   ));
   @include meta.load-css('../components/Layout.scss');
   @include meta.load-css('../components/NoticeBox.scss', $with: (
+<<<<<<< HEAD:tgui-next/packages/tgui/styles/themes/syndicate.scss
     'color-first': #750000,
     'color-second': #910101,
+=======
+    'background-color': #910101,
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d:tgui/packages/tgui/styles/themes/syndicate.scss
   ));
   @include meta.load-css('../components/NumberInput.scss', $with: (
     'border-color': #87ce87,
   ));
   @include meta.load-css('../components/ProgressBar.scss', $with: (
-    'color-background': rgba(0, 0, 0, 0.5),
+    'background-color': rgba(0, 0, 0, 0.5),
   ));
   @include meta.load-css('../components/Section.scss');
   @include meta.load-css('../components/TitleBar.scss', $with: (
     'color-background': #910101,
   ));
   @include meta.load-css('../components/Tooltip.scss', $with: (
-    'color-background': #4a0202,
+    'background-color': #4a0202,
   ));
 
+<<<<<<< HEAD:tgui-next/packages/tgui/styles/themes/syndicate.scss
+=======
+  // Layouts
+  @include meta.load-css('../layouts/Layout.scss');
+  @include meta.load-css('../layouts/Window.scss');
+  @include meta.load-css('../layouts/TitleBar.scss', $with: (
+    'background-color': #910101,
+  ));
+
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d:tgui/packages/tgui/styles/themes/syndicate.scss
   .Layout__content {
     background-image: url('../../assets/bg-syndicate.svg');
   }

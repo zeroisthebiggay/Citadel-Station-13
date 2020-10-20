@@ -27,8 +27,17 @@ const log = (level, ns, ...args) => {
       .filter(value => value)
       .join(' ')
       + '\nUser Agent: ' + navigator.userAgent;
+<<<<<<< HEAD:tgui-next/packages/tgui/logging.js
     act(window.__ref__, 'tgui:log', {
       log: logEntry,
+=======
+    Byond.topic({
+      tgui: 1,
+      window_id: window.__windowId__,
+      type: 'log',
+      ns,
+      message: logEntry,
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d:tgui/packages/tgui/logging.js
     });
   }
 };

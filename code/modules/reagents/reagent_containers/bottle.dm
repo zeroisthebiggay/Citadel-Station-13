@@ -412,6 +412,7 @@
 	name = "bromine bottle"
 	list_reagents = list(/datum/reagent/bromine = 30)
 
+<<<<<<< HEAD
 //Lewd Stuff
 
 /obj/item/reagent_containers/glass/bottle/crocin
@@ -433,3 +434,21 @@
 	name = "Hexacamphor bottle"
 	desc = "A bottle of strong anaphrodisiac. Reduces libido."
 	list_reagents = list(/datum/reagent/drug/anaphrodisiacplus = 30)
+=======
+//Ichors
+/obj/item/reagent_containers/glass/bottle/ichor
+	possible_transfer_amounts = list(1)
+	volume = 1
+
+/obj/item/reagent_containers/glass/bottle/ichor/red
+	name = "healing potion"
+	list_reagents = list(/datum/reagent/red_ichor = 1)
+
+/obj/item/reagent_containers/glass/bottle/ichor/blue
+	name = "blue potion"
+	list_reagents = list(/datum/reagent/blue_ichor = 1)
+
+/obj/item/reagent_containers/glass/bottle/ichor/green
+	name = "green potion"
+	list_reagents = list(/datum/reagent/green_ichor = 1)
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

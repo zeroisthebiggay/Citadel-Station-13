@@ -44,13 +44,25 @@
 /obj/item/integrated_circuit/output/screen/large/do_work()
 	..()
 
-	if(isliving(assembly.loc))//this whole block just returns if the assembly is neither in a mobs hands or on the ground
-		var/mob/living/H = assembly.loc
-		if(H.get_active_held_item() != assembly && H.get_inactive_held_item() != assembly)
-			return
+	var/list/mobs = list()
+	if(isliving(assembly.loc))
+		mobs += assembly.loc
+		var/mob/living/L = assembly.loc
+		if(L.is_holding(src))
+			for(var/mob/M in range(1, get_turf(src)))
+				mobs += M
 	else
+<<<<<<< HEAD
 		if(!isturf(assembly.loc))
 			return
+=======
+		for(var/mob/M in range(2, get_turf(src)))
+			mobs += M
+
+	var/atom/host = assembly || src
+	to_chat(mobs, "<span class='notice'>[icon2html(host.icon, world, host.icon_state)] flashes a message: [stuff_to_display]</span>")
+	host.investigate_log("displayed \"[html_encode(stuff_to_display)]\" as [type].", INVESTIGATE_CIRCUIT)
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 	var/list/nearby_things = range(0, get_turf(src))
 	for(var/mob/M in nearby_things)

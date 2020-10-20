@@ -7,6 +7,7 @@
 	icon_state_unpowered = null
 	icon_state_menu = null
 	hardware_flag = 0
+	max_bays = 4
 
 	var/obj/machinery/modular_computer/machinery_computer = null
 
@@ -15,6 +16,14 @@
 	if(machinery_computer && (machinery_computer.cpu == src))
 		machinery_computer.cpu = null
 	machinery_computer = null
+<<<<<<< HEAD
+=======
+	. = ..()
+
+/obj/item/modular_computer/processor/New(comp)
+	..()
+	STOP_PROCESSING(SSobj, src) // Processed by its machine
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /obj/item/modular_computer/processor/Initialize(mapload)
 	. = ..()
@@ -52,6 +61,7 @@
 	machinery_computer.update_icon()
 	return
 
+<<<<<<< HEAD
 /obj/item/modular_computer/processor/add_verb(path)
 	switch(path)
 		if(MC_CARD)
@@ -69,3 +79,7 @@
 			machinery_computer.verbs -= /obj/machinery/modular_computer/proc/eject_disk
 		if(MC_AI)
 			machinery_computer.verbs -= /obj/machinery/modular_computer/proc/eject_card
+=======
+/obj/item/modular_computer/processor/attack_ghost(mob/user)
+	ui_interact(user)
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

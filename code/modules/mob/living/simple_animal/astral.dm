@@ -21,6 +21,7 @@
 	alpha = 50
 	attacktext = "touches the mind of"
 	speak_emote = list("echos")
+	rad_flags = RAD_NO_CONTAMINATE
 	movement_type = FLYING
 	var/pseudo_death = FALSE
 	var/posses_safe = FALSE

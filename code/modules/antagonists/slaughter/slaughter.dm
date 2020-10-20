@@ -46,6 +46,23 @@
 				/obj/item/organ/heart/demon)
 	del_on_death = 1
 	deathmessage = "screams in anger as it collapses into a puddle of viscera!"
+<<<<<<< HEAD
+=======
+	// How long it takes for the alt-click slam attack to come off cooldown
+	var/slam_cooldown_time = 45 SECONDS
+	// The actual instance var for the cooldown
+	var/slam_cooldown = 0
+	// How many times we have hit humanoid targets since we last bloodcrawled, scaling wounding power
+	var/current_hitstreak = 0
+	// How much both our wound_bonus and bare_wound_bonus go up per hitstreak hit
+	var/wound_bonus_per_hit = 5
+	// How much our wound_bonus hitstreak bonus caps at (peak demonry)
+	var/wound_bonus_hitstreak_max = 12
+	// Keep the people we eat
+	var/list/consumed_mobs = list()
+	//buffs only happen when hearts are eaten, so this needs to be kept track separately
+	var/consumed_buff = 0
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /mob/living/simple_animal/slaughter/Initialize()
 	..()
@@ -65,8 +82,44 @@
 /mob/living/simple_animal/slaughter/phasein()
 	. = ..()
 	add_movespeed_modifier(/datum/movespeed_modifier/slaughter)
-	addtimer(CALLBACK(src, .proc/remove_movespeed_modifier, /datum/movespeed_modifier/slaughter), 6 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
+	var/slowdown_time = 6 SECONDS + (0.5 * consumed_buff)
+	addtimer(CALLBACK(src, .proc/remove_movespeed_modifier, /datum/movespeed_modifier/slaughter), slowdown_time, TIMER_UNIQUE | TIMER_OVERRIDE)
 
+/mob/living/simple_animal/slaughter/Destroy()
+	release_victims()
+	. = ..()
+
+/mob/living/simple_animal/slaughter/proc/release_victims()
+	if(!consumed_mobs)
+		return
+
+	for(var/mob/living/M in consumed_mobs)
+		if(!M)
+			continue
+		var/turf/T = find_safe_turf()
+		if(!T)
+			T = get_turf(src)
+		M.forceMove(T)
+
+/mob/living/simple_animal/slaughter/proc/refresh_consumed_buff()
+	melee_damage_lower = 22.5 + (0.5 * consumed_buff)
+	melee_damage_upper = 22.5 + (1 * consumed_buff)
+
+/mob/living/simple_animal/slaughter/bloodcrawl_swallow(var/mob/living/victim)
+	if(consumed_mobs)
+		// Keep their corpse so rescue is possible
+		consumed_mobs += victim
+		victim.reagents?.add_reagent(/datum/reagent/preservahyde,3) // make it so that they don't decay in there
+		var/obj/item/organ/heart/heart = victim.getorganslot(ORGAN_SLOT_HEART)
+		if(heart)
+			qdel(heart)
+			consumed_buff++
+			refresh_consumed_buff()
+	else
+		// Be safe and just eject the corpse
+		victim.forceMove(get_turf(victim))
+		victim.exit_blood_effect()
+		victim.visible_message("[victim] falls out of the air, covered in blood, looking highly confused. And dead.")
 
 //The loot from killing a slaughter demon - can be consumed to allow the user to blood crawl
 /obj/item/organ/heart/demon
@@ -129,9 +182,6 @@
 		prison of hugs."
 	loot = list(/mob/living/simple_animal/pet/cat/kitten{name = "Laughter"})
 
-	// Keep the people we hug!
-	var/list/consumed_mobs = list()
-
 	playstyle_string = "<span class='big bold'>You are a laughter \
 	demon,</span><B> a wonderful creature from another realm. You have a single \
 	desire: <span class='clown'>To hug and tickle.</span><BR>\
@@ -146,10 +196,6 @@
 	released and fully healed, because in the end it's just a jape, \
 	sibling!</B>"
 
-/mob/living/simple_animal/slaughter/laughter/Destroy()
-	release_friends()
-	. = ..()
-
 /mob/living/simple_animal/slaughter/laughter/ex_act(severity)
 	switch(severity)
 		if(1)
@@ -159,7 +205,22 @@
 		if(3)
 			adjustBruteLoss(30)
 
-/mob/living/simple_animal/slaughter/laughter/proc/release_friends()
+/mob/living/simple_animal/slaughter/laughter/refresh_consumed_buff()
+	melee_damage_lower -= 0.5 // JAPES
+	melee_damage_upper += 1
+
+/mob/living/simple_animal/slaughter/laughter/bloodcrawl_swallow(var/mob/living/victim)
+	if(consumed_mobs)
+		// Keep their corpse so rescue is possible
+		consumed_mobs += victim
+		refresh_consumed_buff()
+	else
+		// Be safe and just eject the corpse
+		victim.forceMove(get_turf(victim))
+		victim.exit_blood_effect()
+		victim.visible_message("[victim] falls out of the air, covered in blood, looking highly confused. And dead.")
+
+/mob/living/simple_animal/slaughter/laughter/release_victims()
 	if(!consumed_mobs)
 		return
 
@@ -174,13 +235,3 @@
 			M.grab_ghost(force = TRUE)
 			playsound(T, feast_sound, 50, 1, -1)
 			to_chat(M, "<span class='clown'>You leave [src]'s warm embrace,	and feel ready to take on the world.</span>")
-
-/mob/living/simple_animal/slaughter/laughter/bloodcrawl_swallow(var/mob/living/victim)
-	if(consumed_mobs)
-		// Keep their corpse so rescue is possible
-		consumed_mobs += victim
-	else
-		// Be safe and just eject the corpse
-		victim.forceMove(get_turf(victim))
-		victim.exit_blood_effect()
-		victim.visible_message("[victim] falls out of the air, covered in blood, looking highly confused. And dead.")

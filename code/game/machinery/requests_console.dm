@@ -132,6 +132,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 /obj/machinery/requests_console/ui_interact(mob/user)
 	. = ..()
 	var/dat = ""
+<<<<<<< HEAD
 	if(!open)
 		switch(screen)
 			if(1)	//req. assistance
@@ -257,6 +258,144 @@ GLOBAL_LIST_EMPTY(allConsoles)
 		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 		popup.open()
 	return
+=======
+	switch(screen)
+		if(1)	//req. assistance
+			dat += "Which department do you need assistance from?<br><br>"
+			dat += "<table width='100%'>"
+			for(var/dpt in GLOB.req_console_assistance)
+				if(dpt == department)
+					continue
+				dat += "<tr>"
+				dat += "<td width='55%'>[dpt]</td>"
+				dat += "<td width='45%'>"
+				dat += "<a href='?src=[REF(src)];write=[ckey(dpt)];priority=1'>Normal</a>"
+				dat += "<a href='?src=[REF(src)];write=[ckey(dpt)];priority=2'>High</a>"
+				if(hackState)
+					dat += "<a href='?src=[REF(src)];write=[ckey(dpt)];priority=3'>EXTREME</a>"
+				dat += "</td>"
+				dat += "</tr>"
+			dat += "</table>"
+			dat += "<br><A href='?src=[REF(src)];setScreen=0'><< Back</A><br>"
+
+		if(2)	//req. supplies
+			dat += "Which department do you need supplies from?<br><br>"
+			dat += "<table width='100%'>"
+			for(var/dpt in GLOB.req_console_supplies)
+				if(dpt == department)
+					continue
+
+				dat += "<tr>"
+				dat += "<td width='55%'>[dpt]</td>"
+				dat += "<td width='45%'>"
+				dat += "<a href='?src=[REF(src)];write=[ckey(dpt)];priority=1'>Normal</a>"
+				dat += "<a href='?src=[REF(src)];write=[ckey(dpt)];priority=2'>High</a>"
+				if(hackState)
+					dat += "<a href='?src=[REF(src)];write=[ckey(dpt)];priority=3'>EXTREME</a>"
+				dat += "</td>"
+				dat += "</tr>"
+			dat += "</table>"
+			dat += "<br><A href='?src=[REF(src)];setScreen=0'><< Back</A><br>"
+
+		if(3)	//relay information
+			dat += "Which department would you like to send information to?<br><br>"
+			dat += "<table width='100%'>"
+			for(var/dpt in GLOB.req_console_information)
+				if(dpt == department)
+					continue
+				dat += "<tr>"
+				dat += "<td width='55%'>[dpt]</td>"
+				dat += "<td width='45%'>"
+				dat += "<a href='?src=[REF(src)];write=[ckey(dpt)];priority=1'>Normal</a>"
+				dat += "<a href='?src=[REF(src)];write=[ckey(dpt)];priority=2'>High</a>"
+				if(hackState)
+					dat += "<a href='?src=[REF(src)];write=[ckey(dpt)];priority=3'>EXTREME</a>"
+				dat += "</td>"
+				dat += "</tr>"
+			dat += "</table>"
+			dat += "<br><a href='?src=[REF(src)];setScreen=0'><< Back</a><br>"
+
+		if(6)	//sent successfully
+			dat += "<span class='good'>Message sent.</span><br><br>"
+			dat += "<a href='?src=[REF(src)];setScreen=0'>Continue</a><br>"
+
+		if(7)	//unsuccessful; not sent
+			dat += "<span class='bad'>An error occurred.</span><br><br>"
+			dat += "<a href='?src=[REF(src)];setScreen=0'>Continue</a><br>"
+
+		if(8)	//view messages
+			for(var/obj/machinery/requests_console/Console in GLOB.allConsoles)
+				if(Console.department == department)
+					Console.newmessagepriority = NO_NEW_MESSAGE
+					Console.update_icon()
+
+			newmessagepriority = NO_NEW_MESSAGE
+			update_icon()
+			var/messageComposite = ""
+			for(var/msg in messages) // This puts more recent messages at the *top*, where they belong.
+				messageComposite = "<div class='block'>[msg]</div>" + messageComposite
+			dat += messageComposite
+			dat += "<br><a href='?src=[REF(src)];setScreen=0'><< Back to Main Menu</a><br>"
+
+		if(9)	//authentication before sending
+			dat += "<b>Message Authentication</b> <br><br>"
+			dat += "<b>Message for [dpt]:</b> [message] <br><br>"
+			dat += "<div class='notice'>You may authenticate your message now by scanning your ID or your stamp</div> <br>"
+
+			dat += "<b>Validated by:</b> [msgVerified ? "<span class='good'><b>[msgVerified]</b></span>" : "<i>Not Validated</i>"] <br>"
+			dat += "<b>Stamped by:</b> [msgStamped ? "<span class='boldnotice'>[msgStamped]</span>" : "<i>Not Stamped</i>"] <br><br>"
+
+			dat += "<a href='?src=[REF(src)];department=[dpt]'>Send Message</a> <br><br>"
+			dat += "<a href='?src=[REF(src)];setScreen=0'><< Discard Message</a> <br>"
+
+		if(10)	//send announcement
+			dat += "<h3>Station-wide Announcement</h3>"
+			if(announceAuth)
+				dat += "<div class='notice'>Authentication accepted</div><br>"
+			else
+				dat += "<div class='notice'>Swipe your card to authenticate yourself</div> <br>"
+			dat += "<b>Message: </b>[message ? message : "<i>No Message</i>"] <br>"
+			dat += "<a href='?src=[REF(src)];writeAnnouncement=1'>[message ? "Edit" : "Write"] Message</a> <br><br>"
+			if((announceAuth || IsAdminGhost(user)) && message)
+				dat += "<a href='?src=[REF(src)];sendAnnouncement=1'>Announce Message</a> <br>"
+			else
+				dat += "<span class='linkOff'>Announce Message</span> <br>"
+			dat += "<br><a href='?src=[REF(src)];setScreen=0'><< Back</a> <br>"
+
+		else	//main menu
+			screen = 0
+			announceAuth = FALSE
+			if(newmessagepriority == NORMAL_MESSAGE_PRIORITY)
+				dat += "<div class='notice'>There are new messages</div><br>"
+			if(newmessagepriority == HIGH_MESSAGE_PRIORITY)
+				dat += "<div class='notice'>There are new <b>PRIORITY</b> messages</div><br>"
+			if(newmessagepriority == EXTREME_MESSAGE_PRIORITY)
+				dat += "<div class='notice'>There are new <b>EXTREME PRIORITY</b> messages</div><br>"
+
+			dat += "<a href='?src=[REF(src)];setScreen=8'>View Messages</a> <br><br>"
+
+			dat += "<a href='?src=[REF(src)];setScreen=1'>Request Assistance</a> <br>"
+			dat += "<a href='?src=[REF(src)];setScreen=2'>Request Supplies</a> <br>"
+			dat += "<a href='?src=[REF(src)];setScreen=3'>Relay Anonymous Information</a> <br><br>"
+
+			if(!emergency)
+				dat += "<a href='?src=[REF(src)];emergency=1'>Emergency: Security</a> <br>"
+				dat += "<a href='?src=[REF(src)];emergency=2'>Emergency: Engineering</a> <br>"
+				dat += "<a href='?src=[REF(src)];emergency=3'>Emergency: Medical</a> <br><br>"
+			else
+				dat += "<b><div class='bad'>[emergency] has been dispatched to this location.</div></b> <br><br>"
+
+			if(announcementConsole)
+				dat += "<a href='?src=[REF(src)];setScreen=10'>Send Station-wide Announcement</a> <br><br>"
+			if(silent)
+				dat += "Speaker <a href='?src=[REF(src)];setSilent=0'>OFF</a>"
+			else
+				dat += "Speaker <a href='?src=[REF(src)];setSilent=1'>ON</a>"
+
+	var/datum/browser/popup = new(user, "req_console", "[department] Requests Console", 450, 440)
+	popup.set_content(dat)
+	popup.open()
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /obj/machinery/requests_console/Topic(href, href_list)
 	if(..())
@@ -331,6 +470,7 @@ GLOBAL_LIST_EMPTY(allConsoles)
 		var/log_msg = message
 		var/sending = message
 		sending += "<br>"
+<<<<<<< HEAD
 		if (msgVerified)
 			sending += msgVerified
 			sending += "<br>"
@@ -389,6 +529,71 @@ GLOBAL_LIST_EMPTY(allConsoles)
 						messages += "<span class='bad'>High Priority</span><BR><b>To:</b> [dpt]<BR>[sending]"
 					else
 						messages += "<b>To: [dpt]</b><BR>[sending]"
+=======
+		if(msgVerified)
+			sending += "<span class='good'><b>[msgVerified]</b></span> <br>"
+		if(msgStamped)
+			sending += "<span class='boldnotice'>[msgStamped]</span> <br>"
+		//so you're telling me is you cheated, by making fail happen, then quickly replacing it with 6
+
+		var/workingServer = FALSE
+		var/datum/data_rc_msg/log = new(href_list["department"], department, message, msgStamped, msgVerified, priority)
+		for(var/obj/machinery/telecomms/message_server/MS in GLOB.telecomms_list)
+			if(MS.on) //on does the calculations. why would this server still work even though the apc is off??
+				LAZYADD(MS.rc_msgs, log)
+				workingServer = TRUE
+
+		if(!workingServer)
+			screen = 7
+			say("NOTICE: No server detected! Please contact your local engineering team.")
+			updateUsrDialog()
+			return
+
+		var/radio_freq = 0
+		switch(href_list["department"])
+			if("bridge")
+				radio_freq = FREQ_COMMAND
+			if("medbay")
+				radio_freq = FREQ_MEDICAL
+			if("science")
+				radio_freq = FREQ_SCIENCE
+			if("engineering")
+				radio_freq = FREQ_ENGINEERING
+			if("security")
+				radio_freq = FREQ_SECURITY
+			if("cargobay" || "mining")
+				radio_freq = FREQ_SUPPLY
+		Radio.set_frequency(radio_freq)
+
+		var/authentic = ""
+		if(msgVerified || msgStamped)
+			authentic = " (Authenticated)"
+
+		var/alert = ""
+		for(var/obj/machinery/requests_console/C in GLOB.allConsoles)
+			if(ckey(C.department) != ckey(href_list["department"]))
+				continue
+			switch(priority)
+				if(HIGH_MESSAGE_PRIORITY)		//High priority
+					alert = "PRIORITY Alert from [department][authentic]"
+					C.createmessage(src, alert, sending, HIGH_MESSAGE_PRIORITY)
+				if(EXTREME_MESSAGE_PRIORITY)	// Extreme Priority
+					alert = "EXTREME PRIORITY Alert from [department][authentic]"
+					C.createmessage(src, alert, sending, EXTREME_MESSAGE_PRIORITY)
+				else		// Normal priority
+					alert = "Message from [department][authentic]"
+					C.createmessage(src, alert, sending, NORMAL_MESSAGE_PRIORITY)
+			screen = 6 //if it ever gets here that means (c.department == href_ls["dept"])
+
+		if(radio_freq)
+			Radio.talk_into(src, "[alert]: <i>[message]</i>", radio_freq)
+		//log to (this)
+		switch(priority)
+			if(HIGH_MESSAGE_PRIORITY)
+				messages += "<span class='bad'>High Priority</span><br><b>To:</b> [dpt]<br>[sending]"
+			if(EXTREME_MESSAGE_PRIORITY)
+				messages += "<span class='bad'>!!!Extreme Priority!!!</span><br><b>To:</b> [dpt]<br>[sending]"
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 			else
 				say("NOTICE: No server detected!")
 
@@ -518,7 +723,12 @@ GLOBAL_LIST_EMPTY(allConsoles)
 				to_chat(user, "<span class='warning'>You are not authorized to send announcements!</span>")
 			updateUsrDialog()
 		return
+<<<<<<< HEAD
 	if (istype(O, /obj/item/stamp))
+=======
+
+	if(istype(O, /obj/item/stamp))
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 		if(screen == 9)
 			var/obj/item/stamp/T = O
 			msgStamped = "<span class='boldnotice'>Stamped with the [T.name]</span>"

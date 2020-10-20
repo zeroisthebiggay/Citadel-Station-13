@@ -1,9 +1,15 @@
 @use '../colors.scss';
 @use '../functions.scss' as *;
 
+<<<<<<< HEAD:tgui-next/packages/tgui/styles/components/ProgressBar.scss
 $color-default: colors.bg(colors.$primary) !default;
 $color-background: rgba(0, 0, 0, 0) !default;
 $border-radius: 0 !default;
+=======
+$color-default-fill: colors.bg(colors.$primary) !default;
+$background-color: rgba(0, 0, 0, 0) !default;
+$border-radius: base.$border-radius !default;
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d:tgui/packages/tgui/styles/components/ProgressBar.scss
 $bg-map: colors.$bg-map !default;
 
 .ProgressBar {
@@ -12,7 +18,7 @@ $bg-map: colors.$bg-map !default;
   width: 100%;
   padding: 0 6px;
   border-radius: $border-radius;
-  background-color: $color-background;
+  background-color: $background-color;
   transition: border-color 500ms;
 }
 
@@ -32,10 +38,14 @@ $bg-map: colors.$bg-map !default;
 }
 
 .ProgressBar--color--default {
+<<<<<<< HEAD:tgui-next/packages/tgui/styles/components/ProgressBar.scss
   border: 1px solid $color-default;
+=======
+  border: base.em(1px) solid $color-default-fill;
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d:tgui/packages/tgui/styles/components/ProgressBar.scss
 
   .ProgressBar__fill {
-    background-color: $color-default;
+    background-color: $color-default-fill;
   }
 }
 

@@ -66,7 +66,11 @@
 				var/energy_transfer = delta_temperature*hot_air_heat_capacity*cold_air_heat_capacity/(hot_air_heat_capacity+cold_air_heat_capacity)
 
 				var/heat = energy_transfer*(1-efficiency)
+<<<<<<< HEAD
 				lastgen += energy_transfer*efficiency
+=======
+				lastgen += LOGISTIC_FUNCTION(500000,0.0009,delta_temperature,10000)
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 				hot_air.temperature = hot_air.temperature - energy_transfer/hot_air_heat_capacity
 				cold_air.temperature = cold_air.temperature + heat/cold_air_heat_capacity
@@ -139,7 +143,6 @@
 	. = ..()
 	var/datum/browser/popup = new(user, "teg", "Thermo-Electric Generator", 460, 300)
 	popup.set_content(get_menu())
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
 /obj/machinery/power/generator/Topic(href, href_list)

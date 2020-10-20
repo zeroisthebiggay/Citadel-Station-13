@@ -1,14 +1,14 @@
 /datum/computer_file/program/ntnetdownload
-	filename = "ntndownloader"
-	filedesc = "Software Download Tool"
+	filename = "ntsoftwarehub"
+	filedesc = "NT Software Hub"
 	program_icon_state = "generic"
 	extended_desc = "This program allows downloads of software from official NT repositories"
-	unsendable = 1
-	undeletable = 1
+	unsendable = TRUE
+	undeletable = TRUE
 	size = 4
-	requires_ntnet = 1
+	requires_ntnet = TRUE
 	requires_ntnet_feature = NTNET_SOFTWAREDOWNLOAD
-	available_on_ntnet = 0
+	available_on_ntnet = FALSE
 	ui_header = "downloader_finished.gif"
 	tgui_id = "ntos_net_downloader"
 
@@ -110,6 +110,8 @@
 
 	if(!istype(my_computer))
 		return
+	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
+	var/list/access = card_slot?.GetAccess()
 
 	var/list/data = get_header_data()
 
@@ -122,6 +124,7 @@
 		data["downloadsize"] = downloaded_file.size
 		data["downloadspeed"] = download_netspeed
 		data["downloadcompletion"] = round(download_completion, 0.1)
+<<<<<<< HEAD
 	else // No download running, pick file.
 		var/obj/item/computer_hardware/hard_drive/hard_drive = my_computer.all_components[MC_HDD]
 		data["disk_size"] = hard_drive.max_capacity
@@ -133,6 +136,19 @@
 			if(!P.can_run(user,transfer = 1) || hard_drive.find_file_by_name(P.filename))
 				continue
 			all_entries.Add(list(list(
+=======
+
+	var/obj/item/computer_hardware/hard_drive/hard_drive = my_computer.all_components[MC_HDD]
+	data["disk_size"] = hard_drive.max_capacity
+	data["disk_used"] = hard_drive.used_capacity
+	var/list/all_entries[0]
+	for(var/A in main_repo)
+		var/datum/computer_file/program/P = A
+		// Only those programs our user can run will show in the list
+		if(!P.can_run(user,transfer = 1, access = access) || hard_drive.find_file_by_name(P.filename))
+			continue
+		all_entries.Add(list(list(
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 			"filename" = P.filename,
 			"filedesc" = P.filedesc,
 			"fileinfo" = P.extended_desc,

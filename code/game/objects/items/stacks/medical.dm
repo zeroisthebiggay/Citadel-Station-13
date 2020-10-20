@@ -35,7 +35,7 @@
 	if(!affecting) //Missing limb?
 		to_chat(user, "<span class='warning'>[C] doesn't have \a [parse_zone(user.zone_selected)]!</span>")
 		return
-	if(affecting.status == BODYPART_ORGANIC) //Limb must be organic to be healed - RR
+	if(affecting.is_organic_limb(FALSE)) //Limb must be organic to be healed - RR
 		if(affecting.brute_dam && brute || affecting.burn_dam && burn)
 			user.visible_message("<span class='green'>[user] applies \the [src] on [C]'s [affecting.name].</span>", "<span class='green'>You apply \the [src] on [C]'s [affecting.name].</span>")
 			if(affecting.heal_damage(brute, burn))
@@ -146,6 +146,67 @@
 	is_cyborg = 1
 	cost = 250
 
+<<<<<<< HEAD
+=======
+/obj/item/stack/medical/suture
+	name = "suture"
+	desc = "Basic sterile sutures used to seal up cuts and lacerations and stop bleeding."
+	gender = PLURAL
+	singular_name = "suture"
+	icon_state = "suture"
+	self_delay = 30
+	other_delay = 10
+	amount = 15
+	max_amount = 15
+	repeating = TRUE
+	heal_brute = 10
+	stop_bleeding = 0.6
+	grind_results = list(/datum/reagent/medicine/spaceacillin = 2)
+
+/obj/item/stack/medical/suture/emergency
+	name = "emergency suture"
+	desc = "A value pack of cheap sutures, not very good at repairing damage, but still decent at stopping bleeding."
+	heal_brute = 5
+	amount = 5
+	max_amount = 5
+
+/obj/item/stack/medical/suture/one
+	amount = 1
+
+/obj/item/stack/medical/suture/five
+	amount = 5
+
+/obj/item/stack/medical/suture/medicated
+	name = "medicated suture"
+	icon_state = "suture_purp"
+	desc = "A suture infused with drugs that speed up wound healing of the treated laceration."
+	heal_brute = 15
+	grind_results = list(/datum/reagent/medicine/polypyr = 2)
+
+/obj/item/stack/medical/suture/one
+	amount = 1
+
+/obj/item/stack/medical/suture/heal(mob/living/M, mob/user)
+	. = ..()
+	if(M.stat == DEAD)
+		to_chat(user, "<span class='warning'>[M] is dead! You can not help [M.p_them()].</span>")
+		return
+	if(iscarbon(M))
+		return heal_carbon(M, user, heal_brute, 0)
+	if(isanimal(M))
+		var/mob/living/simple_animal/critter = M
+		if (!(critter.healable))
+			to_chat(user, "<span class='warning'>You cannot use \the [src] on [M]!</span>")
+			return FALSE
+		else if (critter.health == critter.maxHealth)
+			to_chat(user, "<span class='notice'>[M] is at full health.</span>")
+			return FALSE
+		user.visible_message("<span class='green'>[user] applies \the [src] on [M].</span>", "<span class='green'>You apply \the [src] on [M].</span>")
+		M.heal_bodypart_damage(heal_brute)
+		return TRUE
+	to_chat(user, "<span class='warning'>You can't heal [M] with \the [src]!</span>")
+
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 /obj/item/stack/medical/ointment
 	name = "ointment"
 	desc = "Used to treat those nasty burn wounds."

@@ -13,6 +13,13 @@
 //////////////////// Paperwork and Writing Supplies //////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 
+
+/datum/supply_pack/misc/anvil
+	name = "Anvil Crate"
+	desc = "An anvil in a crate, we had to dig this out of the old warehouse. It's got wheels on it so you can move it."
+	cost = 7500
+	contains = list(/obj/structure/anvil/obtainable/basic)
+
 /datum/supply_pack/misc/artsupply
 	name = "Art Supplies"
 	desc = "Make some happy little accidents with six canvasses, two easels, two boxes of crayons, and a rainbow crayon!"
@@ -360,6 +367,7 @@
 	crate_name = "exotic carpet crate"
 
 /datum/supply_pack/misc/carpet
+<<<<<<< HEAD
 	name = "Premium Carpet Crate"
 	desc = "Plasteel floor tiles getting on your nerves? These stacks of extra soft carpet will tie any room together. Contains some classic carpet, along with black, red, and monochrome varients."
 	cost = 1350
@@ -372,6 +380,63 @@
 					/obj/item/stack/tile/carpet/monochrome/fifty,
 					/obj/item/stack/tile/carpet/monochrome/fifty)
 	crate_name = "premium carpet crate"
+=======
+	goody = PACK_GOODY_PUBLIC
+	name = "Classic Carpet Single-Pack"
+	desc = "Plasteel floor tiles getting on your nerves? This 50 units stack of extra soft carpet will tie any room together."
+	cost = 200
+	contains = list(/obj/item/stack/tile/carpet/fifty)
+
+/datum/supply_pack/misc/carpet/black
+	name = "Black Carpet Single-Pack"
+	contains = list(/obj/item/stack/tile/carpet/black/fifty)
+
+/datum/supply_pack/misc/carpet/arcade
+	name = "Arcade Carpet Single-Pack"
+	contains = list(/obj/item/stack/tile/carpet/arcade/fifty)
+
+/datum/supply_pack/misc/carpet/premium
+	name = "Monochrome Carpet Single-Pack"
+	desc = "Exotic carpets for all your decorating needs. This 30 units stack of extra soft carpet will tie any room together."
+	cost = 250
+	contains = list(/obj/item/stack/tile/carpet/monochrome/thirty)
+
+/datum/supply_pack/misc/carpet/premium/blackred
+	name = "Black-Red Carpet Single-Pack"
+	contains = list(/obj/item/stack/tile/carpet/blackred/thirty)
+
+/datum/supply_pack/misc/carpet/premium/royalblack
+	name = "Royal Black Carpet Single-Pack"
+	contains = list(/obj/item/stack/tile/carpet/royalblack/thirty)
+
+/datum/supply_pack/misc/carpet/premium/royalblue
+	name = "Royal Blue Carpet Single-Pack"
+	contains = list(/obj/item/stack/tile/carpet/royalblue/thirty)
+
+/datum/supply_pack/misc/carpet/premium/red
+	name = "Red Carpet Single-Pack"
+	contains = list(/obj/item/stack/tile/carpet/red/thirty)
+
+/datum/supply_pack/misc/carpet/premium/purple
+	name = "Purple Carpet Single-Pack"
+	contains = list(/obj/item/stack/tile/carpet/purple/thirty)
+
+/datum/supply_pack/misc/carpet/premium/orange
+	name = "Orange Carpet Single-Pack"
+	contains = list(/obj/item/stack/tile/carpet/orange/thirty)
+
+/datum/supply_pack/misc/carpet/premium/green
+	name = "Green Carpet Single-Pack"
+	contains = list(/obj/item/stack/tile/carpet/green/thirty)
+
+/datum/supply_pack/misc/carpet/premium/cyan
+	name = "Cyan Carpet Single-Pack"
+	contains = list(/obj/item/stack/tile/carpet/cyan/thirty)
+
+/datum/supply_pack/misc/carpet/premium/blue
+	name = "Blue Carpet Single-Pack"
+	contains = list(/obj/item/stack/tile/carpet/blue/thirty)
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /datum/supply_pack/misc/noslipfloor
 	name = "High-traction Floor Tiles"

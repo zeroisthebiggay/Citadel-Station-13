@@ -1,6 +1,7 @@
 {
   "private": true,
   "name": "tgui",
+<<<<<<< HEAD:tgui-next/packages/tgui/package.json
   "version": "0.1.0",
   "dependencies": {
     "@babel/core": "^7.6.2",
@@ -27,5 +28,17 @@
     "webpack-build-notifier": "^2.0.0",
     "webpack-bundle-analyzer": "^3.5.1",
     "webpack-cli": "^3.3.9"
+=======
+  "version": "4.2.0",
+  "dependencies": {
+    "common": "workspace:*",
+    "dompurify": "^2.0.11",
+    "fg-loadcss": "^2.1.0",
+    "inferno": "^7.4.2",
+    "inferno-vnode-flags": "^7.4.2",
+    "marked": "^1.1.0",
+    "tgui-dev-server": "workspace:*",
+    "tgui-polyfill": "workspace:*"
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d:tgui/packages/tgui/package.json
   }
 }

@@ -70,8 +70,11 @@
 /obj/machinery/door/firedoor/Bumped(atom/movable/AM)
 	if(panel_open || operating)
 		return
+<<<<<<< HEAD
 	if(!density)
 		return ..()
+=======
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	return FALSE
 
 
@@ -82,10 +85,14 @@
 	else
 		stat |= NOPOWER
 
+<<<<<<< HEAD
 /obj/machinery/door/firedoor/attack_hand(mob/user)
 	. = ..()
 	if(.)
 		return
+=======
+/obj/machinery/door/firedoor/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	if(operating || !density)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)

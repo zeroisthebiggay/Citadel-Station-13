@@ -76,6 +76,13 @@ GLOBAL_LIST_EMPTY(objectives)
 /datum/objective/proc/check_completion()
 	return completed
 
+/*
+Used during the round to check if an objective has already been completed, generally should have harsher requirements that the default objective  (no true because of short afk, etc)
+If not set, defaults to check_completion instead. Set it. It's used by cryo.
+*/
+/datum/objective/proc/check_midround_completion()
+	return check_completion()
+
 /datum/objective/proc/is_unique_objective(possible_target)
 	var/list/datum/mind/owners = get_owners()
 	for(var/datum/mind/M in owners)
@@ -175,6 +182,9 @@ GLOBAL_LIST_EMPTY(objectives)
 /datum/objective/assassinate/check_completion()
 	return !considered_alive(target) || considered_afk(target)
 
+/datum/objective/assassinate/check_midround_completion()
+	return FALSE //They need to be dead at the end of the round, silly!
+
 /datum/objective/assassinate/update_explanation_text()
 	..()
 	if(target && target.current)
@@ -201,10 +211,23 @@ GLOBAL_LIST_EMPTY(objectives)
 	return won || ..()
 
 /datum/objective/assassinate/once/process()
+<<<<<<< HEAD
 	won = check_completion()
 	if(won)
 		STOP_PROCESSING(SSprocessing,src)
 
+=======
+	won = tick_check_completion()
+	if(won)
+		STOP_PROCESSING(SSprocessing,src)
+
+/datum/objective/assassinate/once/proc/tick_check_completion()
+	return won || !considered_alive(target) //The target afking / logging off for a bit during the round doesn't complete it, but them being afk at roundend does.
+
+/datum/objective/assassinate/once/check_midround_completion()
+	return won //If they cryoed, only keep it if we already won
+
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 /datum/objective/assassinate/internal
 	var/stolen = 0 		//Have we already eliminated this target?
 
@@ -230,6 +253,9 @@ GLOBAL_LIST_EMPTY(objectives)
 	var/turf/T = get_turf(target.current)
 	return !T || !is_station_level(T.z)
 
+/datum/objective/mutiny/check_midround_completion()
+	return FALSE
+
 /datum/objective/mutiny/update_explanation_text()
 	..()
 	if(target && target.current)
@@ -249,7 +275,10 @@ GLOBAL_LIST_EMPTY(objectives)
 	return target
 
 /datum/objective/maroon/check_completion()
-	return !target || !considered_alive(target) || (!target.current.onCentCom() && !target.current.onSyndieBase())
+	return !target || !considered_alive(target) || (!target.current?.onCentCom() && !target.current?.onSyndieBase())
+
+/datum/objective/maroon/check_midround_completion()
+	return FALSE
 
 /datum/objective/maroon/update_explanation_text()
 	if(target && target.current)
@@ -309,6 +338,9 @@ GLOBAL_LIST_EMPTY(objectives)
 
 /datum/objective/protect/check_completion()
 	return !target || considered_alive(target, enforce_human = human_check)
+
+/datum/objective/protect/check_midround_completion()
+	return FALSE //Nuh uh, you get a new objective
 
 /datum/objective/protect/update_explanation_text()
 	..()
@@ -409,6 +441,9 @@ GLOBAL_LIST_EMPTY(objectives)
 /datum/objective/breakout/check_completion()
 	return !target || considered_escaped(target)
 
+/datum/objective/breakout/check_midround_completion()
+	return FALSE
+
 /datum/objective/breakout/find_target_by_role(role, role_type=0, invert=0)
 	if(!invert)
 		target_role_type = role_type
@@ -457,6 +492,9 @@ GLOBAL_LIST_EMPTY(objectives)
 		var/mob/living/carbon/human/H = M.current
 		if(H.dna.real_name == target_real_name && (H.get_id_name() == target_real_name || target_missing_id))
 			return TRUE
+	return FALSE
+
+/datum/objective/escape/escape_with_identity/check_midround_completion()
 	return FALSE
 
 /datum/objective/escape/escape_with_identity/admin_edit(mob/admin)
@@ -619,6 +657,8 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	explanation_text = "Acquire [targetinfo.name] held by [target.current.real_name], the [target.assigned_role] and syndicate agent"
 	steal_target = targetinfo.targetitem
 
+/datum/objective/steal/exchange/check_midround_completion()
+	return FALSE
 
 /datum/objective/steal/exchange/update_explanation_text()
 	..()
@@ -822,6 +862,9 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	if(target && target.current)
 		return target.current.stat == DEAD || target.current.z > 6 || !target.current.ckey //Borgs/brains/AIs count as dead for traitor objectives.
 	return TRUE
+
+/datum/objective/destroy/check_midround_completion()
+	return FALSE
 
 /datum/objective/destroy/update_explanation_text()
 	..()

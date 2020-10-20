@@ -32,6 +32,9 @@
 	/// If megafauna can be spawned by natural random generation
 	var/megafauna_spawn_allowed = FALSE
 
+	/// Considered space for hull shielding
+	var/considered_hull_exterior = FALSE
+
 	var/fire = null
 	var/atmos = TRUE
 	var/atmosalm = FALSE

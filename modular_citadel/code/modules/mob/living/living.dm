@@ -1,5 +1,3 @@
-/mob/living
-
 /atom
 	var/pseudo_z_axis
 
@@ -24,6 +22,7 @@
 	if(.)
 		pseudo_z_axis = newloc.get_fake_z()
 		pixel_z = pseudo_z_axis
+<<<<<<< HEAD
 
 /mob/living/carbon/update_stamina()
 	var/total_health = getStaminaLoss()
@@ -47,3 +46,5 @@
 		filters -= CIT_FILTER_STAMINACRIT
 		update_mobility()
 	update_health_hud()
+=======
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

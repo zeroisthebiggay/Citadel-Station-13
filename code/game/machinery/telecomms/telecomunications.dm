@@ -119,7 +119,12 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 /obj/machinery/telecomms/proc/update_power()
 
 	if(toggled)
+<<<<<<< HEAD
 		if(stat & (BROKEN|NOPOWER|EMPED)) // if powered, on. if not powered, off. if too damaged, off
+=======
+		// if powered, on. if not powered, off. if too damaged, off
+		if(CHECK_BITFIELD(stat, (BROKEN | NOPOWER | EMPED)))
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 			on = FALSE
 		else
 			on = TRUE
@@ -139,9 +144,16 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
+<<<<<<< HEAD
 	if(prob(100/severity))
 		if(!(stat & EMPED))
 			stat |= EMPED
 			var/duration = (300 * 10)/severity
+=======
+	if(prob(severity))
+		if(!CHECK_BITFIELD(stat, EMPED))
+			ENABLE_BITFIELD(stat, EMPED)
+			var/duration = severity * 35
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 			spawn(rand(duration - 20, duration + 20)) // Takes a long time for the machines to reboot.
 				stat &= ~EMPED

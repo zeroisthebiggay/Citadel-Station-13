@@ -115,8 +115,13 @@
 		var/datum/reagent/R = pick(reagents.reagent_list)
 		inject_chem(R.type, occupant)
 		open_machine()
+<<<<<<< HEAD
 	//Is this too much?
 	if(severity == EMP_HEAVY)
+=======
+	//Is this too much? Cit specific
+	if(severity >= 80)
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 		var/chem = pick(available_chems)
 		available_chems -= chem
 		available_chems += get_random_reagent_id()

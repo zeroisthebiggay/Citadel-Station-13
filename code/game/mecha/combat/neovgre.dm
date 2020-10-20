@@ -62,7 +62,13 @@
 
 /obj/mecha/combat/neovgre/process()
 	..()
+<<<<<<< HEAD
 	if(GLOB.ratvar_awakens) // At this point only timley intervention by lord singulo could hople to stop the superweapon
+=======
+	if(!obj_integrity) //Integrity is zero but we would heal out of that state if we went into this before it recognises it being zero
+		return
+	if(GLOB.ratvar_awakens) // At this point only timley intervention by lord singulo could hope to stop the superweapon
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 		cell.charge = INFINITY
 		max_integrity = INFINITY
 		obj_integrity = max_integrity

@@ -1,14 +1,15 @@
 //Subtype of human
 /datum/species/human/felinid
 	name = "Felinid"
-	id = "felinid"
-	limbs_id = "human"
+	id = SPECIES_FELINID
+	limbs_id = SPECIES_HUMAN
 
 	mutant_bodyparts = list("mam_tail" = "Cat", "mam_ears" = "Cat", "deco_wings" = "None")
 
 	mutantears = /obj/item/organ/ears/cat
 	mutanttail = /obj/item/organ/tail/cat
 
+<<<<<<< HEAD
 /datum/species/human/felinid/qualifies_for_rank(rank, list/features)
 	return TRUE
 
@@ -40,6 +41,11 @@
 		mutant_bodyparts["mam_tail"] = mutant_bodyparts["mam_waggingtail"]
 		mutant_bodyparts -= "mam_waggingtail"
 	H.update_body()
+=======
+	tail_type = "mam_tail"
+	wagging_type = "mam_waggingtail"
+	species_category = SPECIES_CATEGORY_FURRY
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /datum/species/human/felinid/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	if(ishuman(C))

@@ -16,6 +16,14 @@
 	. = ..()
 	QDEL_NULL(battery)
 
+<<<<<<< HEAD
+=======
+/obj/item/computer_hardware/battery/handle_atom_del(atom/A)
+	if(A == battery)
+		try_eject(forced = TRUE)
+	. = ..()
+
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 /obj/item/computer_hardware/battery/try_insert(obj/item/I, mob/living/user = null)
 	if(!holder)
 		return FALSE
@@ -40,7 +48,7 @@
 	return TRUE
 
 
-/obj/item/computer_hardware/battery/try_eject(slot=0, mob/living/user = null, forced = 0)
+/obj/item/computer_hardware/battery/try_eject(mob/living/user = null, forced = FALSE)
 	if(!battery)
 		to_chat(user, "<span class='warning'>There is no power cell connected to \the [src].</span>")
 		return FALSE

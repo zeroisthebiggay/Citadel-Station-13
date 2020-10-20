@@ -41,6 +41,8 @@
 	var/special_role
 	var/list/restricted_roles = list()
 
+	var/hide_ckey = FALSE //hide ckey from round-end report
+
 	var/list/spell_list = list() // Wizard mode & "Give Spell" badmin button.
 
 	var/linglink
@@ -66,6 +68,13 @@
 	/// Our skill holder.
 	var/datum/skill_holder/skill_holder
 
+<<<<<<< HEAD
+=======
+	///What character we spawned in as- either at roundstart or latejoin, so we know for persistent scars if we ended as the same person or not
+	var/mob/original_character
+
+
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 /datum/mind/New(var/key)
 	skill_holder = new()
 	src.key = key
@@ -127,6 +136,12 @@
 	transfer_martial_arts(new_character)
 	if(active || force_key_move)
 		new_character.key = key		//now transfer the key to link the client to our new body
+<<<<<<< HEAD
+=======
+	if(new_character.client)
+		LAZYCLEARLIST(new_character.client.recent_examines)
+		new_character.client.init_verbs() // re-initialize character specific verbs
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	current.update_atom_languages()
 
 //CIT CHANGE - makes arousal update when transfering bodies
@@ -134,6 +149,8 @@
 		var/mob/living/L = new_character
 		if(L.client?.prefs && L.client.prefs.auto_ooc && L.client.prefs.chat_toggles & CHAT_OOC)
 			DISABLE_BITFIELD(L.client.prefs.chat_toggles,CHAT_OOC)
+
+	hide_ckey = current.client?.prefs?.hide_ckey
 
 	SEND_SIGNAL(src, COMSIG_MIND_TRANSFER, new_character, old_character)
 	SEND_SIGNAL(new_character, COMSIG_MOB_ON_NEW_MIND)
@@ -680,6 +697,7 @@
 		if(istype(S, spell))
 			spell_list -= S
 			qdel(S)
+	current?.client << output(null, "statbrowser:check_spells")
 
 /datum/mind/proc/RemoveAllSpells()
 	for(var/obj/effect/proc_holder/S in spell_list)
@@ -772,6 +790,7 @@
 	if(!mind.name)
 		mind.name = real_name
 	mind.current = src
+	mind.hide_ckey = client?.prefs?.hide_ckey
 
 /mob/living/carbon/mind_initialize()
 	..()

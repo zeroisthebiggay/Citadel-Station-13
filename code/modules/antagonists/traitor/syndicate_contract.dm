@@ -45,7 +45,12 @@
 	empty_pod.reversing = TRUE
 	empty_pod.explosionSize = list(0,0,0,1)
 	empty_pod.leavingSound = 'sound/effects/podwoosh.ogg'
+<<<<<<< HEAD
 	new /obj/effect/abstract/DPtarget(empty_pod_turf, empty_pod)
+=======
+
+	new /obj/effect/pod_landingzone(empty_pod_turf, empty_pod)
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /datum/syndicate_contract/proc/enter_check(datum/source, sent_mob)
 	if(istype(source, /obj/structure/closet/supplypod/extractionpod))
@@ -73,7 +78,14 @@
 					M.transferItemToLoc(W)
 					victim_belongings.Add(W)
 			var/obj/structure/closet/supplypod/extractionpod/pod = source
+<<<<<<< HEAD
 			pod.send_up(pod)	// Handle the pod returning
+=======
+
+			// Handle the pod returning
+			pod.startExitSequence(pod)
+
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 			if(ishuman(M))
 				var/mob/living/carbon/human/target = M	// After we remove items, at least give them what they need to live.
 				target.dna.species.give_important_for_life(target)
@@ -154,7 +166,7 @@
 		M.blur_eyes(30)
 		M.Dizzy(35)
 		M.confused += 20
-		new /obj/effect/abstract/DPtarget(possible_drop_loc[pod_rand_loc], return_pod)
+		new /obj/effect/pod_landingzone(possible_drop_loc[pod_rand_loc], return_pod)
 	else
 		to_chat(M, "<span class='reallybig hypnophrase'>A million voices echo in your head... <i>\"Seems where you got sent here from won't \
 					be able to handle our pod... You will die here instead.\"</i></span>")

@@ -36,6 +36,7 @@
 	var/grab_state = 0
 	var/throwforce = 0
 	var/datum/component/orbiter/orbiting
+	/// Used for space ztransit stuff
 	var/can_be_z_moved = TRUE
 
 	var/zfalling = FALSE

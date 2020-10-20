@@ -193,8 +193,12 @@
 							LZ = pick(empty_turfs)
 					if (SO.pack.cost <= points_to_check && LZ)//we need to call the cost check again because of the CHECK_TICK call
 						D.adjust_money(-SO.pack.cost)
+<<<<<<< HEAD
 						SSblackbox.record_feedback("nested tally", "cargo_imports", 1, list("[SO.pack.cost]", "[SO.pack.name]"))
 						new /obj/effect/abstract/DPtarget(LZ, podType, SO)
+=======
+						new /obj/effect/pod_landingzone(LZ, podType, SO)
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 						. = TRUE
 						update_icon()
 			else
@@ -212,7 +216,7 @@
 						for(var/i in 1 to MAX_EMAG_ROCKETS)
 							var/LZ = pick(empty_turfs)
 							LAZYREMOVE(empty_turfs, LZ)
-							new /obj/effect/abstract/DPtarget(LZ, podType, SO)
+							new /obj/effect/pod_landingzone(LZ, podType, SO)
 							. = TRUE
 							update_icon()
 							CHECK_TICK

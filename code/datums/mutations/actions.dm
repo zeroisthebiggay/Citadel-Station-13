@@ -337,8 +337,9 @@ obj/effect/proc_holder/spell/aimed/firebreath
 		to_chat(user, "<span class='warning'>You can't lay webs here!</span>")
 		failed = TRUE
 	var/turf/T = get_turf(user)
-	var/obj/structure/spider/stickyweb/genetic/W = locate() in T
-	if(W)
+	var/obj/structure/spider/stickyweb/W = locate() in T
+	var/obj/structure/arachnid/W2 = locate() in T
+	if(W || W2)
 		to_chat(user, "<span class='warning'>There's already a web here!</span>")
 		failed = TRUE
 	if(failed)

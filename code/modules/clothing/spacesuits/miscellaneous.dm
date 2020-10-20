@@ -464,4 +464,32 @@ Contains:
 		desc = "A bulky suit meant to protect the user during emergency situations, at least until someone tore a hole in the suit."
 		torn = TRUE
 		playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1)
+<<<<<<< HEAD
 		playsound(loc, 'sound/effects/refill.ogg', 50, 1)
+=======
+		playsound(loc, 'sound/effects/refill.ogg', 50, 1)
+
+/obj/item/clothing/suit/space/eva/paramedic
+	name = "paramedic EVA suit"
+	icon_state = "paramedic-eva"
+	item_state = "paramedic-eva"
+	desc = "A deep blue space suit decorated with red and white crosses to indicate that the wearer is trained emergency medical personnel."
+	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/roller)
+
+/obj/item/clothing/head/helmet/space/eva/paramedic
+	name = "paramedic EVA helmet"
+	desc = "A deep blue space helmet with a large red cross on the faceplate to designate the wearer as trained emergency medical personnel."
+	icon_state = "paramedic-eva-helmet"
+	item_state = "paramedic-eva-helmet"
+
+/obj/item/clothing/suit/space/hunter
+	name = "bounty hunting suit"
+	desc = "A custom version of the MK.II SWAT suit, modified to look rugged and tough. Works as a space suit, if you can find a helmet."
+	icon_state = "hunter"
+	item_state = "swat_suit"
+	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/kitchen/knife/combat)
+	armor = list("melee" = 60, "bullet" = 40, "laser" = 40, "energy" = 50, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100, "wound" = 25)
+	strip_delay = 130
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

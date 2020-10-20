@@ -80,7 +80,38 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 	return 0
 
 /datum/gas_mixture/proc/return_temperature() //kelvins
+<<<<<<< HEAD
 	return temperature
+=======
+
+/datum/gas_mixture/proc/set_min_heat_capacity(n)
+/datum/gas_mixture/proc/set_temperature(new_temp)
+/datum/gas_mixture/proc/set_volume(new_volume)
+/datum/gas_mixture/proc/get_moles(gas_type)
+/datum/gas_mixture/proc/set_moles(gas_type, moles)
+
+// VV WRAPPERS - EXTOOLS HOOKED PROCS DO NOT TAKE ARGUMENTS FROM CALL() FOR SOME REASON.
+/datum/gas_mixture/proc/vv_set_moles(gas_type, moles)
+	return set_moles(gas_type, moles)
+/datum/gas_mixture/proc/vv_get_moles(gas_type)
+	return get_moles(gas_type)
+/datum/gas_mixture/proc/vv_set_temperature(new_temp)
+	return set_temperature(new_temp)
+/datum/gas_mixture/proc/vv_set_volume(new_volume)
+	return set_volume(new_volume)
+/datum/gas_mixture/proc/vv_react(datum/holder)
+	return react(holder)
+
+/datum/gas_mixture/proc/scrub_into(datum/gas_mixture/target, list/gases)
+/datum/gas_mixture/proc/mark_immutable()
+/datum/gas_mixture/proc/get_gases()
+/datum/gas_mixture/proc/multiply(factor)
+/datum/gas_mixture/proc/get_last_share()
+/datum/gas_mixture/proc/clear()
+
+/datum/gas_mixture/proc/adjust_moles(gas_type, amt = 0)
+	set_moles(gas_type, get_moles(gas_type) + amt)
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /datum/gas_mixture/proc/return_volume() //liters
 	return max(0, volume)
@@ -124,7 +155,7 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 	//Performs air sharing calculations between two gas_mixtures assuming only 1 boundary length
 	//Returns: amount of gas exchanged (+ if sharer received)
 
-/datum/gas_mixture/proc/temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
+/datum/gas_mixture/proc/temperature_share(datum/gas_mixture/sharer, conduction_coefficient,temperature=null,heat_capacity=null)
 	//Performs temperature sharing calculations (via conduction) between two gas_mixtures assuming only 1 boundary length
 	//Returns: new temperature of the sharer
 
@@ -132,7 +163,7 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 	//Compares sample to self to see if within acceptable ranges that group processing may be enabled
 	//Returns: a string indicating what check failed, or "" if check passes
 
-/datum/gas_mixture/proc/react(turf/open/dump_location)
+/datum/gas_mixture/proc/react(datum/holder)
 	//Performs various reactions such as combustion or fusion (LOL)
 	//Returns: 1 if any reaction took place; 0 otherwise
 
@@ -245,6 +276,7 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 			path = gas_id2path(path) //a lot of these strings can't have embedded expressions (especially for mappers), so support for IDs needs to stick around
 		gases[path] = text2num(gas[id])
 	return 1
+<<<<<<< HEAD
 
 /datum/gas_mixture/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
 
@@ -360,6 +392,9 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 
 	return ""
 
+=======
+/*
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 /datum/gas_mixture/react(datum/holder)
 	. = NO_REACTION
 	var/list/cached_gases = gases
@@ -409,9 +444,13 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 			. |= reaction.react(src, holder)
 			if (. & STOP_REACTIONS)
 				break
+<<<<<<< HEAD
 	if(.)
 		GAS_GARBAGE_COLLECT(gases)
 
+=======
+*/
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 //Takes the amount of the gas you want to PP as an argument
 //So I don't have to do some hacky switches/defines/magic strings
 //eg:

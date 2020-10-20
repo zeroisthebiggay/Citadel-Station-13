@@ -42,10 +42,26 @@
 	var/dynamic_fhair_suffix = ""//mask > head for facial hair
 
 	//basically a restriction list.
-	var/list/species_restricted = null
+	var/list/species_restricted
 	//Basically syntax is species_restricted = list("Species Name","Species Name")
 	//Add a "exclude" string to do the opposite, making it only only species listed that can't wear it.
+<<<<<<< HEAD
 	//You append this to clothing objects.
+=======
+	//You append this to clothing objects
+
+
+	// How much clothing damage has been dealt to each of the limbs of the clothing, assuming it covers more than one limb
+	var/list/damage_by_parts
+	// How much integrity is in a specific limb before that limb is disabled (for use in [/obj/item/clothing/proc/take_damage_zone], and only if we cover multiple zones.) Set to 0 to disable shredding.
+	var/limb_integrity = 0
+	// How many zones (body parts, not precise) we have disabled so far, for naming purposes
+	var/zones_disabled
+	///These are armor values that protect the wearer, taken from the clothing's armor datum. List updates on examine because it's currently only used to print armor ratings to chat in Topic().
+	var/list/armor_list = list()
+	///These are armor values that protect the clothing, taken from its armor datum. List updates on examine because it's currently only used to print armor ratings to chat in Topic().
+	var/list/durability_list = list()
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /obj/item/clothing/Initialize()
 	. = ..()
@@ -265,3 +281,14 @@ BLIND     // can't see anything
 				return FALSE
 
 	return TRUE
+<<<<<<< HEAD
+=======
+
+
+/// If we're a clothing with at least 1 shredded/disabled zone, give the wearer a periodic heads up letting them know their clothes are damaged
+/obj/item/clothing/proc/bristle(mob/living/L)
+	if(!istype(L))
+		return
+	if(prob(0.2))
+		to_chat(L, "<span class='warning'>The damaged threads on your [src.name] chafe!</span>")
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

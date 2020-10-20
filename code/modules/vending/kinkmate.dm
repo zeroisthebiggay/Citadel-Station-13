@@ -20,7 +20,20 @@
 				/obj/item/clothing/under/misc/gear_harness = 10,
 				/obj/item/dildo/custom = 5,
 				/obj/item/electropack/shockcollar = 3,
+<<<<<<< HEAD
 				/obj/item/assembly/signaler = 3
+=======
+				/obj/item/assembly/signaler = 3,
+				/obj/item/clothing/under/shorts/polychromic/pantsu = 3,
+				/obj/item/clothing/under/misc/poly_bottomless = 3,
+				/obj/item/clothing/under/misc/poly_tanktop = 3,
+				/obj/item/clothing/under/misc/poly_tanktop/female = 3,
+				/obj/item/autosurgeon/penis = 3,
+				/obj/item/autosurgeon/testicles = 3,
+				/obj/item/storage/pill_bottle/penis_enlargement = 5,
+				/obj/item/storage/pill_bottle/breast_enlargement = 5,
+				/obj/item/storage/daki = 4
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 				)
 	contraband = list(
 				/obj/item/clothing/neck/petcollar/locked = 2,

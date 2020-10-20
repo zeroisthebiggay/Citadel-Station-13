@@ -1,8 +1,8 @@
 /datum/computer_file/program/aidiag
 	filename = "aidiag"
-	filedesc = "AI Integrity Restorer"
+	filedesc = "NT FRK"
 	program_icon_state = "generic"
-	extended_desc = "This program is capable of reconstructing damaged AI systems. Requires direct AI connection via intellicard slot."
+	extended_desc = "Firmware Restoration Kit, capable of reconstructing damaged AI systems. Requires direct AI connection via intellicard slot."
 	size = 12
 	requires_ntnet = 0
 	usage_flags = PROGRAM_CONSOLE
@@ -49,7 +49,7 @@
 			if(computer.all_components[MC_AI])
 				var/obj/item/computer_hardware/ai_slot/ai_slot = computer.all_components[MC_AI]
 				if(ai_slot && ai_slot.stored_card)
-					ai_slot.try_eject(0,usr)
+					ai_slot.try_eject(usr)
 					return TRUE
 
 /datum/computer_file/program/aidiag/process_tick()
@@ -72,14 +72,31 @@
 		ai_slot.locked = FALSE
 		restoring = FALSE
 		return
+<<<<<<< HEAD
 	ai_slot.locked =TRUE
 	A.adjustOxyLoss(-1, 0)
 	A.adjustFireLoss(-1, 0)
 	A.adjustToxLoss(-1, 0)
 	A.adjustBruteLoss(-1, 0)
+=======
+	ai_slot.locked = TRUE
+	A.adjustOxyLoss(-5, 0)//, FALSE)
+	A.adjustFireLoss(-5, 0)//, FALSE)
+	A.adjustToxLoss(-5, 0)
+	A.adjustBruteLoss(-5, 0)
+
+	// Please don't forget to update health, otherwise the below if statements will probably always fail.
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	A.updatehealth()
+
 	if(A.health >= 0 && A.stat == DEAD)
+<<<<<<< HEAD
 		A.revive()
+=======
+		A.revive(full_heal = FALSE, admin_revive = FALSE)
+		cardhold.update_icon()
+
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	// Finished restoring
 	if(A.health >= 100)
 		ai_slot.locked = FALSE

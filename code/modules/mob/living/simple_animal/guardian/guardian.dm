@@ -20,7 +20,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	icon_state = "magicbase"
 	icon_living = "magicbase"
 	icon_dead = "magicbase"
-	speed = 0
+	speed = -0.5
 	blood_volume = 0
 	a_intent = INTENT_HARM
 	stop_automated_movement = 1
@@ -182,18 +182,17 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		REMOVE_TRAIT(summoner, TRAIT_NODEATH, "memento_mori")
 		to_chat(summoner,"<span class='danger'>You feel incredibly vulnerable as the memento mori pulls your life force in one too many directions!")
 
-/mob/living/simple_animal/hostile/guardian/Stat()
-	..()
-	if(statpanel("Status"))
-		if(summoner)
-			var/resulthealth
-			if(iscarbon(summoner))
-				resulthealth = round((abs(HEALTH_THRESHOLD_DEAD - summoner.health) / abs(HEALTH_THRESHOLD_DEAD - summoner.maxHealth)) * 100)
-			else
-				resulthealth = round((summoner.health / summoner.maxHealth) * 100, 0.5)
-			stat(null, "Summoner Health: [resulthealth]%")
-		if(cooldown >= world.time)
-			stat(null, "Manifest/Recall Cooldown Remaining: [DisplayTimeText(cooldown - world.time)]")
+/mob/living/simple_animal/hostile/guardian/get_status_tab_items()
+	. += ..()
+	if(summoner)
+		var/resulthealth
+		if(iscarbon(summoner))
+			resulthealth = round((abs(HEALTH_THRESHOLD_DEAD - summoner.health) / abs(HEALTH_THRESHOLD_DEAD - summoner.maxHealth)) * 100)
+		else
+			resulthealth = round((summoner.health / summoner.maxHealth) * 100, 0.5)
+		. += "Summoner Health: [resulthealth]%"
+	if(cooldown >= world.time)
+		. += "Manifest/Recall Cooldown Remaining: [DisplayTimeText(cooldown - world.time)]"
 
 /mob/living/simple_animal/hostile/guardian/Move() //Returns to summoner if they move out of range
 	. = ..()
@@ -463,13 +462,13 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 						to_chat(src, "<span class='holoparasite'><font color=\"[G.guardiancolor]\"><b>[G.real_name]</b></font> has been caught!</span>")
 				guardians -= G
 				if(!guardians.len)
-					verbs -= /mob/living/proc/guardian_reset
+					remove_verb(src, /mob/living/proc/guardian_reset)
 			else
 				to_chat(src, "<span class='holoparasite'>There were no ghosts willing to take control of <font color=\"[G.guardiancolor]\"><b>[G.real_name]</b></font>. Looks like you're stuck with it for now.</span>")
 		else
 			to_chat(src, "<span class='holoparasite'>You decide not to reset [guardians.len > 1 ? "any of your guardians":"your guardian"].</span>")
 	else
-		verbs -= /mob/living/proc/guardian_reset
+		remove_verb(src, /mob/living/proc/guardian_reset)
 
 ////////parasite tracking/finding procs
 
@@ -498,7 +497,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/used_message = "<span class='holoparasite'>All the cards seem to be blank now.</span>"
 	var/failure_message = "<span class='holoparasite bold'>..And draw a card! It's...blank? Maybe you should try again later.</span>"
 	var/ling_failure = "<span class='holoparasite bold'>The deck refuses to respond to a souless creature such as you.</span>"
-	var/list/possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
+	var/list/possible_guardians = list("Assassin", "Chaos", "Gravitokinetic", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 	var/random = TRUE
 	var/allowmultiple = FALSE
 	var/allowling = TRUE
@@ -545,6 +544,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 		if("Chaos")
 			pickedtype = /mob/living/simple_animal/hostile/guardian/fire
+
+		if("Gravitokinetic")
+			pickedtype = /mob/living/simple_animal/hostile/guardian/gravitokinetic
 
 		if("Standard")
 			pickedtype = /mob/living/simple_animal/hostile/guardian/punch
@@ -594,18 +596,18 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		if("carp")
 			to_chat(user, "[G.carp_fluff_string]")
 			to_chat(user, "<span class='holoparasite'><b>[G.real_name]</b> has been caught!</span>")
-	user.verbs += /mob/living/proc/guardian_comm
-	user.verbs += /mob/living/proc/guardian_recall
-	user.verbs += /mob/living/proc/guardian_reset
+	add_verb(user, list(/mob/living/proc/guardian_comm, \
+						/mob/living/proc/guardian_recall, \
+						/mob/living/proc/guardian_reset))
 
 /obj/item/guardiancreator/choose
 	random = FALSE
 
 /obj/item/guardiancreator/choose/dextrous
-	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
+	possible_guardians = list("Assassin", "Chaos", "Gravitokinetic", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
 /obj/item/guardiancreator/choose/wizard
-	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard")
+	possible_guardians = list("Assassin", "Chaos", "Gravitokinetic", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard")
 	allowmultiple = TRUE
 
 /obj/item/guardiancreator/tech
@@ -621,7 +623,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	ling_failure = "<span class='holoparasite bold'>The holoparasites recoil in horror. They want nothing to do with a creature like you.</span>"
 
 /obj/item/guardiancreator/tech/choose/traitor
-	possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
+	possible_guardians = list("Assassin", "Chaos", "Gravitokinetic", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 	allowling = FALSE
 
 /obj/item/guardiancreator/tech/choose/traitor/check_uplink_validity()
@@ -631,8 +633,17 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	random = FALSE
 
 /obj/item/guardiancreator/tech/choose/dextrous
-	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
+	possible_guardians = list("Assassin", "Chaos", "Gravitokinetic", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
+<<<<<<< HEAD
+=======
+/obj/item/guardiancreator/tech/choose/nukie // lacks support and protector as encouraging nukies to play turtle isnt fun and dextrous is epic
+	possible_guardians = list("Assassin", "Chaos", "Gravitokinetic", "Charger", "Dextrous", "Explosive", "Lightning", "Ranged", "Standard")
+
+/obj/item/guardiancreator/tech/choose/nukie/check_uplink_validity()
+	return !used
+
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 /obj/item/paper/guides/antag/guardian
 	name = "Holoparasite Guide"
 	icon_state = "paper_words"
@@ -646,6 +657,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
  <b>Charger</b>: Moves extremely fast, does medium damage on attack, and can charge at targets, damaging the first target hit and forcing them to drop any items they are holding.<br>
  <br>
  <b>Explosive</b>: High damage resist and medium power attack that may explosively teleport targets. Can turn any object, including objects too large to pick up, into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered or after a delay.<br>
+ <br>
+ <b>Gravitokinetic</b>: Attacks will apply crushing gravity to the target. Can target the ground as well to slow targets advancing on you, but this will affect the user.<br>
  <br>
  <b>Lightning</b>: Attacks apply lightning chains to targets. Has a lightning chain to the user. Lightning chains shock everything near them, doing constant damage.<br>
  <br>
@@ -676,6 +689,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
  <br>
  <b>Explosive</b>: High damage resist and medium power attack that may explosively teleport targets. Can turn any object, including objects too large to pick up, into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered or after a delay.<br>
  <br>
+ <b>Gravitokinetic</b>: Attacks will apply crushing gravity to the target. Can target the ground as well to slow targets advancing on you, but this will affect the user.<br>
+ <br>
  <b>Lightning</b>: Attacks apply lightning chains to targets. Has a lightning chain to the user. Lightning chains shock everything near them, doing constant damage.<br>
  <br>
  <b>Protector</b>: Causes you to teleport to it when out of range, unlike other parasites. Has two modes; Combat, where it does and takes medium damage, and Protection, where it does and takes almost no damage but moves slightly slower.<br>
@@ -686,6 +701,34 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
  <br>
 "}
 
+<<<<<<< HEAD
+=======
+/obj/item/paper/guides/antag/guardian/nukie
+	name = "Guardian Guide"
+	info = {"<b>A list of Guardian Types</b><br>
+
+ <br>
+ <b>Assassin</b>: Does medium damage and takes full damage, but can enter stealth, causing its next attack to do massive damage and ignore armor. However, it becomes briefly unable to recall after attacking from stealth.<br>
+ <br>
+ <b>Chaos</b>: Ignites enemies on touch and causes them to hallucinate all nearby people as the guardian. Automatically extinguishes the user if they catch on fire.<br>
+ <br>
+ <b>Charger</b>: Moves extremely fast, does medium damage on attack, and can charge at targets, damaging the first target hit and forcing them to drop any items they are holding.<br>
+ <br>
+ <b>Dextrous</b>: Does low damage on attack, but is capable of holding items and storing a single item within it. It will drop items held in its hands when it recalls, but it will retain the stored item.<br>
+ <br>
+ <b>Explosive</b>: High damage resist and medium power attack that may explosively teleport targets. Can turn any object, including objects too large to pick up, into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered or after a delay.<br>
+ <br>
+ <b>Gravitokinetic</b>: Attacks will apply crushing gravity to the target. Can target the ground as well to slow targets advancing on you, but this will affect the user.<br>
+ <br>
+ <b>Lightning</b>: Attacks apply lightning chains to targets. Has a lightning chain to the user. Lightning chains shock everything near them, doing constant damage.<br>
+ <br>
+ <b>Ranged</b>: Has two modes. Ranged; which fires a constant stream of weak, armor-ignoring projectiles. Scout; Cannot attack, but can move through walls and is quite hard to see. Can lay surveillance snares, which alert it when crossed, in either mode.<br>
+ <br>
+ <b>Standard</b>: Devastating close combat attacks and high damage resist. Can smash through weak walls.<br>
+ <br>
+"}
+
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /obj/item/storage/box/syndie_kit/guardian
 	name = "holoparasite injector kit"

@@ -350,6 +350,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			if(combined_gas < MOLE_PENALTY_THRESHOLD)
 				damage = max(damage + (min(removed.temperature - (T0C + HEAT_PENALTY_THRESHOLD), 0) / 150 ), 0)
 
+<<<<<<< HEAD
 			//capping damage
 			damage = min(damage_archived + (DAMAGE_HARDCAP * explosion_point),damage)
 			if(damage > damage_archived && prob(10))
@@ -434,6 +435,18 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			air_update_turf()
 
 	for(var/mob/living/carbon/human/l in get_actual_viewers(HALLUCINATION_RANGE(power), src)) // If they can see it without mesons on.  Bad on them.
+=======
+	if(produces_gas)
+		env.merge(removed)
+		air_update_turf()
+
+	/*********
+	END CITADEL CHANGES
+	*********/
+
+	//Makes em go mad and accumulate rads.
+	for(var/mob/living/carbon/human/l in fov_viewers(src, HALLUCINATION_RANGE(power))) // If they can see it without mesons on.  Bad on them.
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 		if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
 			var/D = sqrt(1 / max(1, get_dist(l, src)))
 			l.hallucination += power * config_hallucination_power * D
@@ -647,8 +660,15 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		var/mob/living/user = AM
 		if(user.status_flags & GODMODE)
 			return
-		message_admins("[src] has consumed [key_name_admin(user)] [ADMIN_JMP(src)].")
-		investigate_log("has consumed [key_name(user)].", INVESTIGATE_SUPERMATTER)
+		var/add
+		if(user.mind?.assigned_role == "Clown")
+			var/denergy = rand(-1000, 1000)
+			var/ddamage = rand(-150, clamp(150, 0, (explosion_point - damage) + 150))
+			power += denergy
+			damage += ddamage
+			add = ", adding [denergy] energy and [ddamage] damage to the crystal"
+		message_admins("[src] has consumed [key_name_admin(user)] [ADMIN_JMP(src)][add].")
+		investigate_log("has consumed [key_name(user)][add].", INVESTIGATE_SUPERMATTER)
 		user.dust(force = TRUE)
 		matter_power += 200
 	else if(istype(AM, /obj/singularity))
@@ -692,6 +712,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	explosion_power = 12
 	moveable = TRUE
 
+/obj/machinery/power/supermatter_crystal/shard/examine(mob/user)
+	. = ..()
+	if(anchored)
+		. += "<span class='notice'>[src] is <b>anchored</b> to the floor.</span>"
+	else
+		. += "<span class='notice'>[src] is <i>unanchored</i>, but can be <b>bolted</b> down.</span>"
+
 /obj/machinery/power/supermatter_crystal/shard/engine
 	name = "anchored supermatter shard"
 	is_main_engine = TRUE
@@ -731,12 +758,21 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(L)
 		switch(type)
 			if(FLUX_ANOMALY)
+<<<<<<< HEAD
 				var/obj/effect/anomaly/flux/A = new(L, 300)
 				A.explosive = FALSE
 			if(GRAVITATIONAL_ANOMALY)
 				new /obj/effect/anomaly/grav(L, 250)
 			if(PYRO_ANOMALY)
 				new /obj/effect/anomaly/pyro(L, 200)
+=======
+				var/obj/effect/anomaly/flux/A = new(L, 300, SUPERMATTER_ANOMALY_DROP_CHANCE)
+				A.explosive = FALSE
+			if(GRAVITATIONAL_ANOMALY)
+				new /obj/effect/anomaly/grav(L, 250, SUPERMATTER_ANOMALY_DROP_CHANCE)
+			if(PYRO_ANOMALY)
+				new /obj/effect/anomaly/pyro(L, 200, SUPERMATTER_ANOMALY_DROP_CHANCE)
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /obj/machinery/power/supermatter_crystal/proc/supermatter_zap(atom/zapstart, range = 3, power)
 	. = zapstart.dir

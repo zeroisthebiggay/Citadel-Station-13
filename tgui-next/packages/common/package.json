@@ -1,6 +1,10 @@
 {
   "private": true,
   "name": "common",
+<<<<<<< HEAD:tgui-next/packages/common/package.json
   "version": "0.1.0",
   "type": "module"
+=======
+  "version": "4.2.0"
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d:tgui/packages/common/package.json
 }

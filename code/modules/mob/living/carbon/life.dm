@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /mob/living/carbon/Life()
 	set invisibility = 0
 
@@ -8,6 +9,9 @@
 		damageoverlaytemp = 0
 		update_damage_hud()
 
+=======
+/mob/living/carbon/BiologicalLife(seconds, times_fired)
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	//Reagent processing needs to come before breathing, to prevent edge cases.
 	handle_organs()
 
@@ -417,6 +421,7 @@
 		if(stat != DEAD || D.process_dead)
 			D.stage_act()
 
+<<<<<<< HEAD
 //todo generalize this and move hud out
 /mob/living/carbon/proc/handle_changeling()
 	if(mind && hud_used && hud_used.lingchemdisplay)
@@ -428,6 +433,13 @@
 		else
 			hud_used.lingchemdisplay.invisibility = INVISIBILITY_ABSTRACT
 
+=======
+/mob/living/carbon/handle_wounds()
+	for(var/thing in all_wounds)
+		var/datum/wound/W = thing
+		if(W.processes) // meh
+			W.handle_process()	
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /mob/living/carbon/handle_mutations_and_radiation()
 	if(dna && dna.temporary_mutations.len)
@@ -523,18 +535,18 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 //this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
 	..()
+<<<<<<< HEAD
 	if(getStaminaLoss() && !(combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))		//CIT CHANGE - prevents stamina regen while combat mode is active
 		adjustStaminaLoss(!CHECK_MOBILITY(src, MOBILITY_STAND) ? ((combat_flags & COMBAT_FLAG_HARD_STAMCRIT) ? -7.5 : -6) : -3)//CIT CHANGE - decreases adjuststaminaloss to stop stamina damage from being such a joke
+=======
+	var/combat_mode = SEND_SIGNAL(src, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE)
+	if(getStaminaLoss() && !HAS_TRAIT(src, TRAIT_NO_STAMINA_REGENERATION))
+		adjustStaminaLoss((!CHECK_MOBILITY(src, MOBILITY_STAND) ? ((combat_flags & COMBAT_FLAG_HARD_STAMCRIT) ? STAM_RECOVERY_STAM_CRIT : STAM_RECOVERY_RESTING) : STAM_RECOVERY_NORMAL) * (combat_mode? 0.25 : 1))
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 	if(!(combat_flags & COMBAT_FLAG_HARD_STAMCRIT) && incomingstammult != 1)
 		incomingstammult = max(0.01, incomingstammult)
 		incomingstammult = min(1, incomingstammult*2)
-
-	//CIT CHANGES START HERE. STAMINA BUFFER STUFF
-	if(bufferedstam && world.time > stambufferregentime)
-		var/drainrate = max((bufferedstam*(bufferedstam/(5)))*0.1,1)
-		bufferedstam = max(bufferedstam - drainrate, 0)
-	//END OF CIT CHANGES
 
 	var/restingpwr = 1 + 4 * !CHECK_MOBILITY(src, MOBILITY_STAND)
 

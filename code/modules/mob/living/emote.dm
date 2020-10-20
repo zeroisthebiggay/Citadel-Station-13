@@ -1,9 +1,3 @@
-
-/* EMOTE DATUMS */
-/datum/emote/living
-	mob_type_allowed_typecache = /mob/living
-	mob_type_blacklist_typecache = list(/mob/living/simple_animal/slime, /mob/living/brain)
-
 /datum/emote/living/blush
 	key = "blush"
 	key_third_person = "blushes"
@@ -228,6 +222,21 @@
 			return
 		else if(ismoth(C))
 			playsound(C, 'sound/voice/moth/mothlaugh.ogg', 50, 1)
+		else if(isjellyperson(C))
+			var/mob/living/carbon/human/H = C
+			if(H.dna.features["mam_ears"] == "Cat" || H.dna.features["mam_ears"] == "Cat, Big") //slime have cat ear. slime go nya.
+				playsound(C, pick('sound/voice/jelly/nyahaha1.ogg',
+				'sound/voice/jelly/nyahaha2.ogg',
+				'sound/voice/jelly/nyaha.ogg',
+				'sound/voice/jelly/nyahehe.ogg'),
+				50, 1)
+				return
+			else if(user.gender == FEMALE)
+				playsound(C, 'sound/voice/jelly/womanlaugh.ogg', 50, 1)
+				return
+			else
+				playsound(C, pick('sound/voice/jelly/manlaugh1.ogg', 'sound/voice/jelly/manlaugh2.ogg'), 50, 1)
+				return
 		else if(ishumanbasic(C))
 			if(user.gender == FEMALE)
 				playsound(C, 'sound/voice/human/womanlaugh.ogg', 50, 1)
@@ -530,3 +539,32 @@
 		to_chat(user, "<span class='notice'>You ready your slapping hand.</span>")
 	else
 		to_chat(user, "<span class='warning'>You're incapable of slapping in your current state.</span>")
+<<<<<<< HEAD
+=======
+
+/datum/emote/living/audio_emote/blorble
+	key = "blorble"
+	key_third_person = "blorbles"
+	message = "blorbles."
+	message_param = "blorbles at %t."
+
+/datum/emote/living/audio_emote/blorble/run_emote(mob/user, params)
+	. = ..()
+	if(. && iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(isjellyperson(C))
+			playsound(C, 'sound/effects/attackblob.ogg', 50, 1)
+
+/datum/emote/living/audio_emote/blurp
+	key = "blurp"
+	key_third_person = "blurps"
+	message = "blurps."
+	message_param = "blurps at %t."
+
+/datum/emote/living/audio_emote/blurp/run_emote(mob/user, params)
+	. = ..()
+	if(. && iscarbon(user))
+		var/mob/living/carbon/C = user
+		if(isjellyperson(C))
+			pick(playsound(C, 'sound/effects/meatslap.ogg', 50, 1),playsound(C, 'sound/effects/gib_step.ogg', 50, 1))
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

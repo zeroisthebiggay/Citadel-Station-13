@@ -64,9 +64,9 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	if(is_operational())
-		if(prob(50 / severity))
+		if(prob(severity/2))
 			on = !on
-		if(prob(100 / severity))
+		if(prob(severity))
 			direction = PUMP_OUT
 		pump.target_pressure = rand(0, 100 * ONE_ATMOSPHERE)
 		update_icon()
@@ -81,10 +81,15 @@
 		else if(on && holding && direction == PUMP_OUT)
 			investigate_log("[key_name(user)] started a transfer into [holding].<br>", INVESTIGATE_ATMOS)
 
+<<<<<<< HEAD
 
 /obj/machinery/portable_atmospherics/pump/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 														datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+=======
+/obj/machinery/portable_atmospherics/pump/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	if(!ui)
 		ui = new(user, src, ui_key, "portable_pump", name, 300, 315, master_ui, state)
 		ui.open()

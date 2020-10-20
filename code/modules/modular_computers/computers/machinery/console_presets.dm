@@ -1,6 +1,6 @@
 /obj/machinery/modular_computer/console/preset
 	// Can be changed to give devices specific hardware
-	var/_has_id_slot = FALSE
+	var/_has_second_id_slot = FALSE
 	var/_has_printer = FALSE
 	var/_has_battery = FALSE
 	var/_has_ai = FALSE
@@ -11,8 +11,9 @@
 		return
 	cpu.install_component(new /obj/item/computer_hardware/processor_unit)
 
-	if(_has_id_slot)
-		cpu.install_component(new /obj/item/computer_hardware/card_slot)
+	cpu.install_component(new /obj/item/computer_hardware/card_slot)
+	if(_has_second_id_slot)
+		cpu.install_component(new /obj/item/computer_hardware/card_slot/secondary)
 	if(_has_printer)
 		cpu.install_component(new /obj/item/computer_hardware/printer)
 	if(_has_battery)
@@ -63,12 +64,28 @@
 	console_department = "Command"
 	name = "command console"
 	desc = "A stationary computer. This one comes preloaded with command programs."
-	_has_id_slot = TRUE
+	_has_second_id_slot = TRUE
 	_has_printer = TRUE
 
+<<<<<<< HEAD
 /obj/machinery/modular_computer/console/preset/command/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>Alt-click [src] to eject the identification card.</span>"
+=======
+/obj/machinery/modular_computer/console/preset/command/install_programs()
+	var/obj/item/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
+	hard_drive.store_file(new/datum/computer_file/program/chatclient())
+	hard_drive.store_file(new/datum/computer_file/program/card_mod())
+
+
+// ===== IDENTIFICATION CONSOLE =====
+/obj/machinery/modular_computer/console/preset/id
+	console_department = "Identification"
+	name = "identification console"
+	desc = "A stationary computer. This one comes preloaded with identification modification programs."
+	_has_second_id_slot = TRUE
+	_has_printer = TRUE
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /obj/machinery/modular_computer/console/preset/command/install_programs()
 	var/obj/item/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]

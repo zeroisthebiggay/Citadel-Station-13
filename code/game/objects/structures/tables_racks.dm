@@ -71,7 +71,14 @@
 				if(user.grab_state < GRAB_AGGRESSIVE)
 					to_chat(user, "<span class='warning'>You need a better grip to do that!</span>")
 					return
+<<<<<<< HEAD
 				tablepush(user, pushed_mob)
+=======
+				if(user.grab_state >= GRAB_NECK || HAS_TRAIT(user, TRAIT_MAULER))
+					tablelimbsmash(user, pushed_mob)
+				else
+					tablepush(user, pushed_mob)
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 			if(user.a_intent == INTENT_HELP)
 				pushed_mob.visible_message("<span class='notice'>[user] begins to place [pushed_mob] onto [src]...</span>", \
 									"<span class='userdanger'>[user] begins to place [pushed_mob] onto [src]...</span>")
@@ -136,6 +143,25 @@
 	var/mob/living/carbon/human/H = pushed_mob
 	SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table)
 
+<<<<<<< HEAD
+=======
+/obj/structure/table/proc/tablelimbsmash(mob/living/user, mob/living/pushed_mob)
+	pushed_mob.Knockdown(30)
+	var/obj/item/bodypart/banged_limb = pushed_mob.get_bodypart(user.zone_selected) || pushed_mob.get_bodypart(BODY_ZONE_HEAD)
+	var/extra_wound = 0
+	if(HAS_TRAIT(user, TRAIT_HULK) || HAS_TRAIT(user, TRAIT_MAULER))
+		extra_wound = 20
+	banged_limb.receive_damage(30, wound_bonus = extra_wound)
+	pushed_mob.apply_damage(60, STAMINA)
+	take_damage(50)
+
+	playsound(pushed_mob, 'sound/effects/bang.ogg', 90, TRUE)
+	pushed_mob.visible_message("<span class='danger'>[user] smashes [pushed_mob]'s [banged_limb.name] against \the [src]!</span>",
+								"<span class='userdanger'>[user] smashes your [banged_limb.name] against \the [src]</span>")
+	log_combat(user, pushed_mob, "head slammed", null, "against [src]")
+	SEND_SIGNAL(pushed_mob, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table_limbsmash, banged_limb)
+
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 /obj/structure/table/shove_act(mob/living/target, mob/living/user)
 	if(CHECK_MOBILITY(target, MOBILITY_STAND))
 		target.DefaultCombatKnockdown(SHOVE_KNOCKDOWN_TABLE)

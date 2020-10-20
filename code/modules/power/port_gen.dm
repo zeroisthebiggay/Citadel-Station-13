@@ -200,8 +200,12 @@
 	if(obj_flags & EMAGGED)
 		return
 	obj_flags |= EMAGGED
+<<<<<<< HEAD
 	emp_act(EMP_HEAVY)
 	return TRUE
+=======
+	emp_act(100)
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /obj/machinery/power/port_gen/pacman/attack_ai(mob/user)
 	interact(user)

@@ -109,10 +109,25 @@
 
 	stored_research = SSresearch.science_tech
 
+<<<<<<< HEAD
 /obj/machinery/computer/scan_consolenew/examine(mob/user)
 	. = ..()
 	if(jokerready < world.time)
 		. += "<span class='notice'>JOKER algorithm available.</span>"
+=======
+/obj/machinery/computer/scan_consolenew/ui_interact(mob/user, datum/tgui/ui)
+	// Most of ui_interact is spent setting variables for passing to the tgui
+	//  interface.
+	// We can also do some general state processing here too as it's a good
+	//  indication that a player is using the console.
+
+	var/scanner_op = scanner_operational()
+	var/can_modify_occ = can_modify_occupant()
+
+	// Check for connected AND operational scanner.
+	if(scanner_op)
+		can_use_scanner = TRUE
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	else
 		. += "<span class='notice'>JOKER algorithm available in about [round(0.00166666667 * (jokerready - world.time))] minutes."
 
@@ -165,6 +180,18 @@
 			else
 				scanner_status += "<span class='good'>(Unlocked)</span>"
 
+<<<<<<< HEAD
+=======
+	// Attempt to update tgui ui, open and update if needed.
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "DnaConsole")
+		ui.open()
+		
+/obj/machinery/computer/scan_consolenew/ui_assets()
+	. = ..() || list()
+	. += get_asset_datum(/datum/asset/simple/genetics)
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 	else
 		occupant_status += "<span class='bad'>----</span></div></div>"
@@ -557,7 +584,11 @@
 	temp_html += "</div></div>"
 	return temp_html
 
+<<<<<<< HEAD
 /obj/machinery/computer/scan_consolenew/Topic(href, href_list)
+=======
+/obj/machinery/computer/scan_consolenew/ui_act(action, list/params)
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	if(..())
 		return
 	if(!isturf(usr.loc))
@@ -570,6 +601,7 @@
 	add_fingerprint(usr)
 	usr.set_machine(src)
 
+<<<<<<< HEAD
 	var/mob/living/carbon/viable_occupant = get_viable_occupant()
 
 	//Basic Tasks///////////////////////////////////////////
@@ -711,6 +743,268 @@
 
 							viable_occupant.dna.uni_identity = copytext_char(viable_occupant.dna.uni_identity, 1, num) + hex + copytext_char(viable_occupant.dna.uni_identity, num + 1)
 							viable_occupant.updateappearance(mutations_overlay_update=1)
+=======
+	switch(action)
+		// Connect this DNA Console to a nearby DNA Scanner
+		// Usually only activate as an option if there is no connected scanner
+		if("connect_scanner")
+			connect_to_scanner()
+			return
+
+		// Toggle the door open/closed status on attached DNA Scanner
+		if("toggle_door")
+			// GUARD CHECK - Scanner still connected and operational?
+			if(!scanner_operational())
+				return
+
+			connected_scanner.toggle_open(usr)
+			return
+
+		// Toggle the door bolts on the attached DNA Scanner
+		if("toggle_lock")
+			// GUARD CHECK - Scanner still connected and operational?
+			if(!scanner_operational())
+				return
+
+			connected_scanner.locked = !connected_scanner.locked
+			return
+
+		// Scramble scanner occupant's DNA
+		if("scramble_dna")
+			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
+			//  operational guard checks.
+			// GUARD CHECK - Is scramble DNA actually ready?
+			if(!can_modify_occupant() || !(scrambleready < world.time))
+				return
+
+			scanner_occupant.dna.remove_all_mutations(list(MUT_NORMAL, MUT_EXTRA))
+			scanner_occupant.dna.generate_dna_blocks()
+			scrambleready = world.time + SCRAMBLE_TIMEOUT
+			to_chat(usr,"<span class='notice'>DNA scrambled.</span>")
+			scanner_occupant.radiation += RADIATION_STRENGTH_MULTIPLIER*50/(connected_scanner.damage_coeff ** 2)
+			return
+
+		// Check whether a specific mutation is eligible for discovery within the
+		//  scanner occupant
+		// This is additionally done when a mutation's tab is selected in the tgui
+		//  interface. This is because some mutations, such as Monkified on monkeys,
+		//  are infact completed by default but not yet discovered. Likewise, all
+		//  mutations can have their sequence completed while Monkified is still an
+		//  active mutation and thus won't immediately be discovered but could be
+		//  discovered when Monkified is removed
+		// ---------------------------------------------------------------------- //
+		// params["alias"] - Alias of a mutation. The alias is the "hidden" name of
+		//                   the mutation, for example "Mutation 5" or "Mutation 33"
+		if("check_discovery")
+			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
+			//  operational guard checks.
+			if(!can_modify_occupant())
+				return
+
+			// GUARD CHECK - Have we somehow cheekily swapped occupants? This is
+			//  unexpected.
+			if(!(scanner_occupant == connected_scanner.occupant))
+				return
+
+			check_discovery(params["alias"])
+			return
+
+		// Check all mutations of the occupant and check if any are discovered.
+		// This is called when the Genetic Sequencer is selected. It'll do things
+		//  like immediately discover Monkified without needing to click through
+		//  the mutation tabs and handle cases where mutations are solved but not
+		//  discovered due to the Monkified mutation being active then removed.
+		if("all_check_discovery")
+			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
+			//  operational guard checks.
+			if(!can_modify_occupant())
+				return
+
+			// GUARD CHECK - Have we somehow cheekily swapped occupants? This is
+			//  unexpected.
+			if(!(scanner_occupant == connected_scanner.occupant))
+				return
+
+			// Go over all standard mutations and check if they've been discovered.
+			for(var/mutation_type in scanner_occupant.dna.mutation_index)
+				var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(mutation_type)
+				check_discovery(HM.alias)
+
+			return
+
+		// Set a gene in a mutation's genetic sequence. Will also check for mutations
+		//  discovery as part of the process.
+		// ---------------------------------------------------------------------- //
+		// params["alias"] - Alias of a mutation. The alias is the "hidden" name of
+		//  the mutation, for example "Mutation 5" or "Mutation 33"
+		// params["gene"] - The letter of the new gene
+		// params["pos"] - The BYOND index of the letter in the gene sequence to be
+		//  changed. Expects a text string from TGUI and will convert to a number
+		if("pulse_gene")
+			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
+			//  operational guard checks.
+			if(!can_modify_occupant())
+				return
+
+			// GUARD CHECK - Have we somehow cheekily swapped occupants? This is
+			//  unexpected.
+			if(!(scanner_occupant == connected_scanner.occupant))
+				return
+
+			// GUARD CHECK - Is the occupant currently undergoing some form of
+			//  transformation? If so, we don't want to be pulsing genes.
+			if(scanner_occupant.transformation_timer)
+				to_chat(usr,"<span class='warning'>Gene pulse failed: The scanner occupant undergoing a transformation.</span>")
+				return
+
+			// Resolve mutation's BYOND path from the alias
+			var/alias = params["alias"]
+			var/path = GET_MUTATION_TYPE_FROM_ALIAS(alias)
+
+			// Make sure the occupant still has this mutation
+			if(!(path in scanner_occupant.dna.mutation_index))
+				return
+
+			// Resolve BYOND path to genome sequence of scanner occupant
+			var/sequence = GET_GENE_STRING(path, scanner_occupant.dna)
+
+			var/newgene = params["gene"]
+			var/genepos = text2num(params["pos"])
+
+			// If the new gene is J, this means we're dealing with a JOKER
+			// GUARD CHECK - Is JOKER actually ready?
+			if((newgene == "J") && (jokerready < world.time))
+				var/truegenes = GET_SEQUENCE(path)
+				newgene = truegenes[genepos]
+				jokerready = world.time + JOKER_TIMEOUT - (JOKER_UPGRADE * (connected_scanner.precision_coeff-1))
+
+			// If the gene is an X, we want to update the default genes with the new
+			//  X to allow highlighting logic to work on the tgui interface.
+			if(newgene == "X")
+				var/defaultseq = scanner_occupant.dna.default_mutation_genes[path]
+				defaultseq = copytext_char(defaultseq, 1, genepos) + newgene + copytext_char(defaultseq, genepos + 1)
+				scanner_occupant.dna.default_mutation_genes[path] = defaultseq
+
+			// Copy genome to scanner occupant and do some basic mutation checks as
+			//  we've increased the occupant rads
+			sequence = copytext_char(sequence, 1, genepos) + newgene + copytext_char(sequence, genepos + 1)
+			scanner_occupant.dna.mutation_index[path] = sequence
+			scanner_occupant.radiation += RADIATION_STRENGTH_MULTIPLIER/connected_scanner.damage_coeff
+			scanner_occupant.domutcheck()
+
+			// GUARD CHECK - Modifying genetics can lead to edge cases where the
+			//  scanner occupant is qdel'd and replaced with a different entity.
+			//  Examples of this include adding/removing the Monkified mutation which
+			//  qdels the previous entity and creates a brand new one in its place.
+			// We should redo all of our occupant modification checks again, although
+			//  it is less than ideal.
+			if(!can_modify_occupant())
+				return
+
+			// Check if we cracked a mutation
+			check_discovery(alias)
+
+			return
+
+		// Apply a chromosome to a specific mutation.
+		// ---------------------------------------------------------------------- //
+		// params["mutref"] - ATOM Ref of specific mutation to apply the chromo to
+		// params["chromo"] - Name of the chromosome to apply to the mutation
+		if("apply_chromo")
+			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
+			//  operational guard checks.
+			if(!can_modify_occupant())
+				return
+
+			// GUARD CHECK - Have we somehow cheekily swapped occupants? This is
+			//  unexpected.
+			if(!(scanner_occupant == connected_scanner.occupant))
+				return
+
+			var/bref = params["mutref"]
+
+			// GUARD CHECK - Only search occupant for this specific ref, since your
+			//  can only apply chromosomes to mutations occupants.
+			var/datum/mutation/human/HM = get_mut_by_ref(bref, SEARCH_OCCUPANT)
+
+			// GUARD CHECK - This should not be possible. Unexpected result
+			if(!HM)
+				return
+
+			// Look through our stored chromos and compare names to find a
+			// stored chromo we can apply.
+			for(var/obj/item/chromosome/CM in stored_chromosomes)
+				if(CM.can_apply(HM) && (CM.name == params["chromo"]))
+					stored_chromosomes -= CM
+					CM.apply(HM)
+
+			return
+
+		// Print any type of standard injector, limited right now to activators that
+		//  activate a dormant mutation and mutators that forcibly create a new
+		//  MUT_EXTRA mutation
+		// ---------------------------------------------------------------------- //
+		// params["mutref"] - ATOM Ref of specific mutation to create an injector of
+		// params["is_activator"] - Is this an "Activator" style injector, also
+		//  referred to as a "Research" type. Expects a string with 0 or 1, which
+		//  then gets converted to a number.
+		// params["source"] - The source the request came from.
+		//	Expected results:
+		//   "occupant" - From genetic sequencer
+		//   "console" - From DNA Console storage
+		//   "disk" - From inserted diskette
+		if("print_injector")
+			// Because printing mutators and activators share a bunch of code,
+			//  it makes sense to keep them both together and set unique vars
+			//  later in the code
+
+			// As a side note, because mutations can contain unique metadata,
+			//  this system uses BYOND Atom Refs to safely and accurately
+			//  identify mutations from big ol' lists
+
+			// GUARD CHECK - Is the injector actually ready?
+			if(world.time < injectorready)
+				return
+
+			var/search_flags = 0
+
+			switch(params["source"])
+				if("occupant")
+					// GUARD CHECK - Make sure we can modify the occupant before we
+					//  attempt to search them for any given mutation refs. This could
+					//  lead to no search flags being passed to get_mut_by_ref and this
+					//  is intended functionality to prevent any cheese or abuse
+					if(can_modify_occupant())
+						search_flags |= SEARCH_OCCUPANT
+				if("console")
+					search_flags |= SEARCH_STORED
+				if("disk")
+					search_flags |= SEARCH_DISKETTE
+
+			var/bref = params["mutref"]
+			var/datum/mutation/human/HM = get_mut_by_ref(bref, search_flags)
+
+			// GUARD CHECK - This should not be possible. Unexpected result
+			if(!HM)
+				return
+
+			// Create a new DNA Injector and add the appropriate mutations to it
+			var/obj/item/dnainjector/activator/I = new /obj/item/dnainjector/activator(loc)
+			I.add_mutations += new HM.type(copymut = HM)
+
+			var/is_activator = text2num(params["is_activator"])
+
+			// Activators are also called "research" injectors and are used to create
+			//  chromosomes by recycling at the DNA Console
+			if(is_activator)
+				I.name = "[HM.name] activator"
+				I.research = TRUE
+				// If there's an operational connected scanner, we can use its upgrades
+				//  to improve our injector's radiation generation
+				if(scanner_operational())
+					I.damage_coeff = connected_scanner.damage_coeff*4
+					injectorready = world.time + INJECTOR_TIMEOUT * (1 - 0.1 * connected_scanner.precision_coeff)
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 				else
 					current_screen = "mainmenu"
 

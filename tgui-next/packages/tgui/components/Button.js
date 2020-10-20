@@ -17,15 +17,17 @@ export const Button = props => {
     className,
     fluid,
     icon,
+    iconRotation,
+    iconSpin,
     color,
     disabled,
     selected,
     tooltip,
     tooltipPosition,
     ellipsis,
+    compact,
+    circular,
     content,
-    iconRotation,
-    iconSpin,
     children,
     onclick,
     onClick,
@@ -51,15 +53,22 @@ export const Button = props => {
         selected && 'Button--selected',
         hasContent && 'Button--hasContent',
         ellipsis && 'Button--ellipsis',
+        circular && 'Button--circular',
+        compact && 'Button--compact',
         (color && typeof color === 'string')
           ? 'Button--color--' + color
           : 'Button--color--default',
         className,
       ])}
       tabIndex={!disabled && '0'}
+<<<<<<< HEAD:tgui-next/packages/tgui/components/Button.js
       unselectable={tridentVersion <= 4}
       onclick={e => {
         refocusLayout();
+=======
+      unselectable={Byond.IS_LTE_IE8}
+      onClick={e => {
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d:tgui/packages/tgui/components/Button.js
         if (!disabled && onClick) {
           onClick(e);
         }
@@ -77,7 +86,6 @@ export const Button = props => {
         // Refocus layout on pressing escape.
         if (keyCode === KEY_ESCAPE) {
           e.preventDefault();
-          refocusLayout();
           return;
         }
       }}

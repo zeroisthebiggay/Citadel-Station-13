@@ -18,6 +18,7 @@
 	path = /obj/item/bikehorn/airhorn
 	ckeywhitelist = list("kevinz000")
 
+<<<<<<< HEAD
 /datum/gear/cebusoap
 	name = "Cebutris' soap"
 	category = SLOT_IN_BACKPACK
@@ -25,6 +26,9 @@
 	ckeywhitelist = list("cebutris")
 
 /datum/gear/kiaracloak
+=======
+/datum/gear/donator/kiaracloak
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	name = "Kiara's cloak"
 	category = SLOT_NECK
 	path = /obj/item/clothing/neck/cloak/inferno
@@ -494,3 +498,15 @@ datum/gear/darksabresheath
 	category = SLOT_IN_BACKPACK
 	path = /obj/item/bedsheet/cosmos
 	ckeywhitelist = list("grunnyyy")
+
+/datum/gear/donator/customskirt
+	name = "custom atmos skirt"
+	slot = SLOT_IN_BACKPACK
+	path = /obj/item/clothing/under/custom/customskirt
+	ckeywhitelist = list("thakyz")
+
+/datum/gear/donator/hisakaki
+	name = "halo"
+	slot = SLOT_HEAD
+	path = 	/obj/item/clothing/head/halo
+	ckeywhitelist = list("hisakaki")

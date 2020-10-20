@@ -24,11 +24,30 @@
 	. = ..()
 	install_component(new /obj/item/computer_hardware/processor_unit/small)
 	install_component(new /obj/item/computer_hardware/battery(src, /obj/item/stock_parts/cell/computer))
+<<<<<<< HEAD
 	install_component(new /obj/item/computer_hardware/hard_drive/small)
+=======
+	install_component(hard_drive)
+	install_component(new /obj/item/computer_hardware/card_slot)
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	install_component(new /obj/item/computer_hardware/network_card)
 	install_component(new /obj/item/computer_hardware/printer/mini)
 
+<<<<<<< HEAD
 /obj/item/modular_computer/tablet/syndicate_contract_uplink/preset/uplink/Initialize()	// Given by the syndicate as part of the contract uplink bundle - loads in the Contractor Uplink.
+=======
+/obj/item/modular_computer/tablet/preset/advanced/atmos/Initialize() //This will be defunct and will be replaced when NtOS PDAs are done
+	. = ..()
+	install_component(new /obj/item/computer_hardware/sensorpackage)
+
+/obj/item/modular_computer/tablet/preset/advanced/command/Initialize()
+	. = ..()
+	install_component(new /obj/item/computer_hardware/sensorpackage)
+	install_component(new /obj/item/computer_hardware/card_slot/secondary)
+
+/// Given by the syndicate as part of the contract uplink bundle - loads in the Contractor Uplink.
+/obj/item/modular_computer/tablet/syndicate_contract_uplink/preset/uplink/Initialize()
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	. = ..()
 	var/obj/item/computer_hardware/hard_drive/small/syndicate/hard_drive = new
 	var/datum/computer_file/program/contract_uplink/uplink = new

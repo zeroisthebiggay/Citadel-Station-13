@@ -103,6 +103,11 @@
 	create_reagents(100, NONE, NO_REAGENTS_VALUE)
 	set_colour(new_colour)
 	. = ..()
+<<<<<<< HEAD
+=======
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 7.5)
+	set_nutrition(rand(650, 800))
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /mob/living/simple_animal/slime/Destroy()
 	for (var/A in actions)
@@ -205,21 +210,20 @@
 /mob/living/simple_animal/slime/Process_Spacemove(movement_dir = 0)
 	return 2
 
-/mob/living/simple_animal/slime/Stat()
-	if(..())
-
-		if(!docile)
-			stat(null, "Nutrition: [nutrition]/[get_max_nutrition()]")
-		if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
-			if(is_adult)
-				stat(null, "You can reproduce!")
-			else
-				stat(null, "You can evolve!")
+/mob/living/simple_animal/slime/get_status_tab_items()
+	. = ..()
+	if(!docile)
+		. += "Nutrition: [nutrition]/[get_max_nutrition()]"
+	if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
+		if(is_adult)
+			. += "You can reproduce!"
+		else
+			. += "You can evolve!"
 
 		if(stat == UNCONSCIOUS)
-			stat(null,"You are knocked out by high levels of BZ!")
+			. += "You are knocked out by high levels of BZ!"
 		else
-			stat(null,"Power Level: [powerlevel]")
+			. += "Power Level: [powerlevel]"
 
 
 /mob/living/simple_animal/slime/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)

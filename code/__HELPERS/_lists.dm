@@ -553,12 +553,6 @@
 			if(D.vars[varname] == value)
 				return D
 
-//remove all nulls from a list
-/proc/removeNullsFromList(list/L)
-	while(L.Remove(null))
-		continue
-	return L
-
 //Copies a list, and all lists inside it recusively
 //Does not copy any other reference type
 /proc/deepCopyList(list/l)
@@ -671,3 +665,24 @@
 	for(var/key in input)
 		ret += key
 	return ret
+<<<<<<< HEAD
+=======
+
+/proc/is_type_in_ref_list(path, list/L)
+	if(!ispath(path))//not a path
+		return
+	for(var/i in L)
+		var/datum/D = i
+		if(!istype(D))//not an usable reference
+			continue
+		if(istype(D, path))
+			return TRUE
+
+/proc/safe_json_encode(list/L, default = "")
+	. = default
+	return json_encode(L)
+
+/proc/safe_json_decode(string, default = list())
+	. = default
+	return json_decode(string)
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

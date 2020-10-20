@@ -1,6 +1,7 @@
 // Clients aren't datums so we have to define these procs indpendently.
 // These verbs are called for all key press and release events
 /client/verb/keyDown(_key as text)
+	SHOULD_NOT_SLEEP(TRUE)
 	set instant = TRUE
 	set hidden = TRUE
 
@@ -66,6 +67,7 @@
 		mob.focus.key_down(_key, src)
 
 /client/verb/keyUp(_key as text)
+	SHOULD_NOT_SLEEP(TRUE)
 	set instant = TRUE
 	set hidden = TRUE
 

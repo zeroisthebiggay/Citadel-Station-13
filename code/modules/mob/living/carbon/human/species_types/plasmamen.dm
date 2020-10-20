@@ -1,6 +1,6 @@
 /datum/species/plasmaman
 	name = "Plasmaman"
-	id = "plasmaman"
+	id = SPECIES_PLASMAMAN
 	say_mod = "rattles"
 	sexes = 0
 	meat = /obj/item/stack/sheet/mineral/plasma
@@ -22,6 +22,11 @@
 	liked_food = VEGETABLES
 	outfit_important_for_life = /datum/outfit/plasmaman
 
+<<<<<<< HEAD
+=======
+	species_category = SPECIES_CATEGORY_SKELETON
+
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()
 	var/atmos_sealed = FALSE

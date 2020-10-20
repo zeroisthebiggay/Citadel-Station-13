@@ -22,6 +22,7 @@
 	var/produced_power
 	var/energy_to_raise = 32
 	var/energy_to_lower = -20
+	var/obj/machinery/power/grounding_rod/rodtarget
 
 /obj/singularity/energy_ball/Initialize(mapload, starting_energy = 50, is_miniball = FALSE)
 	miniball = is_miniball
@@ -48,10 +49,11 @@
 		return //don't annnounce miniballs
 	..()
 
-
 /obj/singularity/energy_ball/process()
 	if(!orbiting)
 		handle_energy()
+
+		determine_containment()
 
 		move_the_basket_ball(4 + orbiting_balls.len * 1.5)
 
@@ -75,12 +77,19 @@
 	if(orbiting_balls.len)
 		. += "The amount of orbiting mini-balls is [orbiting_balls.len]."
 
-
 /obj/singularity/energy_ball/proc/move_the_basket_ball(var/move_amount)
 	//we face the last thing we zapped, so this lets us favor that direction a bit
 	var/move_bias = pick(GLOB.alldirs)
+	var/move_dir
+	for(var/rod in GLOB.grounding_rods) // grounding rods pull the tesla ball, picks the nearest one
+		if(!rodtarget || get_dist(src,rod)<get_dist(src,rodtarget))
+			rodtarget=rod
+
 	for(var/i in 0 to move_amount)
-		var/move_dir = pick(GLOB.alldirs + move_bias) //ensures large-ball teslas don't just sit around
+		if(rodtarget)
+			move_dir = pick(GLOB.alldirs + get_dir(src,rodtarget))
+		else
+			move_dir = pick(GLOB.alldirs + move_bias) //ensures large-ball teslas don't just sit around
 		if(target && prob(10))
 			move_dir = get_dir(src,target)
 		var/turf/T = get_step(src, move_dir)
@@ -90,6 +99,20 @@
 			for(var/mob/living/carbon/C in loc)
 				dust_mobs(C)
 
+/obj/singularity/energy_ball/proc/determine_containment()
+	contained=0
+	var/found
+	var/tiletocheck
+	for(var/direction in GLOB.cardinals) // check a radius of 10 tiles around the ball for a full containment field
+		tiletocheck=get_step(src,direction)
+		for(var/tile in 1 to 10)
+			found=locate(/obj/machinery/field/containment) in tiletocheck
+			if(found)
+				continue
+			else if (!found && tile==10)
+				return // if one side is lacking a field it doesn't bother checking the others
+			tiletocheck=get_step(tiletocheck,direction)
+	contained=1
 
 /obj/singularity/energy_ball/proc/handle_energy()
 	if(energy >= energy_to_raise)
@@ -109,6 +132,10 @@
 	else if(orbiting_balls.len)
 		dissipate() //sing code has a much better system.
 
+		if(energy<=0)
+			investigate_log("fizzled.", INVESTIGATE_SINGULO)
+			qdel(src)
+
 /obj/singularity/energy_ball/proc/new_mini_ball()
 	if(!loc)
 		return
@@ -121,7 +148,6 @@
 	orbitsize -= (orbitsize / world.icon_size) * (world.icon_size * 0.25)
 
 	EB.orbit(src, orbitsize, pick(FALSE, TRUE), rand(10, 25), pick(3, 4, 5, 6, 36))
-
 
 /obj/singularity/energy_ball/Bump(atom/A)
 	dust_mobs(A)
@@ -156,7 +182,6 @@
 	. = ..()
 	if (!QDELETED(src))
 		qdel(src)
-
 
 /obj/singularity/energy_ball/proc/dust_mobs(atom/A)
 	if(isliving(A))
@@ -300,12 +325,19 @@
 		closest_mob.electrocute_act(shock_damage, source, 1, SHOCK_TESLA | ((tesla_flags & TESLA_MOB_STUN) ? NONE : SHOCK_NOSTUN))
 		if(issilicon(closest_mob))
 			var/mob/living/silicon/S = closest_mob
+<<<<<<< HEAD
 			if((tesla_flags & TESLA_MOB_STUN) && (tesla_flags & TESLA_MOB_DAMAGE))
 				S.emp_act(EMP_LIGHT)
 			tesla_zap(S, 7, power / 1.5, tesla_flags, shocked_targets) // metallic folks bounce it further
+=======
+			if((zap_flags & ZAP_MOB_STUN) && (zap_flags & ZAP_MOB_DAMAGE))
+				S.emp_act(50)
+			next_range = 7 // metallic folks bounce it further
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 		else
 			tesla_zap(closest_mob, 5, power / 1.5, tesla_flags, shocked_targets)
 
+<<<<<<< HEAD
 	else if(closest_machine)
 		closest_machine.tesla_act(power, tesla_flags, shocked_targets)
 
@@ -314,3 +346,27 @@
 
 	else if(closest_structure)
 		closest_structure.tesla_act(power, tesla_flags, shocked_targets)
+=======
+	else
+		power = closest_atom.zap_act(power, zap_flags, shocked_targets)
+
+		var/obj/singularity/energy_ball/tesla = source
+		if(istype(tesla))
+			if(istype(closest_atom,/obj/machinery/power/grounding_rod) && tesla.energy>13 && !tesla.contained)
+				qdel(closest_atom)							// each rod deletes two miniballs,
+				tesla.energy = round(tesla.energy/1.5625)	// if there are no miniballs the rod stays and continues to pull the ball in
+	if(prob(20))//I know I know
+		tesla_zap(closest_atom, next_range, power * 0.5, zap_flags, shocked_targets)
+		tesla_zap(closest_atom, next_range, power * 0.5, zap_flags, shocked_targets)
+	else
+		tesla_zap(closest_atom, next_range, power, zap_flags, shocked_targets)
+
+#undef BIKE
+#undef COIL
+#undef ROD
+#undef RIDE
+#undef LIVING
+#undef MACHINERY
+#undef BLOB
+#undef STRUCTURE
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

@@ -69,7 +69,11 @@
 				to_chat(user, "<span class='notice'>[src]'s transfer amount is now [amount_per_transfer_from_this] units.</span>")
 				return
 
+<<<<<<< HEAD
 /obj/item/reagent_containers/attack(mob/M, mob/user, def_zone)
+=======
+/obj/item/reagent_containers/attack(mob/living/M, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	if(user.a_intent == INTENT_HARM)
 		return ..()
 

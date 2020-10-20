@@ -235,3 +235,63 @@
 // eventually maybe have it update icon to show state (timer, prox etc.) like old bombs
 /obj/item/transfer_valve/proc/c_state()
 	return
+<<<<<<< HEAD
+=======
+
+/obj/item/transfer_valve/ui_state(mob/user)
+	return GLOB.hands_state
+
+/obj/item/transfer_valve/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "TransferValve", name)
+		ui.open()
+
+/obj/item/transfer_valve/ui_data(mob/user)
+	var/list/data = list()
+	data["tank_one"] = tank_one
+	data["tank_two"] = tank_two
+	data["attached_device"] = attached_device
+	data["valve"] = valve_open
+	return data
+
+/obj/item/transfer_valve/ui_act(action, params)
+	if(..())
+		return
+
+	switch(action)
+		if("tankone")
+			if(tank_one)
+				split_gases()
+				valve_open = FALSE
+				tank_one.forceMove(drop_location())
+				tank_one = null
+				. = TRUE
+		if("tanktwo")
+			if(tank_two)
+				split_gases()
+				valve_open = FALSE
+				tank_two.forceMove(drop_location())
+				tank_two = null
+				. = TRUE
+		if("toggle")
+			toggle_valve()
+			. = TRUE
+		if("device")
+			if(attached_device)
+				attached_device.attack_self(usr)
+				. = TRUE
+		if("remove_device")
+			if(attached_device)
+				attached_device.on_detach()
+				attached_device = null
+				. = TRUE
+
+	update_icon()
+
+/**
+  * Returns if this is ready to be detonated. Checks if both tanks are in place.
+  */
+/obj/item/transfer_valve/proc/ready()
+	return tank_one && tank_two
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

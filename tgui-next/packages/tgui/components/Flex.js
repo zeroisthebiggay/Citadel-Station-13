@@ -37,6 +37,7 @@ Flex.defaultHooks = pureComponentHooks;
 export const computeFlexItemProps = props => {
   const {
     className,
+    style,
     grow,
     order,
     align,
@@ -45,10 +46,15 @@ export const computeFlexItemProps = props => {
   return {
     className: classes([
       'Flex__item',
+<<<<<<< HEAD:tgui-next/packages/tgui/components/Flex.js
+=======
+      Byond.IS_LTE_IE10 && 'Flex__item--iefix',
+      Byond.IS_LTE_IE10 && grow > 0 && 'Flex__item--iefix--grow',
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d:tgui/packages/tgui/components/Flex.js
       className,
     ]),
     style: {
-      ...rest.style,
+      ...style,
       'flex-grow': grow,
       'order': order,
       'align-self': align,

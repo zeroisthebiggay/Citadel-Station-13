@@ -11,6 +11,8 @@
 	var/datum/action/innate/camera_off/off_action = new
 	var/datum/action/innate/camera_jump/jump_action = new
 	var/list/actions = list()
+	/// Should we suppress the user's view?
+	var/should_supress_view_changes = TRUE
 
 	light_color = LIGHT_COLOR_RED
 
@@ -69,6 +71,7 @@
 
 	current_user = null
 	user.unset_machine()
+	user.client.view_size.unsupress()
 	playsound(src, 'sound/machines/terminal_off.ogg', 25, 0)
 
 /obj/machinery/computer/camera_advanced/check_eye(mob/user)
@@ -152,6 +155,8 @@
 	user.remote_control = eyeobj
 	user.reset_perspective(eyeobj)
 	eyeobj.setLoc(eyeobj.loc)
+	if(should_supress_view_changes)
+		user.client.view_size.supress()
 
 /mob/camera/aiEye/remote
 	name = "Inactive Camera Eye"
@@ -269,6 +274,7 @@
 		C.clear_fullscreen("flash", 3) //Shorter flash than normal since it's an ~~advanced~~ console!
 	else
 		playsound(origin, 'sound/machines/terminal_prompt_deny.ogg', 25, 0)
+<<<<<<< HEAD
 
 
 //Used by servants of Ratvar! They let you beam to the station.
@@ -377,3 +383,5 @@
 
 /datum/action/innate/servant_warp/proc/is_canceled()
 	return !cancel
+=======
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

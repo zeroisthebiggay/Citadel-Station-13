@@ -1,7 +1,15 @@
 /datum/sprite_accessory/horns
 	icon = 'icons/mob/mutant_bodyparts.dmi'
 	color_src = HORNCOLOR
+<<<<<<< HEAD
 	relevant_layers = list(BODY_ADJ_LAYER)
+=======
+	relevant_layers = list(HORNS_LAYER)
+
+/datum/sprite_accessory/horns/is_not_visible(var/mob/living/carbon/human/H, var/tauric)
+	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
+	return (!H.dna.features["horns"] || H.dna.features["horns"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.is_robotic_limb(FALSE))
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /datum/sprite_accessory/horns/none
 	name = "None"

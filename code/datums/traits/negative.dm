@@ -44,6 +44,7 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 /datum/quirk/family_heirloom/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/heirloom_type
+<<<<<<< HEAD
 	switch(quirk_holder.mind.assigned_role)
 		if("Clown")
 			heirloom_type = pick(/obj/item/paint/anycolor, /obj/item/bikehorn/golden)
@@ -75,11 +76,18 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 			heirloom_type = /obj/item/camera/spooky/family
 		if("Captain")
 			heirloom_type = /obj/item/clothing/accessory/medal/gold/captain/family
+=======
+	var/species_heirloom_entry = GLOB.species_heirlooms[H.dna.species.id]
+	if(species_heirloom_entry)
+		if(prob(species_heirloom_entry[1]))
+			heirloom_type = pick(species_heirloom_entry[2])
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	if(!heirloom_type)
-		heirloom_type = pick(
-		/obj/item/toy/cards/deck,
-		/obj/item/lighter,
-		/obj/item/dice/d20)
+		var/job_heirloom_entry = GLOB.job_heirlooms[quirk_holder.mind.assigned_role]
+		if(!job_heirloom_entry)
+			heirloom_type = pick(GLOB.job_heirlooms["NO_JOB"]) //consider: should this be a define?
+		else
+			heirloom_type = pick(job_heirloom_entry)
 	heirloom = new heirloom_type(get_turf(quirk_holder))
 	GLOB.family_heirlooms += heirloom
 	var/list/slots = list(
@@ -211,24 +219,27 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	H.gain_trauma(T, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/paraplegic/on_spawn()
-	if(quirk_holder.buckled) // Handle late joins being buckled to arrival shuttle chairs.
-		quirk_holder.buckled.unbuckle_mob(quirk_holder)
+	if(quirk_holder.client)
+		var/modified_limbs = quirk_holder.client.prefs.modified_limbs
+		if(!(modified_limbs[BODY_ZONE_L_LEG] == LOADOUT_LIMB_AMPUTATED && modified_limbs[BODY_ZONE_R_LEG] == LOADOUT_LIMB_AMPUTATED && !isjellyperson(quirk_holder)))
+			if(quirk_holder.buckled) // Handle late joins being buckled to arrival shuttle chairs.
+				quirk_holder.buckled.unbuckle_mob(quirk_holder)
 
-	var/turf/T = get_turf(quirk_holder)
-	var/obj/structure/chair/spawn_chair = locate() in T
+			var/turf/T = get_turf(quirk_holder)
+			var/obj/structure/chair/spawn_chair = locate() in T
 
-	var/obj/vehicle/ridden/wheelchair/wheels = new(T)
-	if(spawn_chair) // Makes spawning on the arrivals shuttle more consistent looking
-		wheels.setDir(spawn_chair.dir)
+			var/obj/vehicle/ridden/wheelchair/wheels = new(T)
+			if(spawn_chair) // Makes spawning on the arrivals shuttle more consistent looking
+				wheels.setDir(spawn_chair.dir)
 
-	wheels.buckle_mob(quirk_holder)
+			wheels.buckle_mob(quirk_holder)
 
-	// During the spawning process, they may have dropped what they were holding, due to the paralysis
-	// So put the things back in their hands.
+			// During the spawning process, they may have dropped what they were holding, due to the paralysis
+			// So put the things back in their hands.
 
-	for(var/obj/item/I in T)
-		if(I.fingerprintslast == quirk_holder.ckey)
-			quirk_holder.put_in_hands(I)
+			for(var/obj/item/I in T)
+				if(I.fingerprintslast == quirk_holder.ckey)
+					quirk_holder.put_in_hands(I)
 
 /datum/quirk/poor_aim
 	name = "Poor Aim"
@@ -243,42 +254,6 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 	value = -1
 	mob_trait = TRAIT_PROSOPAGNOSIA
 	medical_record_text = "Patient suffers from prosopagnosia and cannot recognize faces."
-
-/datum/quirk/prosthetic_limb
-	name = "Prosthetic Limb"
-	desc = "An accident caused you to lose one of your limbs. Because of this, you now have a random prosthetic!"
-	value = -1
-	var/slot_string = "limb"
-
-/datum/quirk/prosthetic_limb/on_spawn()
-	var/mob/living/carbon/human/H = quirk_holder
-	var/limb_slot
-	if(HAS_TRAIT(H, TRAIT_PARA))//Prevent paraplegic legs being replaced
-		limb_slot = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)
-	else
-		limb_slot = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-	var/obj/item/bodypart/old_part = H.get_bodypart(limb_slot)
-	var/obj/item/bodypart/prosthetic
-	switch(limb_slot)
-		if(BODY_ZONE_L_ARM)
-			prosthetic = new/obj/item/bodypart/l_arm/robot/surplus(quirk_holder)
-			slot_string = "left arm"
-		if(BODY_ZONE_R_ARM)
-			prosthetic = new/obj/item/bodypart/r_arm/robot/surplus(quirk_holder)
-			slot_string = "right arm"
-		if(BODY_ZONE_L_LEG)
-			prosthetic = new/obj/item/bodypart/l_leg/robot/surplus(quirk_holder)
-			slot_string = "left leg"
-		if(BODY_ZONE_R_LEG)
-			prosthetic = new/obj/item/bodypart/r_leg/robot/surplus(quirk_holder)
-			slot_string = "right leg"
-	prosthetic.replace_limb(H)
-	qdel(old_part)
-	H.regenerate_icons()
-
-/datum/quirk/prosthetic_limb/post_add()
-	to_chat(quirk_holder, "<span class='boldannounce'>Your [slot_string] has been replaced with a surplus prosthetic. It is fragile and will easily come apart under duress. Additionally, \
-	you need to use a welding tool and cables to repair it, instead of bruise packs and ointment.</span>")
 
 /datum/quirk/insanity
 	name = "Reality Dissociation Syndrome"

@@ -7,44 +7,39 @@
 	device_type = MC_CARD
 
 	var/obj/item/card/id/stored_card = null
-	var/obj/item/card/id/stored_card2 = null
 
+<<<<<<< HEAD
+=======
+/obj/item/computer_hardware/card_slot/handle_atom_del(atom/A)
+	if(A == stored_card)
+		try_eject(null, TRUE)
+	. = ..()
+
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 /obj/item/computer_hardware/card_slot/Destroy()
 	try_eject()
 	return ..()
 
 /obj/item/computer_hardware/card_slot/GetAccess()
-	if(stored_card && stored_card2) // Best of both worlds
-		return (stored_card.GetAccess() | stored_card2.GetAccess())
-	else if(stored_card)
-		return stored_card.GetAccess()
-	else if(stored_card2)
-		return stored_card2.GetAccess()
-	return ..()
+	var/list/total_access
+	if(stored_card)
+		total_access = stored_card.GetAccess()
+	var/obj/item/computer_hardware/card_slot/card_slot2 = holder?.all_components[MC_CARD2] //Best of both worlds
+	if(card_slot2?.stored_card)
+		total_access |= card_slot2.stored_card.GetAccess()
+	return total_access
 
 /obj/item/computer_hardware/card_slot/GetID()
 	if(stored_card)
 		return stored_card
-	else if(stored_card2)
-		return stored_card2
 	return ..()
 
 /obj/item/computer_hardware/card_slot/RemoveID()
 	if(stored_card)
 		. = stored_card
-		if(!try_eject(1))
+		if(!try_eject())
 			return null
 		return
-	if(stored_card2)
-		. = stored_card2
-		if(!try_eject(2))
-			return null
-
-/obj/item/computer_hardware/card_slot/on_install(obj/item/modular_computer/M, mob/living/user = null)
-	M.add_verb(device_type)
-
-/obj/item/computer_hardware/card_slot/on_remove(obj/item/modular_computer/M, mob/living/user = null)
-	M.remove_verb(device_type)
 
 /obj/item/computer_hardware/card_slot/try_insert(obj/item/I, mob/living/user = null)
 	if(!holder)
@@ -53,8 +48,7 @@
 	if(!istype(I, /obj/item/card/id))
 		return FALSE
 
-	if(stored_card && stored_card2)
-		to_chat(user, "<span class='warning'>You try to insert \the [I] into \the [src], but its slots are occupied.</span>")
+	if(stored_card)
 		return FALSE
 	if(user)
 		if(!user.transferItemToLoc(I, src))
@@ -62,16 +56,26 @@
 	else
 		I.forceMove(src)
 
+<<<<<<< HEAD
 	if(!stored_card)
 		stored_card = I
 	else
 		stored_card2 = I
 	to_chat(user, "<span class='notice'>You insert \the [I] into \the [src].</span>")
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+=======
+	stored_card = I
+	to_chat(user, "<span class='notice'>You insert \the [I] into \the [expansion_hw ? "secondary":"primary"] [src].</span>")
+	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.sec_hud_set_ID()
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 	return TRUE
 
 
+<<<<<<< HEAD
 /obj/item/computer_hardware/card_slot/try_eject(slot=0, mob/living/user = null, forced = 0)
 	if (get_dist(src,user) > 1)
 		if (iscarbon(user))
@@ -114,16 +118,67 @@
 		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
 		return TRUE
 	return FALSE
+=======
+/obj/item/computer_hardware/card_slot/try_eject(mob/living/user = null, forced = FALSE)
+	if(!stored_card)
+		to_chat(user, "<span class='warning'>There are no cards in \the [src].</span>")
+		return FALSE
+
+	if(user)
+		user.put_in_hands(stored_card)
+	else
+		stored_card.forceMove(drop_location())
+	stored_card = null
+
+	if(holder)
+		if(holder.active_program)
+			holder.active_program.event_idremoved(0)
+
+		for(var/p in holder.idle_threads)
+			var/datum/computer_file/program/computer_program = p
+			computer_program.event_idremoved(1)
+	if(ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		human_user.sec_hud_set_ID()
+	to_chat(user, "<span class='notice'>You remove the card from \the [src].</span>")
+	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+	return TRUE
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /obj/item/computer_hardware/card_slot/attackby(obj/item/I, mob/living/user)
 	if(..())
 		return
+<<<<<<< HEAD
 	if(istype(I, /obj/item/screwdriver))
 		to_chat(user, "<span class='notice'>You press down on the manual eject button with \the [I].</span>")
 		try_eject(0,user)
 		return
+=======
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
+		if(stored_card)
+			to_chat(user, "<span class='notice'>You press down on the manual eject button with \the [I].</span>")
+			try_eject(user)
+			return
+		swap_slot()
+		to_chat(user, "<span class='notice'>You adjust the connecter to fit into [expansion_hw ? "an expansion bay" : "the primary ID bay"].</span>")
+
+/**
+  *Swaps the card_slot hardware between using the dedicated card slot bay on a computer, and using an expansion bay.
+*/
+/obj/item/computer_hardware/card_slot/proc/swap_slot()
+	expansion_hw = !expansion_hw
+	if(expansion_hw)
+		device_type = MC_CARD2
+	else
+		device_type = MC_CARD
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /obj/item/computer_hardware/card_slot/examine(mob/user)
 	. = ..()
-	if(stored_card || stored_card2)
+	. += "The connector is set to fit into [expansion_hw ? "an expansion bay" : "a computer's primary ID bay"], but can be adjusted with a screwdriver."
+	if(stored_card)
 		. += "There appears to be something loaded in the card slots."
+
+/obj/item/computer_hardware/card_slot/secondary
+	device_type = MC_CARD2
+	expansion_hw = TRUE

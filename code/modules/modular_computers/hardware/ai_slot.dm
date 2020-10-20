@@ -5,6 +5,7 @@
 	icon_state = "card_mini"
 	w_class = WEIGHT_CLASS_SMALL
 	device_type = MC_AI
+	expansion_hw = TRUE
 
 	var/obj/item/aicard/stored_card = null
 	var/locked = FALSE
@@ -14,12 +15,6 @@
 	. = ..()
 	if(stored_card)
 		. += "There appears to be an intelliCard loaded. There appears to be a pinhole protecting a manual eject button. A screwdriver could probably press it."
-
-/obj/item/computer_hardware/ai_slot/on_install(obj/item/modular_computer/M, mob/living/user = null)
-	M.add_verb(device_type)
-
-/obj/item/computer_hardware/ai_slot/on_remove(obj/item/modular_computer/M, mob/living/user = null)
-	M.remove_verb(device_type)
 
 /obj/item/computer_hardware/ai_slot/try_insert(obj/item/I, mob/living/user = null)
 	if(!holder)
@@ -40,6 +35,7 @@
 	return TRUE
 
 
+<<<<<<< HEAD
 /obj/item/computer_hardware/ai_slot/try_eject(slot=0,mob/living/user = null,forced = 0)
 	if (get_dist(src,user) > 1)
 		if (iscarbon(user))
@@ -48,6 +44,9 @@
 				return FALSE
 		else
 			return FALSE
+=======
+/obj/item/computer_hardware/ai_slot/try_eject(mob/living/user = null,forced = FALSE)
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	if(!stored_card)
 		to_chat(user, "<span class='warning'>There is no card in \the [src].</span>")
 		return FALSE

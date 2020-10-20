@@ -1,6 +1,11 @@
 /datum/species/insect
 	name = "Anthromorphic Insect"
+<<<<<<< HEAD
 	id = "insect"
+=======
+	id = SPECIES_INSECT
+	say_mod = "chitters"
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	default_color = "00FF00"
 	species_traits = list(LIPS,EYECOLOR,HAIR,FACEHAIR,MUTCOLORS,HORNCOLOR,WINGCOLOR)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
@@ -14,6 +19,7 @@
 	disliked_food = TOXIC
 	icon_limbs = DEFAULT_BODYPART_ICON_CITADEL
 
+<<<<<<< HEAD
 /datum/species/insect/spec_death(gibbed, mob/living/carbon/human/H)
 	if(H)
 		stop_wagging_tail(H)
@@ -43,3 +49,12 @@
 
 /datum/species/insect/qualifies_for_rank(rank, list/features)
 	return TRUE
+=======
+	tail_type = "mam_tail"
+	wagging_type = "mam_waggingtail"
+	species_category = SPECIES_CATEGORY_INSECT
+
+	allowed_limb_ids = list("insect","apid","moth","moth_not_greyscale")
+
+	eye_type = "insect"
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

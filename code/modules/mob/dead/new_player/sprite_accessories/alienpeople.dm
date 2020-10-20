@@ -43,6 +43,13 @@
 	mutant_part_string = "xhead"
 	relevant_layers = list(BODY_ADJ_LAYER)
 
+<<<<<<< HEAD
+=======
+/datum/sprite_accessory/xeno_head/is_not_visible(var/mob/living/carbon/human/H, var/tauric)
+	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
+	return (!H.dna.features["xenohead"] || H.dna.features["xenohead"] == "None" || H.head && (H.head.flags_inv & HIDEHAIR) || (H.wear_mask && (H.wear_mask.flags_inv & HIDEHAIR)) || !HD || HD.is_robotic_limb(FALSE))
+
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 /datum/sprite_accessory/xeno_head/standard
 	name = "Standard"
 	icon_state = "standard"

@@ -23,7 +23,12 @@
 
 	var/hunger_mod = 1		//% of hunger rate taken per tick.
 
+<<<<<<< HEAD
 	var/do_after_speed = 1 //Speed mod for do_after. Lower is better. If temporarily adjusting, please only modify using *= and /=, so you don't interrupt other calculations.
+=======
+	/// footstep type override for both shoeless and not footstep sounds.
+	var/footstep_type
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /datum/physiology/New()
 	armor = new

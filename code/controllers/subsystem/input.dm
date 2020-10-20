@@ -71,6 +71,7 @@ SUBSYSTEM_DEF(input)
 		"Insert", "Delete", "Ctrl", "Alt",
 		"F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12",
 		)
+<<<<<<< HEAD
 
 	for(var/i in 1 to oldmode_keys.len)
 		var/key = oldmode_keys[i]
@@ -108,6 +109,74 @@ SUBSYSTEM_DEF(input)
 		)
 
 	movement_keys = default_movement_keys.Copy()
+=======
+	for(var/key in classic_mode_keys)
+		macroset_classic_input[key] = "\"KeyDown [key]\""
+		macroset_classic_input["[key]+UP"] = "\"KeyUp [key]\""
+	// LET'S PLAY THE BIND EVERY KEY GAME!
+	// oh except for Backspace and Enter; if you want to use those you shouldn't have used oldmode!
+	var/list/classic_ctrl_override_keys = list(
+	"\[", "\]", "\\\\", ";", "'", ",", ".", "/", "-", "=", "`"
+	)
+	// i'm lazy let's play the list iteration game of numbers
+	for(var/i in 0 to 9)
+		classic_ctrl_override_keys += "[i]"
+	// let's play the ascii game of A to Z (UPPERCASE)
+	for(var/i in 65 to 90)
+		classic_ctrl_override_keys += ascii2text(i)
+	// let's play the game of clientside bind overrides!
+	classic_ctrl_override_keys -= list("T", "O", "M", "L")
+	macroset_classic_input["Ctrl+T"] = "say"
+	macroset_classic_input["Ctrl+O"] = "ooc"
+	macroset_classic_input["Ctrl+L"] = "looc"
+	// let's play the list iteration game x2
+	for(var/key in classic_ctrl_override_keys)
+		// make sure to double double quote to ensure things are treated as a key combo instead of addition/semicolon logic.
+		macroset_classic_input["\"Ctrl+[key]\""] = "\"KeyDown [istext(classic_ctrl_override_keys[key])? classic_ctrl_override_keys[key] : key]\""
+		macroset_classic_input["\"Ctrl+[key]+UP\""] = "\"KeyUp [istext(classic_ctrl_override_keys[key])? classic_ctrl_override_keys[key] : key]\""
+	// Misc
+	macroset_classic_input["Tab"] = "\".winset \\\"mainwindow.macro=[SKIN_MACROSET_CLASSIC_HOTKEYS] map.focus=true input.background-color=[COLOR_INPUT_DISABLED]\\\"\""
+	macroset_classic_input["Escape"] = "\".winset \\\"input.text=\\\"\\\"\\\"\""
+
+	// FINALLY, WE CAN DO SOMETHING MORE NORMAL FOR THE SNOWFLAKE-BUT-LESS KEYSET.
+
+	// HAHA - SIKE. Because of BYOND weirdness (tl;dr not specifically binding this way results in potentially duplicate chatboxes when
+	//  conflicts occur with something like say indicator vs say), we're going to snowflake this anyways
+	var/list/hard_binds = list(
+		"O" = "ooc",
+		"T" = "say",
+		"L" = "looc",
+		"M" = "me"
+		)
+	var/list/hard_bind_anti_collision = list()
+	var/list/anti_collision_modifiers = list("Ctrl", "Alt", "Shift", "Ctrl+Alt", "Ctrl+Shift", "Alt+Shift", "Ctrl+Alt+Shift")
+	for(var/key in hard_binds)
+		for(var/modifier in anti_collision_modifiers)
+			hard_bind_anti_collision["[modifier]+[key]"] = ".NONSENSICAL_VERB_THAT_DOES_NOTHING"
+
+	macroset_classic_hotkey = list(
+	"Any" = "\"KeyDown \[\[*\]\]\"",
+	"Any+UP" = "\"KeyUp \[\[*\]\]\"",
+	"Tab" = "\".winset \\\"mainwindow.macro=[SKIN_MACROSET_CLASSIC_INPUT] input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
+	"Escape" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
+	"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
+	)
+
+	macroset_classic_hotkey |= hard_binds
+	macroset_classic_hotkey |= hard_bind_anti_collision
+
+	// And finally, the modern set.
+	macroset_hotkey = list(
+	"Any" = "\"KeyDown \[\[*\]\]\"",
+	"Any+UP" = "\"KeyUp \[\[*\]\]\"",
+	"Tab" = "\".winset \\\"input.focus=true?map.focus=true input.background-color=[COLOR_INPUT_DISABLED]:input.focus=true input.background-color=[COLOR_INPUT_ENABLED]\\\"\"",
+	"Escape" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
+	"Back" = "\".winset \\\"input.text=\\\"\\\"\\\"\"",
+	)
+
+	macroset_hotkey |= hard_binds
+	macroset_hotkey |= hard_bind_anti_collision
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 // Badmins just wanna have fun ♪
 /datum/controller/subsystem/input/proc/refresh_client_macro_sets()

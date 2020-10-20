@@ -27,8 +27,17 @@
   ));
   @include meta.load-css('../components/Layout.scss');
   @include meta.load-css('../components/Section.scss');
+<<<<<<< HEAD:tgui-next/packages/tgui/styles/themes/hackerman.scss
   @include meta.load-css('../components/TitleBar.scss', $with: (
     'color-background': #223d22,
+=======
+
+  // Layouts
+  @include meta.load-css('../layouts/Layout.scss');
+  @include meta.load-css('../layouts/Window.scss');
+  @include meta.load-css('../layouts/TitleBar.scss', $with: (
+    'background-color': #223d22,
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d:tgui/packages/tgui/styles/themes/hackerman.scss
   ));
 
   .Layout__content {

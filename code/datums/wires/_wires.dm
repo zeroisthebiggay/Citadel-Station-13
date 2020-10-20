@@ -200,12 +200,17 @@
 		S.forceMove(holder.drop_location())
 		return S
 
+<<<<<<< HEAD
 /datum/wires/proc/emp_pulse()
+=======
+/// Called from [/atom/proc/emp_act]
+/datum/wires/proc/emp_pulse(severity)
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	var/list/possible_wires = shuffle(wires)
 	var/remaining_pulses = MAXIMUM_EMP_WIRES
 
 	for(var/wire in possible_wires)
-		if(prob(33))
+		if(prob(10 + severity/3.5))
 			pulse(wire)
 			remaining_pulses--
 			if(!remaining_pulses)

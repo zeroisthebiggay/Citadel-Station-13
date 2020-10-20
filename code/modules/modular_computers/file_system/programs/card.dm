@@ -1,6 +1,6 @@
 /datum/computer_file/program/card_mod
-	filename = "cardmod"
-	filedesc = "ID Card Modification"
+	filename = "plexagonidwriter"
+	filedesc = "Plexagon Access Management"
 	program_icon_state = "id"
 	extended_desc = "Program for programming employee ID cards to access parts of the station."
 	transfer_access = ACCESS_HEADS
@@ -99,15 +99,18 @@
 		return 1
 
 	var/obj/item/computer_hardware/card_slot/card_slot
+	var/obj/item/computer_hardware/card_slot/card_slot2
 	var/obj/item/computer_hardware/printer/printer
 	if(computer)
 		card_slot = computer.all_components[MC_CARD]
+		card_slot2 = computer.all_components[MC_CARD2]
 		printer = computer.all_components[MC_PRINT]
-		if(!card_slot)
+		if(!card_slot || !card_slot2)
 			return
 
 	var/obj/item/card/id/user_id_card = null
 	var/mob/user = usr
+<<<<<<< HEAD
 
 	var/obj/item/card/id/id_card = card_slot.stored_card
 	var/obj/item/card/id/auth_card = card_slot.stored_card2
@@ -277,6 +280,214 @@
 				reg_ids -= regsel
 			else
 				reg_ids += regsel
+=======
+	var/obj/item/card/id/user_id_card = card_slot.stored_card
+
+	var/obj/item/card/id/target_id_card = card_slot2.stored_card
+
+	switch(action)
+		if("PRG_authenticate")
+			if(!computer || !user_id_card)
+				playsound(computer, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
+				return
+			if(authenticate(user, user_id_card))
+				playsound(computer, 'sound/machines/terminal_on.ogg', 50, FALSE)
+				return TRUE
+		if("PRG_logout")
+			authenticated = FALSE
+			playsound(computer, 'sound/machines/terminal_off.ogg', 50, FALSE)
+			return TRUE
+		if("PRG_print")
+			if(!computer || !printer)
+				return
+			if(!authenticated)
+				return
+			var/contents = {"<h4>Access Report</h4>
+						<u>Prepared By:</u> [user_id_card && user_id_card.registered_name ? user_id_card.registered_name : "Unknown"]<br>
+						<u>For:</u> [target_id_card.registered_name ? target_id_card.registered_name : "Unregistered"]<br>
+						<hr>
+						<u>Assignment:</u> [target_id_card.assignment]<br>
+						<u>Access:</u><br>
+						"}
+
+			var/known_access_rights = get_all_accesses()
+			for(var/A in target_id_card.access)
+				if(A in known_access_rights)
+					contents += "  [get_access_desc(A)]"
+
+			if(!printer.print_text(contents,"access report"))
+				to_chat(usr, "<span class='notice'>Hardware error: Printer was unable to print the file. It may be out of paper.</span>")
+				return
+			else
+				playsound(computer, 'sound/machines/terminal_on.ogg', 50, FALSE)
+				computer.visible_message("<span class='notice'>\The [computer] prints out a paper.</span>")
+			return TRUE
+		if("PRG_eject")
+			if(!computer || !card_slot2)
+				return
+			if(target_id_card)
+				GLOB.data_core.manifest_modify(target_id_card.registered_name, target_id_card.assignment)
+				return card_slot2.try_eject(user)
+			else
+				var/obj/item/I = user.get_active_held_item()
+				if(istype(I, /obj/item/card/id))
+					return card_slot2.try_insert(I)
+			return FALSE
+		if("PRG_terminate")
+			if(!computer || !authenticated)
+				return
+			if(minor)
+				if(!(target_id_card.assignment in head_subordinates) && target_id_card.assignment != "Assistant")
+					return
+
+			target_id_card.access -= get_all_centcom_access() + get_all_accesses()
+			target_id_card.assignment = "Unassigned"
+			target_id_card.update_label()
+			playsound(computer, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
+			return TRUE
+		if("PRG_edit")
+			if(!computer || !authenticated || !target_id_card)
+				return
+			var/new_name = params["name"]
+			if(!new_name)
+				return
+			target_id_card.registered_name = new_name
+			target_id_card.update_label()
+			playsound(computer, "terminal_type", 50, FALSE)
+			return TRUE
+		if("PRG_assign")
+			if(!computer || !authenticated || !target_id_card)
+				return
+			var/target = params["assign_target"]
+			if(!target)
+				return
+
+			if(target == "Custom")
+				var/custom_name = params["custom_name"]
+				if(custom_name)
+					target_id_card.assignment = custom_name
+					target_id_card.update_label()
+			else
+				if(minor && !(target in head_subordinates))
+					return
+				var/list/new_access = list()
+				if(is_centcom)
+					new_access = get_centcom_access(target)
+				else
+					var/datum/job/job
+					for(var/jobtype in subtypesof(/datum/job))
+						var/datum/job/J = new jobtype
+						if(J.title == target)
+							job = J
+							break
+					if(!job)
+						to_chat(user, "<span class='warning'>No class exists for this job: [target]</span>")
+						return
+					new_access = job.get_access()
+				target_id_card.access -= get_all_centcom_access() + get_all_accesses()
+				target_id_card.access |= new_access
+				target_id_card.assignment = target
+				target_id_card.update_label()
+			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+			return TRUE
+		if("PRG_access")
+			if(!computer || !authenticated)
+				return
+			var/access_type = text2num(params["access_target"])
+			if(access_type in (is_centcom ? get_all_centcom_access() : get_all_accesses()))
+				if(access_type in target_id_card.access)
+					target_id_card.access -= access_type
+				else
+					target_id_card.access |= access_type
+				playsound(computer, "terminal_type", 50, FALSE)
+				return TRUE
+		if("PRG_grantall")
+			if(!computer || !authenticated || minor)
+				return
+			target_id_card.access |= (is_centcom ? get_all_centcom_access() : get_all_accesses())
+			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+			return TRUE
+		if("PRG_denyall")
+			if(!computer || !authenticated || minor)
+				return
+			target_id_card.access.Cut()
+			playsound(computer, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
+			return TRUE
+		if("PRG_grantregion")
+			if(!computer || !authenticated)
+				return
+			var/region = text2num(params["region"])
+			if(isnull(region))
+				return
+			target_id_card.access |= get_region_accesses(region)
+			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
+			return TRUE
+		if("PRG_denyregion")
+			if(!computer || !authenticated)
+				return
+			var/region = text2num(params["region"])
+			if(isnull(region))
+				return
+			target_id_card.access -= get_region_accesses(region)
+			playsound(computer, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
+			return TRUE
+
+
+
+/datum/computer_file/program/card_mod/ui_static_data(mob/user)
+	var/list/data = list()
+	data["station_name"] = station_name()
+	data["centcom_access"] = is_centcom
+	data["minor"] = target_dept || minor ? TRUE : FALSE
+
+	var/list/departments = target_dept
+	if(is_centcom)
+		departments = list("CentCom" = get_all_centcom_jobs())
+	else if(isnull(departments))
+		departments = list(
+			CARDCON_DEPARTMENT_COMMAND = list("Captain"),//lol
+			CARDCON_DEPARTMENT_ENGINEERING = GLOB.engineering_positions,
+			CARDCON_DEPARTMENT_MEDICAL = GLOB.medical_positions,
+			CARDCON_DEPARTMENT_SCIENCE = GLOB.science_positions,
+			CARDCON_DEPARTMENT_SECURITY = GLOB.security_positions,
+			CARDCON_DEPARTMENT_SUPPLY = GLOB.supply_positions,
+			CARDCON_DEPARTMENT_SERVICE = GLOB.civilian_positions
+		)
+	data["jobs"] = list()
+	for(var/department in departments)
+		var/list/job_list = departments[department]
+		var/list/department_jobs = list()
+		for(var/job in job_list)
+			if(minor && !(job in head_subordinates))
+				continue
+			department_jobs += list(list(
+				"display_name" = replacetext(job, "&nbsp", " "),
+				"job" = job
+			))
+		if(length(department_jobs))
+			data["jobs"][department] = department_jobs
+
+	var/list/regions = list()
+	for(var/i in 1 to 7)
+		if((minor || target_dept) && !(i in region_access))
+			continue
+
+		var/list/accesses = list()
+		for(var/access in get_region_accesses(i))
+			if (get_access_desc(access))
+				accesses += list(list(
+					"desc" = replacetext(get_access_desc(access), "&nbsp", " "),
+					"ref" = access,
+				))
+
+		regions += list(list(
+			"name" = get_region_accesses_name(i),
+			"regid" = i,
+			"accesses" = accesses
+		))
+
+	data["regions"] = regions
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 	if(id_card)
 		id_card.name = text("[id_card.registered_name]'s ID Card ([id_card.assignment])")
@@ -294,11 +505,11 @@
 
 	var/list/data = get_header_data()
 
-	var/obj/item/computer_hardware/card_slot/card_slot
+	var/obj/item/computer_hardware/card_slot/card_slot2
 	var/obj/item/computer_hardware/printer/printer
 
 	if(computer)
-		card_slot = computer.all_components[MC_CARD]
+		card_slot2 = computer.all_components[MC_CARD2]
 		printer = computer.all_components[MC_PRINT]
 
 	data["mmode"] = mod_mode
@@ -346,7 +557,7 @@
 		data["manifest"] = crew
 	data["assignments"] = show_assignments
 	if(computer)
-		data["have_id_slot"] = !!card_slot
+		data["have_id_slot"] = !!(card_slot2)
 		data["have_printer"] = !!printer
 		if(!card_slot && mod_mode == 1)
 			mod_mode = 0 //We can't modify IDs when there is no card reader
@@ -413,6 +624,17 @@
 
 	data["minor"] = target_dept || minor ? 1 : 0
 
+<<<<<<< HEAD
+=======
+	if(computer)
+		var/obj/item/card/id/id_card = card_slot2.stored_card
+		data["has_id"] = !!id_card
+		data["id_name"] = id_card ? id_card.name : "-----"
+		if(id_card)
+			data["id_rank"] = id_card.assignment ? id_card.assignment : "Unassigned"
+			data["id_owner"] = id_card.registered_name ? id_card.registered_name : "-----"
+			data["access_on_card"] = id_card.access
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 	return data
 

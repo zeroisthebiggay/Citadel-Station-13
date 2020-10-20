@@ -255,4 +255,35 @@
 		/obj/item/reagent_containers/glass/bowl = 1
 	)
 	result= /obj/item/reagent_containers/food/snacks/soup/wish
+<<<<<<< HEAD
 	subcategory = CAT_SOUP
+=======
+	subcategory = CAT_SOUP
+
+
+/datum/crafting_recipe/food/peasoup
+	name = "Pea soup"
+	reqs = list(
+		/datum/reagent/water = 10,
+		/obj/item/reagent_containers/food/snacks/grown/peas = 2,
+		/obj/item/reagent_containers/food/snacks/grown/parsnip = 1,
+		/obj/item/reagent_containers/food/snacks/grown/carrot = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/soup/peasoup
+	subcategory = CAT_SOUP
+
+/datum/crafting_recipe/food/facehuggerjambalayapot
+	name = "Facehugger jambalaya"
+	reqs = list(
+		/datum/reagent/bluespace = 10,
+		/datum/reagent/consumable/ethanol/booger =10,
+		/obj/item/organ/heart= 3,
+		/obj/item/clothing/mask/facehugger = 1,
+		/obj/item/reagent_containers/food/snacks/egg = 1,
+		/datum/reagent/consumable/blackpepper = 5,
+		/datum/reagent/toxin/acid = 5
+
+	)
+	result = /obj/item/reagent_containers/food/snacks/soup/facehuggerpot
+	subcategory = CAT_SOUP
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

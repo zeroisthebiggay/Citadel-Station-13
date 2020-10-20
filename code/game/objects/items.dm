@@ -285,6 +285,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return
 	if(anchored)
 		return
+<<<<<<< HEAD
+=======
+	if(loc == user && current_equipped_slot && current_equipped_slot != SLOT_HANDS)
+		if(current_equipped_slot in user.check_obscured_slots())
+			to_chat(user, "<span class='warning'>You are unable to unequip that while wearing other garments over it!</span>")
+			return FALSE
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 	if(resistance_flags & ON_FIRE)
 		var/mob/living/carbon/C = user
@@ -349,6 +356,14 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return
 	if(anchored)
 		return
+<<<<<<< HEAD
+=======
+	if(loc == user && current_equipped_slot && current_equipped_slot != SLOT_HANDS)
+		if(current_equipped_slot in user.check_obscured_slots())
+			to_chat(user, "<span class='warning'>You are unable to unequip that while wearing other garments over it!</span>")
+			return FALSE
+
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 	SEND_SIGNAL(loc, COMSIG_TRY_STORAGE_TAKE, src, user.loc, TRUE)
 
@@ -524,7 +539,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		to_chat(user, "<span class='danger'>You cannot locate any organic eyes on this brain!</span>")
 		return
 
-	if(IS_STAMCRIT(user))//CIT CHANGE - makes eyestabbing impossible if you're in stamina softcrit
+	if(IS_STAMCRIT(user) || !user.UseStaminaBuffer(STAMINA_COST_ITEM_EYESTAB, warn = TRUE))//CIT CHANGE - makes eyestabbing impossible if you're in stamina softcrit
 		to_chat(user, "<span class='danger'>You're too exhausted for that.</span>")//CIT CHANGE - ditto
 		return //CIT CHANGE - ditto
 
@@ -533,8 +548,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	playsound(loc, src.hitsound, 30, 1, -1)
 
 	user.do_attack_animation(M)
-
-	user.adjustStaminaLossBuffered(10)//CIT CHANGE - makes eyestabbing cost stamina
 
 	if(M != user)
 		M.visible_message("<span class='danger'>[user] has stabbed [M] in the eye with [src]!</span>", \

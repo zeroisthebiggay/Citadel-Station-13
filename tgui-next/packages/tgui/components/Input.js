@@ -1,13 +1,23 @@
+<<<<<<< HEAD:tgui-next/packages/tgui/components/Input.js
 import { classes, isFalsy } from 'common/react';
+=======
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
+import { classes } from 'common/react';
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d:tgui/packages/tgui/components/Input.js
 import { Component, createRef } from 'inferno';
 import { Box } from './Box';
+import { KEY_ESCAPE, KEY_ENTER } from 'common/keycodes';
 
-const toInputValue = value => {
-  if (isFalsy(value)) {
-    return '';
-  }
-  return value;
-};
+export const toInputValue = value => (
+  typeof value !== 'number' && typeof value !== 'string'
+    ? ''
+    : String(value)
+);
 
 export class Input extends Component {
   constructor() {
@@ -44,7 +54,7 @@ export class Input extends Component {
     };
     this.handleKeyDown = e => {
       const { onInput, onChange, onEnter } = this.props;
-      if (e.keyCode === 13) {
+      if (e.keyCode === KEY_ENTER) {
         this.setEditing(false);
         if (onChange) {
           onChange(e, e.target.value);
@@ -62,7 +72,7 @@ export class Input extends Component {
         }
         return;
       }
-      if (e.keyCode === 27) {
+      if (e.keyCode === KEY_ESCAPE) {
         this.setEditing(false);
         e.target.value = toInputValue(this.props.value);
         e.target.blur();
@@ -77,6 +87,12 @@ export class Input extends Component {
     if (input) {
       input.value = toInputValue(nextValue);
     }
+<<<<<<< HEAD:tgui-next/packages/tgui/components/Input.js
+=======
+    if (this.props.autoFocus) {
+      setTimeout(() => input.focus(), 1);
+    }
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d:tgui/packages/tgui/components/Input.js
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -110,6 +126,7 @@ export class Input extends Component {
     const {
       className,
       fluid,
+      monospace,
       ...rest
     } = boxProps;
     return (
@@ -117,6 +134,7 @@ export class Input extends Component {
         className={classes([
           'Input',
           fluid && 'Input--fluid',
+          monospace && 'Input--monospace',
           className,
         ])}
         {...rest}>

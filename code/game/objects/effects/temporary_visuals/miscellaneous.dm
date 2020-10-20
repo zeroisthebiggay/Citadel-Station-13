@@ -486,4 +486,28 @@
 		addtimer(CALLBACK(src, .proc/end), 15)
 
 /obj/effect/constructing_effect/proc/end()
+<<<<<<< HEAD
 	qdel(src)
+=======
+	qdel(src)
+
+/obj/effect/temp_visual/dir_setting/space_wind
+	icon = 'icons/effects/atmospherics.dmi'
+	icon_state = "space_wind"
+	layer = FLY_LAYER
+	duration = 20
+	mouse_opacity = 0
+
+/obj/effect/temp_visual/dir_setting/space_wind/Initialize(mapload, set_dir, set_alpha = 255)
+	. = ..()
+	alpha = set_alpha
+
+/obj/effect/temp_visual/slime_puddle
+	icon = 'icons/mob/mob.dmi'
+	duration = 12
+	icon_state = "to_puddle"
+
+/obj/effect/temp_visual/slime_puddle/reverse
+	icon_state = "from_puddle"
+	duration = 7
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

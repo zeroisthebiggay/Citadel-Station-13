@@ -5,6 +5,15 @@
 /datum/emote/sound/silicon
 	mob_type_allowed_typecache = list(/mob/living/silicon)
 	emote_type = EMOTE_AUDIBLE
+<<<<<<< HEAD
+=======
+	var/unrestricted = TRUE
+
+/datum/emote/sound/silicon/run_emote(mob/user, params)
+	if(!unrestricted && !(issilicon(user) || isipcperson(user)))
+		return
+	return ..()
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /datum/emote/silicon/boop
 	key = "boop"

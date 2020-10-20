@@ -142,6 +142,7 @@
 // bones
 /datum/status_effect/wound/bone
 
+<<<<<<< HEAD
 /datum/status_effect/wound/bone/interact_speed_modifier()
 	var/mob/living/carbon/C = owner
 
@@ -156,8 +157,25 @@
 
 	if(C.get_active_hand() == linked_limb)
 		return linked_wound.interaction_efficiency_penalty
+=======
+/datum/status_effect/wound/blunt/on_apply()
+	. = ..()
+	RegisterSignal(owner, COMSIG_MOB_SWAP_HANDS, .proc/on_swap_hands)
+	on_swap_hands()
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
-	return 1
+/datum/status_effect/wound/blunt/on_remove()
+	. = ..()
+	UnregisterSignal(owner, COMSIG_MOB_SWAP_HANDS)
+	var/mob/living/carbon/wound_owner = owner
+	wound_owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound)
+
+/datum/status_effect/wound/blunt/proc/on_swap_hands()
+	var/mob/living/carbon/wound_owner = owner
+	if(wound_owner.get_active_hand() == linked_limb)
+		wound_owner.add_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound, (linked_wound.interaction_efficiency_penalty - 1))
+	else
+		wound_owner.remove_actionspeed_modifier(/datum/actionspeed_modifier/blunt_wound)
 
 /datum/status_effect/wound/bone/moderate
 	id = "disjoint"

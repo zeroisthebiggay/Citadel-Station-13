@@ -71,30 +71,6 @@
 		. += "bsod"
 		. += "broken"
 
-// Eject ID card from computer, if it has ID slot with card inside.
-/obj/machinery/modular_computer/proc/eject_id()
-	set name = "Eject ID"
-	set category = "Object"
-
-	if(cpu)
-		cpu.eject_id()
-
-// Eject ID card from computer, if it has ID slot with card inside.
-/obj/machinery/modular_computer/proc/eject_disk()
-	set name = "Eject Data Disk"
-	set category = "Object"
-
-	if(cpu)
-		cpu.eject_disk()
-
-/obj/machinery/modular_computer/proc/eject_card()
-	set name = "Eject Intellicard"
-	set category = "Object"
-	set src in view(1)
-
-	if(cpu)
-		cpu.eject_card()
-
 /obj/machinery/modular_computer/AltClick(mob/user)
 	. = ..()
 	if(cpu)
@@ -134,7 +110,7 @@
 	..()
 	update_icon()
 
-/obj/machinery/modular_computer/attackby(var/obj/item/W as obj, mob/user)
+/obj/machinery/modular_computer/attackby(obj/item/W as obj, mob/user)
 	if(cpu && !(flags_1 & NODECONSTRUCT_1))
 		return cpu.attackby(W, user)
 	return ..()
@@ -160,5 +136,4 @@
 // "Brute" damage mostly damages the casing.
 /obj/machinery/modular_computer/bullet_act(obj/item/projectile/Proj)
 	if(cpu)
-		return cpu.bullet_act(Proj)
-	return ..()
+		cpu.bullet_act(Proj)

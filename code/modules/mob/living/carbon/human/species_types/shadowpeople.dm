@@ -4,7 +4,7 @@
 /datum/species/shadow
 	// Humans cursed to stay in the darkness, lest their life forces drain. They regain health in shadow and die in light.
 	name = "???"
-	id = "shadow"
+	id = SPECIES_SHADOW
 	sexes = 0
 	blacklisted = 1
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
@@ -15,6 +15,10 @@
 	dangerous_existence = 1
 	mutanteyes = /obj/item/organ/eyes/night_vision
 
+<<<<<<< HEAD
+=======
+	species_category = SPECIES_CATEGORY_SHADOW
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /datum/species/shadow/spec_life(mob/living/carbon/human/H)
 	var/turf/T = H.loc
@@ -33,8 +37,8 @@
 
 /datum/species/shadow/nightmare
 	name = "Nightmare"
-	id = "nightmare"
-	limbs_id = "shadow"
+	id = SPECIES_NIGHTMARE
+	limbs_id = SPECIES_SHADOW
 	burnmod = 1.5
 	blacklisted = TRUE
 	no_equip = list(SLOT_WEAR_MASK, SLOT_WEAR_SUIT, SLOT_GLOVES, SLOT_SHOES, SLOT_W_UNIFORM, SLOT_S_STORE)
@@ -144,7 +148,7 @@
 			playsound(owner,'sound/effects/singlebeat.ogg',40,1)
 	if(respawn_progress >= HEART_RESPAWN_THRESHHOLD)
 		owner.revive(full_heal = TRUE)
-		if(!(owner.dna.species.id == "shadow" || owner.dna.species.id == "nightmare"))
+		if(!(owner.dna.species.id == SPECIES_SHADOW || owner.dna.species.id == SPECIES_NIGHTMARE))
 			var/mob/living/carbon/old_owner = owner
 			Remove(HEART_SPECIAL_SHADOWIFY)
 			old_owner.set_species(/datum/species/shadow)
@@ -186,6 +190,11 @@
 			T.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	else if(isliving(AM))
 		var/mob/living/L = AM
+<<<<<<< HEAD
+=======
+		if(isethereal(AM))
+			AM.emp_act(50)
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 		if(iscyborg(AM))
 			var/mob/living/silicon/robot/borg = AM
 			if(borg.lamp_intensity)

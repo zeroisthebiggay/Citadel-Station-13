@@ -121,7 +121,7 @@
 /obj/item/gun/equipped(mob/living/user, slot)
 	. = ..()
 	if(zoomed && user.get_active_held_item() != src)
-		zoom(user, FALSE) //we can only stay zoomed in if it's in our hands	//yeah and we only unzoom if we're actually zoomed using the gun!!
+		zoom(user, user.dir, FALSE) //we can only stay zoomed in if it's in our hands	//yeah and we only unzoom if we're actually zoomed using the gun!!
 
 //called after the gun has successfully fired its chambered ammo.
 /obj/item/gun/proc/process_chamber()
@@ -140,8 +140,14 @@
 	if(recoil)
 		shake_camera(user, recoil + 1, recoil)
 
+<<<<<<< HEAD
 	if(isliving(user)) //CIT CHANGE - makes gun recoil cause staminaloss
 		user.adjustStaminaLossBuffered(getstamcost(user)*(firing && burst_size >= 2 ? 1/burst_size : 1)) //CIT CHANGE - ditto
+=======
+	if(stam_cost) //CIT CHANGE - makes gun recoil cause staminaloss
+		var/safe_cost = clamp(stam_cost, 0, user.stamina_buffer)*(firing && burst_size >= 2 ? 1/burst_size : 1)
+		user.UseStaminaBuffer(safe_cost)
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 	if(suppressed)
 		playsound(user, fire_sound, 10, 1)
@@ -415,7 +421,7 @@
 
 /obj/item/gun/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/toggle_scope_zoom))
-		zoom(user)
+		zoom(user, user.dir)
 	else if(istype(action, alight))
 		toggle_gunlight()
 
@@ -517,14 +523,19 @@
 	. = ..()
 	if(!.)
 		var/obj/item/gun/G = target
-		G.zoom(owner, FALSE)
+		G.zoom(owner, owner.dir)
 
 /datum/action/item_action/toggle_scope_zoom/Remove(mob/living/L)
 	var/obj/item/gun/G = target
-	G.zoom(L, FALSE)
+	G.zoom(L, L.dir)
 	return ..()
 
-/obj/item/gun/proc/zoom(mob/living/user, forced_zoom)
+/obj/item/gun/proc/rotate(atom/thing, old_dir, new_dir)
+	if(ismob(thing))
+		var/mob/lad = thing
+		lad.client.view_size.zoomOut(zoom_out_amt, zoom_amt, new_dir)
+
+/obj/item/gun/proc/zoom(mob/living/user, direct, forced_zoom)
 	if(!(user?.client))
 		return
 
@@ -536,31 +547,18 @@
 		zoomed = !zoomed
 
 	if(zoomed)
-		var/_x = 0
-		var/_y = 0
-		switch(user.dir)
-			if(NORTH)
-				_y = zoom_amt
-			if(EAST)
-				_x = zoom_amt
-			if(SOUTH)
-				_y = -zoom_amt
-			if(WEST)
-				_x = -zoom_amt
-
-		user.client.change_view(zoom_out_amt)
-		user.client.pixel_x = world.icon_size*_x
-		user.client.pixel_y = world.icon_size*_y
+		RegisterSignal(user, COMSIG_ATOM_DIR_CHANGE, .proc/rotate)
+		user.client.view_size.zoomOut(zoom_out_amt, zoom_amt, direct)
 	else
-		user.client.change_view(CONFIG_GET(string/default_view))
-		user.client.pixel_x = 0
-		user.client.pixel_y = 0
+		UnregisterSignal(user, COMSIG_ATOM_DIR_CHANGE)
+		user.client.view_size.zoomIn()
 
 /obj/item/gun/handle_atom_del(atom/A)
 	if(A == chambered)
 		chambered = null
 		update_icon()
 
+<<<<<<< HEAD
 /obj/item/gun/proc/getinaccuracy(mob/living/user)
 	if(!isliving(user))
 		return FALSE
@@ -570,3 +568,37 @@
 			return 0
 		else
 			return ((weapon_weight * 25) * inaccuracy_modifier)
+=======
+/obj/item/gun/proc/getinaccuracy(mob/living/user, bonus_spread, stamloss)
+	return 0		// Replacement TBD: Exponential curved aim instability system.
+
+/*
+	if(inaccuracy_modifier == 0)
+		return bonus_spread
+	var/base_inaccuracy = weapon_weight * 25 * inaccuracy_modifier
+	var/aiming_delay = 0 //Otherwise aiming would be meaningless for slower guns such as sniper rifles and launchers.
+	if(fire_delay)
+		var/penalty = (last_fire + GUN_AIMING_TIME + fire_delay) - world.time
+		if(penalty > 0) //Yet we only penalize users firing it multiple times in a haste. fire_delay isn't necessarily cumbersomeness.
+			aiming_delay = penalty
+	if(SEND_SIGNAL(user, COMSIG_COMBAT_MODE_CHECK, COMBAT_MODE_ACTIVE) || HAS_TRAIT(user, TRAIT_INSANE_AIM)) //To be removed in favor of something less tactless later.
+		base_inaccuracy /= 1.5
+	if(stamloss > STAMINA_NEAR_SOFTCRIT) //This can null out the above bonus.
+		base_inaccuracy *= 1 + (stamloss - STAMINA_NEAR_SOFTCRIT)/(STAMINA_NEAR_CRIT - STAMINA_NEAR_SOFTCRIT)*0.5
+	if(HAS_TRAIT(user, TRAIT_POOR_AIM)) //nice shootin' tex
+		if(!HAS_TRAIT(user, TRAIT_INSANE_AIM))
+			bonus_spread += 25
+		else
+			//you have both poor aim and insane aim, why?
+			bonus_spread += rand(0,50)
+	var/mult = max((GUN_AIMING_TIME + aiming_delay + user.last_click_move - world.time)/GUN_AIMING_TIME, -0.5) //Yes, there is a bonus for taking time aiming.
+	if(mult < 0) //accurate weapons should provide a proper bonus with negative inaccuracy. the opposite is true too.
+		mult *= 1/inaccuracy_modifier
+	return max(bonus_spread + (base_inaccuracy * mult), 0) //no negative spread.
+*/
+
+/obj/item/gun/proc/getstamcost(mob/living/carbon/user)
+	. = recoil
+	if(user && !user.has_gravity())
+		. = recoil*5
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

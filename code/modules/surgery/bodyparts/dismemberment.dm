@@ -364,4 +364,10 @@
 			L.burnstate = 0
 
 		L.attach_limb(src, 1)
+<<<<<<< HEAD
 		return 1
+=======
+		if(ROBOTIC_LIMBS in dna.species.species_traits) //Snowflake trait moment, but needed.
+			L.change_bodypart_status(BODYPART_HYBRID, FALSE, TRUE) //Haha what if IPC-lings actually regenerated the right limbs instead of organic ones? That'd be pretty cool, right?
+		return TRUE
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

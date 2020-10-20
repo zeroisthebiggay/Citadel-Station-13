@@ -231,7 +231,7 @@ export const StatusPane = props => {
         <Grid.Column size={0.85}>
           <LabeledList>
             <LabeledList.Item
-              label="TC Availible"
+              label="TC Available"
               buttons={(
                 <Button
                   content="Claim"
@@ -265,6 +265,84 @@ export const SyndPane = props => {
 
   const contractor_hub_items = data.contractor_hub_items || [];
   const contracts = data.contracts || [];
+<<<<<<< HEAD:tgui-next/packages/tgui/interfaces/SyndContractor.js
+=======
+  return (
+    <Fragment>
+      <Section
+        title="Available Contracts"
+        buttons={(
+          <Button
+            content="Call Extraction"
+            disabled={!data.ongoing_contract || data.extraction_enroute}
+            onClick={() => act('PRG_call_extraction')} />
+        )}>
+        {contracts.map(contract => {
+          if (data.ongoing_contract
+            && contract.status !== CONTRACT_STATUS_ACTIVE) {
+            return;
+          }
+          const active = (contract.status > CONTRACT_STATUS_INACTIVE);
+          if (contract.status >= CONTRACT_STATUS_COMPLETE) {
+            return;
+          }
+          return (
+            <Section
+              key={contract.target}
+              title={contract.target
+                ? `${contract.target} (${contract.target_rank})`
+                : "Invalid Target"}
+              level={active ? 1 : 2}
+              buttons={(
+                <Fragment>
+                  <Box
+                    inline
+                    bold
+                    mr={1}>
+                    {contract.payout} (+{contract.payout_bonus}) TC
+                  </Box>
+                  <Button
+                    content={active ? "Abort" : "Accept"}
+                    disabled={contract.extraction_enroute}
+                    color={active && "bad"}
+                    onClick={() => act(
+                      'PRG_contract' + (active ? '_abort' : '-accept'),
+                      {
+                        contract_id: contract.id,
+                      })} />
+                </Fragment>
+              )}>
+              <Grid>
+                <Grid.Column>
+                  {contract.message}
+                </Grid.Column>
+                <Grid.Column size={0.5}>
+                  <Box
+                    bold
+                    mb={1}>
+                    Dropoff Location:
+                  </Box>
+                  <Box>
+                    {contract.dropoff}
+                  </Box>
+                </Grid.Column>
+              </Grid>
+            </Section>
+          );
+        })}
+      </Section>
+      <Section
+        title="Dropoff Locator"
+        textAlign="center"
+        opacity={data.ongoing_contract ? 100 : 0}>
+        <Box bold>
+          {data.dropoff_direction}
+        </Box>
+      </Section>
+    </Fragment>
+  );
+};
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d:tgui/packages/tgui/interfaces/SyndContractor.js
 
   return (
     <Fragment>

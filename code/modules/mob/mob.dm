@@ -39,6 +39,7 @@
 	. = ..()
 	update_config_movespeed()
 	update_movespeed(TRUE)
+	initialize_actionspeed()
 	hook_vr("mob_new",list(src))
 
 /mob/GenerateTag()
@@ -470,11 +471,12 @@ mob/visible_message(message, self_message, blind_message, vision_distance = DEFA
 	if(!ckey)
 		return
 	SEND_SIGNAL(new_mob, COMSIG_MOB_PRE_PLAYER_CHANGE, new_mob, src)
-	if (client && client.prefs && client.prefs.auto_ooc)
-		if (client.prefs.chat_toggles & CHAT_OOC && isliving(new_mob))
-			client.prefs.chat_toggles ^= CHAT_OOC
-		if (!(client.prefs.chat_toggles & CHAT_OOC) && isdead(new_mob))
-			client.prefs.chat_toggles ^= CHAT_OOC
+	if (client)
+		if(client.prefs?.auto_ooc)
+			if (client.prefs.chat_toggles & CHAT_OOC && isliving(new_mob))
+				client.prefs.chat_toggles ^= CHAT_OOC
+			if (!(client.prefs.chat_toggles & CHAT_OOC) && isdead(new_mob))
+				client.prefs.chat_toggles ^= CHAT_OOC
 	new_mob.ckey = ckey
 	if(send_signal)
 		SEND_SIGNAL(src, COMSIG_MOB_KEY_CHANGE, new_mob, src)
@@ -571,9 +573,11 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 /mob/proc/is_muzzled()
 	return FALSE
 
-/mob/Stat()
-	..()
+/// Adds this list to the output to the stat browser
+/mob/proc/get_status_tab_items()
+	. = list()
 
+<<<<<<< HEAD
 	//This is only called from client/Stat(), let's assume client exists.
 
 	if(statpanel("Status"))
@@ -635,23 +639,32 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 				if(A.IsObscured())
 					continue
 				statpanel(listed_turf.name, null, A)
+=======
+/// Gets all relevant proc holders for the browser statpenl
+/mob/proc/get_proc_holders()
+	. = list()
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	if(mind)
-		add_spells_to_statpanel(mind.spell_list)
-		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
-		if(changeling)
-			add_stings_to_statpanel(changeling.purchasedpowers)
-	add_spells_to_statpanel(mob_spell_list)
+		. += get_spells_for_statpanel(mind.spell_list)
+	. += get_spells_for_statpanel(mob_spell_list)
 
-/mob/proc/add_spells_to_statpanel(list/spells)
+/**
+  * Convert a list of spells into a displyable list for the statpanel
+  *
+  * Shows charge and other important info
+  */
+/mob/proc/get_spells_for_statpanel(list/spells)
+	var/list/L = list()
 	for(var/obj/effect/proc_holder/spell/S in spells)
 		if((!S.mobs_blacklist || !S.mobs_blacklist[src]) && (!S.mobs_whitelist || S.mobs_whitelist[src]))
 			switch(S.charge_type)
 				if("recharge")
-					statpanel("[S.panel]","[S.charge_counter/10.0]/[S.charge_max/10]",S)
+					L[++L.len] = list("[S.panel]", "[S.charge_counter/10.0]/[S.charge_max/10]", S.name, REF(S))
 				if("charges")
-					statpanel("[S.panel]","[S.charge_counter]/[S.charge_max]",S)
+					L[++L.len] = list("[S.panel]", "[S.charge_counter]/[S.charge_max]", S.name, REF(S))
 				if("holdervar")
-					statpanel("[S.panel]","[S.holder_var_type] [S.holder_var_amount]",S)
+					L[++L.len] = list("[S.panel]", "[S.holder_var_type] [S.holder_var_amount]", S.name, REF(S))
+	return L
 
 /mob/proc/add_stings_to_statpanel(list/stings)
 	for(var/obj/effect/proc_holder/changeling/S in stings)
@@ -779,6 +792,8 @@ GLOBAL_VAR_INIT(exploit_warn_spam_prevention, 0)
 		if(istype(S, spell))
 			mob_spell_list -= S
 			qdel(S)
+	if(client)
+		client << output(null, "statbrowser:check_spells")
 
 /mob/proc/anti_magic_check(magic = TRUE, holy = FALSE, tinfoil = FALSE, chargecost = 1, self = FALSE)
 	if(!magic && !holy && !tinfoil)

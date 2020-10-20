@@ -94,6 +94,23 @@
 	flags_inv = HIDEJUMPSUIT
 	mutantrace_variation = STYLE_DIGITIGRADE|STYLE_NO_ANTHRO_ICON
 
+/obj/item/clothing/suit/tailcoat
+	name = "tailcoat"
+	desc = "A rather impractical, long coat."
+	icon_state = "tailcoat"
+	item_state = "tailcoat"
+
+/obj/item/clothing/suit/vickyblack
+	name = "black victorian coat"
+	desc = "An overbearing black coat, it looks far older than you are."
+	icon_state = "vickyblack"
+	item_state = "vickyblack"
+
+/obj/item/clothing/suit/vickyred
+	name = "red victorian coat"
+	desc = "An overbearing red coat, it looks far older than you are."
+	icon_state = "vickyred"
+	item_state = "vickyred"
 
 /obj/item/clothing/suit/apron/overalls
 	name = "coveralls"
@@ -1003,3 +1020,24 @@
 /obj/item/clothing/head/hooded/winterhood/polychromic
 	icon_state = "winterhood_poly"
 	item_state = "winterhood_poly"
+<<<<<<< HEAD
+=======
+
+/obj/item/clothing/suit/striped_sweater
+	name = "striped sweater"
+	desc = "Reminds you of someone, but you just can't put your finger on it..."
+	icon_state = "waldo_shirt"
+	item_state = "waldo_shirt"
+
+/obj/item/clothing/suit/samurai
+	name = "Samurai outfit"
+	desc = "An outfit used by traditional japanese warriors."
+	icon_state = "samurai"
+	item_state = "samurai"
+
+/obj/item/clothing/suit/bomber
+	name = "old bomber jacket"
+	desc = "It looks like someone dragged this out of a muddy lake."
+	icon_state = "bomberalt"
+	item_state = "bomberalt"
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

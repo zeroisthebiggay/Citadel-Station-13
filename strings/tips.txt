@@ -148,8 +148,15 @@ As the Chaplain, your bible is also a container that can store small items. Depe
 As the Chaplain, you are much more likely to get a response by praying to the gods than most people. To boost your chances, make altars with colorful crayon runes, lit candles, and wire art.
 As a Botanist, you can hack the MegaSeed Vendor to get access to more exotic seeds. These seeds can alternatively be ordered from cargo.
 As a Botanist, you can mutate the plants growing in your hydroponics trays with unstable mutagen or, as an alternative, crude radioactives from chemistry to get special variations.
+<<<<<<< HEAD
 As a Botanist, you should look into increasing the potency of your plants. This increases the size, amount of chemicals, points gained from grinding them in the biogenerator, and lets people know you are a proficient botanist.
 As a Botanist, you can combine production trait chemicals just like a Chemist. Chlorine (blumpkin) + radium and phosphorus (glowshrooms) equals unstable mutagen!
+=======
+As a Botanist, you should look into increasing the potency of your plants. This is shown by the size of the plant's sprite, and can increase the amount of chemicals, points gained from grinding them in the biogenerator, and lets people know you are a proficient botanist.
+As a Botanist, you can combine production trait chemicals and mix your own complex chemicals inside of the plants themselves using precursors. Chlorine (blumpkin) + radium and phosphorus (glowshrooms) equals unstable mutagen!
+As a Botanist, earthsblood is an incredibly powerful chemical found in Ambrosia Gaia, it heals all types of damages very rapidly but causes lingering brain damage and has a nasty overdose. You can combine the chemicals from watermelons (water), grass (hydrogen), and cherries (sugar) to mix mannitol in with your earthsblood to completely counteract its main drawback!
+As a Botanist, Ambrosia Gaia is a plant mutated from Ambrosia Deus, which is a plant mutated from Ambrosia Vulgaris. The reagent contained within this plant known as earthsblood makes for a vastly superior fertilizer than most, giving decent stat boosts to most stats, and automatically killing weeds and pests!
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 As a Cook, you can load your food into snack vending machines.
 As a Cook, you can rename your custom made food with a pen.
 As a Cook, any food you make will be much healthier than the junk food found in vendors. Having the crew routinely eating from you will provide minor buffs.

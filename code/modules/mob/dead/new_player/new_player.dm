@@ -298,6 +298,7 @@
 	if(observer.client && observer.client.prefs)
 		observer.real_name = observer.client.prefs.real_name
 		observer.name = observer.real_name
+		observer.client.init_verbs()
 	observer.update_icon()
 	observer.stop_sound_channel(CHANNEL_LOBBYMUSIC)
 	QDEL_NULL(mind)
@@ -395,7 +396,7 @@
 	job.standard_assign_skills(character.mind)
 
 	SSticker.minds += character.mind
-
+	character.client.init_verbs() // init verbs for the late join
 	var/mob/living/carbon/human/humanc
 	if(ishuman(character))
 		humanc = character	//Let's retypecast the var to be human,
@@ -415,6 +416,13 @@
 			give_guns(humanc)
 		if(GLOB.summon_magic_triggered)
 			give_magic(humanc)
+<<<<<<< HEAD
+=======
+		if(GLOB.curse_of_madness_triggered)
+			give_madness(humanc, GLOB.curse_of_madness_triggered)
+		if(humanc.client)
+			humanc.client.prefs.post_copy_to(humanc)
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 	GLOB.joined_player_list += character.ckey
 	GLOB.latejoiners += character
@@ -558,7 +566,21 @@
 	if(frn)
 		client.prefs.random_character()
 		client.prefs.real_name = client.prefs.pref_species.random_name(gender,1)
+<<<<<<< HEAD
 	client.prefs.copy_to(H)
+=======
+	var/cur_scar_index = client.prefs.scars_index
+	if(client.prefs.persistent_scars && client.prefs.scars_list["[cur_scar_index]"])
+		var/scar_string = client.prefs.scars_list["[cur_scar_index]"]
+		var/valid_scars = ""
+		for(var/scar_line in splittext(scar_string, ";"))
+			if(H.load_scar(scar_line))
+				valid_scars += "[scar_line];"
+
+		client.prefs.scars_list["[cur_scar_index]"] = valid_scars
+		client.prefs.save_character()
+	client.prefs.copy_to(H, initial_spawn = TRUE)
+>>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	H.dna.update_dna_identity()
 	if(mind)
 		if(transfer_after)
@@ -567,7 +589,7 @@
 		mind.transfer_to(H)					//won't transfer key since the mind is not active
 
 	H.name = real_name
-
+	client.init_verbs()
 	. = H
 	new_character = .
 	if(transfer_after)
