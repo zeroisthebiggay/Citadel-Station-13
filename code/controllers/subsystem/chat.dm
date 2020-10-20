@@ -9,13 +9,10 @@ SUBSYSTEM_DEF(chat)
 	wait = 1
 	priority = FIRE_PRIORITY_CHAT
 	init_order = INIT_ORDER_CHAT
-<<<<<<< HEAD
 	var/list/payload = list()
 
-=======
 
 	var/list/payload_by_client = list()
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /datum/controller/subsystem/chat/fire()
 	for(var/key in payload_by_client)
@@ -31,7 +28,6 @@ SUBSYSTEM_DEF(chat)
 		if(MC_TICK_CHECK)
 			return
 
-<<<<<<< HEAD
 
 /datum/controller/subsystem/chat/proc/queue(target, message, handle_whitespace = TRUE)
 	if(!target || !message)
@@ -94,7 +90,6 @@ SUBSYSTEM_DEF(chat)
 			return
 
 		payload[C] += twiceEncoded
-=======
 /datum/controller/subsystem/chat/proc/queue(target, message)
 	if(islist(target))
 		for(var/_target in target)
@@ -105,4 +100,3 @@ SUBSYSTEM_DEF(chat)
 	var/client/client = CLIENT_FROM_VAR(target)
 	if(client)
 		LAZYADD(payload_by_client[client], list(message))
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

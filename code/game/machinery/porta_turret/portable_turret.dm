@@ -680,9 +680,7 @@
 
 /obj/machinery/porta_turret/syndicate/ComponentInitialize()
 	. = ..()
-<<<<<<< HEAD
 	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
-=======
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
 
 /obj/machinery/porta_turret/syndicate/setup()
@@ -690,7 +688,6 @@
 
 /obj/machinery/porta_turret/syndicate/assess_perp(mob/living/carbon/human/perp)
 	return 10 //Syndicate turrets shoot everything not in their faction
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /obj/machinery/porta_turret/syndicate/energy
 	icon_state = "standard_stun"

@@ -27,7 +27,6 @@ SUBSYSTEM_DEF(npcpool)
 		var/mob/living/simple_animal/SA = currentrun[currentrun.len]
 		--currentrun.len
 
-<<<<<<< HEAD
 		if(!SA.ckey && !SA.notransform)
 			if(SA.stat != DEAD)
 				SA.handle_automated_movement()
@@ -35,7 +34,6 @@ SUBSYSTEM_DEF(npcpool)
 				SA.handle_automated_action()
 			if(SA.stat != DEAD)
 				SA.handle_automated_speech()
-=======
 		invoking = TRUE
 		invoke_start = world.time
 		INVOKE_ASYNC(src, .proc/invoke_process, SA)
@@ -43,7 +41,6 @@ SUBSYSTEM_DEF(npcpool)
 			stack_trace("WARNING: [SA] ([SA.type]) slept during NPCPool processing.")
 			invoking = FALSE
 
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 		if (MC_TICK_CHECK)
 			return
 

@@ -132,7 +132,6 @@ GLOBAL_LIST_EMPTY(allConsoles)
 /obj/machinery/requests_console/ui_interact(mob/user)
 	. = ..()
 	var/dat = ""
-<<<<<<< HEAD
 	if(!open)
 		switch(screen)
 			if(1)	//req. assistance
@@ -258,7 +257,6 @@ GLOBAL_LIST_EMPTY(allConsoles)
 		popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 		popup.open()
 	return
-=======
 	switch(screen)
 		if(1)	//req. assistance
 			dat += "Which department do you need assistance from?<br><br>"
@@ -395,7 +393,6 @@ GLOBAL_LIST_EMPTY(allConsoles)
 	var/datum/browser/popup = new(user, "req_console", "[department] Requests Console", 450, 440)
 	popup.set_content(dat)
 	popup.open()
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /obj/machinery/requests_console/Topic(href, href_list)
 	if(..())
@@ -470,7 +467,6 @@ GLOBAL_LIST_EMPTY(allConsoles)
 		var/log_msg = message
 		var/sending = message
 		sending += "<br>"
-<<<<<<< HEAD
 		if (msgVerified)
 			sending += msgVerified
 			sending += "<br>"
@@ -529,7 +525,6 @@ GLOBAL_LIST_EMPTY(allConsoles)
 						messages += "<span class='bad'>High Priority</span><BR><b>To:</b> [dpt]<BR>[sending]"
 					else
 						messages += "<b>To: [dpt]</b><BR>[sending]"
-=======
 		if(msgVerified)
 			sending += "<span class='good'><b>[msgVerified]</b></span> <br>"
 		if(msgStamped)
@@ -593,7 +588,6 @@ GLOBAL_LIST_EMPTY(allConsoles)
 				messages += "<span class='bad'>High Priority</span><br><b>To:</b> [dpt]<br>[sending]"
 			if(EXTREME_MESSAGE_PRIORITY)
 				messages += "<span class='bad'>!!!Extreme Priority!!!</span><br><b>To:</b> [dpt]<br>[sending]"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 			else
 				say("NOTICE: No server detected!")
 
@@ -723,12 +717,9 @@ GLOBAL_LIST_EMPTY(allConsoles)
 				to_chat(user, "<span class='warning'>You are not authorized to send announcements!</span>")
 			updateUsrDialog()
 		return
-<<<<<<< HEAD
 	if (istype(O, /obj/item/stamp))
-=======
 
 	if(istype(O, /obj/item/stamp))
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 		if(screen == 9)
 			var/obj/item/stamp/T = O
 			msgStamped = "<span class='boldnotice'>Stamped with the [T.name]</span>"

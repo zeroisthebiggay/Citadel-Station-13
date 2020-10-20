@@ -149,8 +149,6 @@
 		pixel_x = 0
 		pixel_y = 0
 	return TRUE
-<<<<<<< HEAD
-=======
 
 /obj/structure/lattice/lava
 	name = "heatproof support lattice"
@@ -178,4 +176,3 @@
 		else
 			to_chat(user, "<span class='warning'>You need one floor tile to build atop [src].</span>")
 		return
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

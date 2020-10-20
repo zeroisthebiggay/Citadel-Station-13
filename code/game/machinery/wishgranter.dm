@@ -30,13 +30,11 @@
 		insisting++
 
 	else
-<<<<<<< HEAD
 		to_chat(user, "You speak.  [pick("I want the station to disappear","Humanity is corrupt, mankind must be destroyed","I want to be rich", "I want to rule the world","I want immortality.")].  The Wish Granter answers.")
 		to_chat(user, "Your head pounds for a moment, before your vision clears.  You are the avatar of the Wish Granter, and your power is LIMITLESS!  And it's all yours.  You need to make sure no one can take it from you.  No one can know, first.")
 
 		charges--
 		insisting = 0
-=======
 		if(is_special_character(user))
 			to_chat(user, "You speak.  [pick("I want power","Humanity is corrupt, mankind must be destroyed", "I want to rule the world","I want immortality")].  The Wish Granter answers.")
 			to_chat(user, "Your head pounds for a moment, before your vision clears. The Wish Granter, sensing the darkness in your heart, has given you limitless power, and it's all yours!")
@@ -134,7 +132,6 @@
 					charges--
 					insisting = FALSE
 					qdel(src)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 		user.mind.add_antag_datum(/datum/antagonist/wishgranter)
 

@@ -665,8 +665,6 @@
 	for(var/key in input)
 		ret += key
 	return ret
-<<<<<<< HEAD
-=======
 
 /proc/is_type_in_ref_list(path, list/L)
 	if(!ispath(path))//not a path
@@ -685,4 +683,3 @@
 /proc/safe_json_decode(string, default = list())
 	. = default
 	return json_decode(string)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

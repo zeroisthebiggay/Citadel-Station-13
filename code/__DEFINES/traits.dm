@@ -190,15 +190,12 @@
 #define TRAIT_NO_ALCOHOL		"alcohol_intolerance"
 #define TRAIT_MUTATION_STASIS			"mutation_stasis" //Prevents processed genetics mutations from processing.
 #define TRAIT_FAST_PUMP				"fast_pump"
-<<<<<<< HEAD
-=======
 #define TRAIT_NO_PROCESS_FOOD	"no-process-food" // You don't get benefits from nutriment, nor nutrition from reagent consumables
 #define TRAIT_NICE_SHOT			"nice_shot" //hnnnnnnnggggg..... you're pretty good...
 /// Prevents stamina buffer regeneration
 #define TRAIT_NO_STAMINA_BUFFER_REGENERATION			"block_stamina_buffer_regen"
 /// Prevents stamina regeneration
 #define TRAIT_NO_STAMINA_REGENERATION					"block_stamina_regen"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 // mobility flag traits
 // IN THE FUTURE, IT WOULD BE NICE TO DO SOMETHING SIMILAR TO https://github.com/tgstation/tgstation/pull/48923/files (ofcourse not nearly the same because I have my.. thoughts on it)
@@ -302,12 +299,9 @@
 #define CLOWNOP_TRAIT "clown-op"
 #define MEGAFAUNA_TRAIT "megafauna"
 #define DEATHSQUAD_TRAIT "deathsquad"
-<<<<<<< HEAD
-=======
 #define SLIMEPUDDLE_TRAIT "slimepuddle"
 /// This trait is added by the active directional block system.
 #define ACTIVE_BLOCK_TRAIT				"active_block"
 /// This trait is added by the parry system.
 #define ACTIVE_PARRY_TRAIT				"active_parry"
 #define STICKY_NODROP "sticky-nodrop" //sticky nodrop sounds like a bad soundcloud rapper's name
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

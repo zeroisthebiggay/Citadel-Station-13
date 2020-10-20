@@ -141,14 +141,11 @@
 #define CUSTOM_SKINTONE	24	//adds a "_g" suffix to bodypart overlays icon states if a custom skintone is used.
 #define HORNCOLOR		25
 #define WINGCOLOR		26
-<<<<<<< HEAD
-=======
 #define ROBOTIC_LIMBS	27 //has robotic limbs that render like organic ones
 #define CAN_SCAR		28 // If this species can be scarred (fleshy)
 /// Used for determining which wounds are applicable to this species.
 #define HAS_FLESH	29 /// if we have flesh (can suffer slash/piercing/burn wounds, requires they don't have NOBLOOD)
 #define HAS_BONE	30 /// if we have bones (can suffer bone wounds)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 //organ slots
 #define ORGAN_SLOT_BRAIN "brain"

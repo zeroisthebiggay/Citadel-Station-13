@@ -1,6 +1,4 @@
-<<<<<<< HEAD
 #define WOUND_DAMAGE_EXPONENT	1.4
-=======
 
 #define WOUND_DAMAGE_EXPONENT	1.2
 
@@ -11,7 +9,6 @@
 /// any damage dealt over this is ignored for damage rolls unless the target has the frail quirk (35^1.4=145)
 #define WOUND_MAX_CONSIDERED_DAMAGE	35
 
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 #define WOUND_SEVERITY_TRIVIAL	0 // for jokey/meme wounds like stubbed toe, no standard messages/sounds or second winds
 #define WOUND_SEVERITY_MODERATE	1

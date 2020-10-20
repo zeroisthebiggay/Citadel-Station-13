@@ -115,13 +115,10 @@ Property weights are added to the config weight of the ruleset. They are:
 				for(var/property in property_weights)
 					if(property in rule.property_weights) // just treat it as 0 if it's not in there
 						property_weight += rule.property_weights[property] * property_weights[property]
-<<<<<<< HEAD
 				drafted_rules[rule] = (rule.get_weight() * property_weight)*rule.weight_mult
-=======
 				var/calced_weight = (rule.get_weight() + property_weight) * rule.weight_mult
 				if(calced_weight > 0) // negatives in the list might cause problems
 					drafted_rules[rule] = calced_weight
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	return drafted_rules
 
 /datum/dynamic_storyteller/proc/midround_draft()
@@ -151,9 +148,7 @@ Property weights are added to the config weight of the ruleset. They are:
 				for(var/property in property_weights)
 					if(property in rule.property_weights)
 						property_weight += rule.property_weights[property] * property_weights[property]
-<<<<<<< HEAD
 				drafted_rules[rule] = round(((rule.get_weight() * property_weight)*rule.weight_mult*threat_weight)*1000,1)
-=======
 				var/threat_weight = 1
 				if(!(rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)) // makes the traitor rulesets always possible anyway
 					var/cost_difference = rule.cost-(mode.threat_level-mode.threat)
@@ -172,7 +167,6 @@ Property weights are added to the config weight of the ruleset. They are:
 				var/calced_weight =  (rule.get_weight() + property_weight) * rule.weight_mult * threat_weight
 				if(calced_weight > 0)
 					drafted_rules[rule] = calced_weight
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	return drafted_rules
 
 /datum/dynamic_storyteller/proc/latejoin_draft(mob/living/carbon/human/newPlayer)
@@ -198,7 +192,6 @@ Property weights are added to the config weight of the ruleset. They are:
 				for(var/property in property_weights)
 					if(property in rule.property_weights)
 						property_weight += rule.property_weights[property] * property_weights[property]
-<<<<<<< HEAD
 				drafted_rules[rule] = round(((rule.get_weight() * property_weight)*rule.weight_mult*threat_weight)*1000,1)
 	return drafted_rules
 
@@ -212,7 +205,6 @@ Property weights are added to the config weight of the ruleset. They are:
 					if(property in rule.property_weights)
 						property_weight += rule.property_weights[property] * property_weights[property]
 				drafted_rules[rule] = (rule.get_weight() + property_weight)*rule.weight_mult
-=======
 				var/threat_weight = 1
 				if(!(rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET))
 					var/cost_difference = rule.cost-(mode.threat_level-mode.threat)
@@ -222,7 +214,6 @@ Property weights are added to the config weight of the ruleset. They are:
 				var/calced_weight = (rule.get_weight() + property_weight) * rule.weight_mult * threat_weight
 				if(calced_weight > 0)
 					drafted_rules[rule] = calced_weight
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	return drafted_rules
 
 /datum/dynamic_storyteller/chaotic
@@ -326,7 +317,6 @@ Property weights are added to the config weight of the ruleset. They are:
 				drafted_rules[rule] = 1
 	return drafted_rules
 
-<<<<<<< HEAD
 /datum/dynamic_storyteller/random/event_draft()
 	var/list/drafted_rules = list()
 	for(var/datum/dynamic_ruleset/event/rule in mode.events)
@@ -335,8 +325,6 @@ Property weights are added to the config weight of the ruleset. They are:
 				drafted_rules[rule] = 1
 	return drafted_rules
 
-=======
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 /datum/dynamic_storyteller/story
 	name = "Story"
 	config_tag = "story"
@@ -346,15 +334,12 @@ Property weights are added to the config weight of the ruleset. They are:
 	flags = USE_PREV_ROUND_WEIGHTS
 	property_weights = list("story_potential" = 2)
 
-<<<<<<< HEAD
 
 /datum/dynamic_storyteller/story/calculate_threat()
 	var/current_time = (world.time / SSautotransfer.targettime)*180
 	mode.threat_level = round(mode.initial_threat_level*(sin(current_time)+0.25),0.1)
 	return ..()
 
-=======
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 /datum/dynamic_storyteller/classic
 	name = "Classic"
 	config_tag = "classic"

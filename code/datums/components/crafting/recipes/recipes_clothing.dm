@@ -39,7 +39,7 @@
 	time = 10
 	reqs = list(/obj/item/paper = 20)
 	category = CAT_CLOTHING
-	
+
 /datum/crafting_recipe/armwraps
 	name = "Armwraps"
 	result = /obj/item/clothing/gloves/fingerless/pugilist
@@ -263,8 +263,6 @@
 	time = 30
 	category = CAT_CLOTHING
 
-<<<<<<< HEAD
-=======
 /datum/crafting_recipe/twinsheath
 	name = "Twin Sword Sheath"
 	result = /obj/item/storage/belt/sabre/twin
@@ -283,7 +281,6 @@
 	time = 40
 	category = CAT_CLOTHING
 
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 /datum/crafting_recipe/durathread_duffelbag
 	name = "Durathread Dufflebag"
 	result = /obj/item/storage/backpack/duffelbag/durathread

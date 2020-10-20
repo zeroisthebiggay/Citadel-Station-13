@@ -22,6 +22,8 @@
 	///Next tick to reset the total message counter
 	var/total_count_reset = 0
 	var/ircreplyamount = 0
+	/// last time they tried to do an autobunker auth
+	var/autobunker_last_try = 0
 
 		/////////
 		//OTHER//
@@ -30,6 +32,9 @@
 	var/last_turn = 0
 	var/move_delay = 0
 	var/area			= null
+
+	/// Last time we Click()ed. No clicking twice in one tick!
+	var/last_click = 0
 
 		///////////////
 		//SOUND STUFF//
@@ -84,15 +89,43 @@
 
 	var/list/char_render_holders			//Should only be a key-value list of north/south/east/west = obj/screen.
 
+	/// Keys currently held
+	var/list/keys_held = list()
+	/// These next two vars are to apply movement for keypresses and releases made while move delayed.
+	/// Because discarding that input makes the game less responsive.
+ 	/// On next move, add this dir to the move that would otherwise be done
+	var/next_move_dir_add
+ 	/// On next move, subtract this dir from the move that would otherwise be done
+	var/next_move_dir_sub
+	/// Amount of keydowns in the last keysend checking interval
 	var/client_keysend_amount = 0
+	/// World tick time where client_keysend_amount will reset
 	var/next_keysend_reset = 0
+	/// World tick time where keysend_tripped will reset back to false
 	var/next_keysend_trip_reset = 0
+	/// When set to true, user will be autokicked if they trip the keysends in a second limit again
 	var/keysend_tripped = FALSE
+	/// custom movement keys for this client
+	var/list/movement_keys = list()
+
+	///Autoclick list of two elements, first being the clicked thing, second being the parameters.
+	var/list/atom/selected_target[2]
+	///Autoclick variable referencing the associated item.
+	var/obj/item/active_mousedown_item = null
+	///Used in MouseDrag to preserve the original mouse click parameters
+	var/mouseParams = ""
+	///Used in MouseDrag to preserve the last mouse-entered location.
+	var/mouseLocation = null
+	///Used in MouseDrag to preserve the last mouse-entered object.
+	var/mouseObject = null
+	var/mouseControlObject = null
+	//Middle-mouse-button click dragtime control for aimbot exploit detection.
+	var/middragtime = 0
+	//Middle-mouse-button clicked object control for aimbot exploit detection.
+	var/atom/middragatom
 
 	/// Messages currently seen by this client
 	var/list/seen_messages
-<<<<<<< HEAD
-=======
 	/// viewsize datum for holding our view size
 	var/datum/viewData/view_size
 
@@ -146,5 +179,3 @@
 
 	//world.time of when the crew manifest can be accessed
 	var/crew_manifest_delay
-
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

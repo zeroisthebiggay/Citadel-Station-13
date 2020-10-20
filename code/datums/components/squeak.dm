@@ -11,8 +11,6 @@
 	// This is to stop squeak spam from inhand usage
 	var/last_use = 0
 	var/use_delay = 20
-<<<<<<< HEAD
-=======
 
 	// squeak cooldowns
 	var/last_squeak = 0
@@ -20,7 +18,6 @@
 
 	/// chance we'll be stopped from squeaking by cooldown when something crossing us squeaks
 	var/cross_squeak_delay_chance = 33		// about 3 things can squeak at a time
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /datum/component/squeak/Initialize(custom_sounds, volume_override, chance_override, step_delay_override, use_delay_override)
 	if(!isatom(parent))

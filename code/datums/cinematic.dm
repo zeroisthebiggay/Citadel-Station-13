@@ -30,11 +30,8 @@
 /datum/cinematic
 	var/id = CINEMATIC_DEFAULT
 	var/list/watching = list() //List of clients watching this
-<<<<<<< HEAD
 	var/list/locked = list() //Who had notransform set during the cinematic
-=======
 	var/list/locked = list() //Who had mob_transforming  set during the cinematic
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	var/is_global = FALSE //Global cinematics will override mob-specific ones
 	var/obj/screen/cinematic/screen
 	var/datum/callback/special_callback //For special effects synced with animation (explosions after the countdown etc)
@@ -53,10 +50,8 @@
 		C.screen -= screen
 	watching = null
 	QDEL_NULL(screen)
-<<<<<<< HEAD
 	for(var/mob/M in locked)
 		M.notransform = FALSE
-=======
 	QDEL_NULL(special_callback)
 	for(var/MM in locked)
 		if(!MM)
@@ -64,7 +59,6 @@
 		var/mob/M = MM
 		M.mob_transforming  = FALSE
 	locked = null
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	return ..()
 
 /datum/cinematic/proc/play(watchers)
@@ -83,7 +77,6 @@
 		ooc_toggled = TRUE
 		toggle_ooc(FALSE)
 
-<<<<<<< HEAD
 
 	for(var/mob/M in GLOB.mob_list)
 		if(M in watchers)
@@ -98,7 +91,6 @@
 			if(is_global)
 				M.notransform = TRUE
 				locked += M
-=======
 	//Place /obj/screen/cinematic into everyone's screens, prevent them from moving
 	for(var/MM in watchers)
 		var/mob/M = MM
@@ -106,7 +98,6 @@
 		RegisterSignal(M, COMSIG_MOB_CLIENT_LOGIN, .proc/show_to)
 		//Close watcher ui's
 		SStgui.close_user_uis(M)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 	//Actually play it
 	content()

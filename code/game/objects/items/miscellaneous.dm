@@ -115,8 +115,6 @@
 	new /obj/item/toy/crayon/spraycan(src)
 	new /obj/item/clothing/shoes/sandal(src)
 
-<<<<<<< HEAD
-=======
 /obj/item/choice_beacon/hosgun
 	name = "personal weapon beacon"
 	desc = "Use this to summon your personal Head of Security issued firearm!"
@@ -261,7 +259,6 @@
 		plushie_list[V] = V //easiest way to do this which works with how selecting options works, despite being snowflakey to have the key equal the value
 	return plushie_list
 
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 /obj/item/skub
 	desc = "It's skub."
 	name = "skub"

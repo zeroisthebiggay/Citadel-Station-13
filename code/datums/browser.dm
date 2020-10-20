@@ -101,18 +101,15 @@
 	var/window_size = ""
 	if (width && height)
 		window_size = "size=[width]x[height];"
-<<<<<<< HEAD
 	if (stylesheets.len)
 		send_asset_list(user, stylesheets, verify=FALSE)
 	if (scripts.len)
 		send_asset_list(user, scripts, verify=FALSE)
-=======
 	common_asset.send(user)
 	if(stylesheets.len)
 		SSassets.transport.send_assets(user, stylesheets)
 	if(scripts.len)
 		SSassets.transport.send_assets(user, scripts)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	user << browse(get_content(), "window=[window_id];[window_size][window_options]")
 	if (use_onclose)
 		setup_onclose()

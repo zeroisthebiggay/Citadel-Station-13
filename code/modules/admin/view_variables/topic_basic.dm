@@ -45,8 +45,6 @@
 			usr.client.admin_delete(target)
 			if (isturf(src))	// show the turf that took its place
 				usr.client.debug_variables(src)
-<<<<<<< HEAD
-=======
 				return
 
 		#ifdef REFERENCE_TRACKING //people with debug can only access this putnam!
@@ -59,7 +57,6 @@
 			return
 		#endif
 
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	if(href_list[VV_HK_MARK])
 		usr.client.mark_datum(target)
 	if(href_list[VV_HK_ADDCOMPONENT])

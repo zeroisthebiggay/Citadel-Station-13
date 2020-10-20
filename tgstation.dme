@@ -124,14 +124,11 @@
 #include "code\__DEFINES\vv.dm"
 #include "code\__DEFINES\wall_dents.dm"
 #include "code\__DEFINES\wires.dm"
-<<<<<<< HEAD
-=======
 #include "code\__DEFINES\wounds.dm"
 #include "code\__DEFINES\_flags\_flags.dm"
 #include "code\__DEFINES\_flags\do_after.dm"
 #include "code\__DEFINES\_flags\item_flags.dm"
 #include "code\__DEFINES\_flags\obj_flags.dm"
-#include "code\__DEFINES\_flags\return_values.dm"
 #include "code\__DEFINES\_flags\shields.dm"
 #include "code\__DEFINES\admin\keybindings.dm"
 #include "code\__DEFINES\chemistry\reactions.dm"
@@ -139,7 +136,6 @@
 #include "code\__DEFINES\combat\block.dm"
 #include "code\__DEFINES\combat\block_parry.dm"
 #include "code\__DEFINES\combat\stamina_combat.dm"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 #include "code\__DEFINES\dcs\flags.dm"
 #include "code\__DEFINES\dcs\helpers.dm"
 #include "code\__DEFINES\dcs\signals.dm"
@@ -280,12 +276,9 @@
 #include "code\controllers\configuration\entries\game_options.dm"
 #include "code\controllers\configuration\entries\general.dm"
 #include "code\controllers\configuration\entries\plushies.dm"
-<<<<<<< HEAD
-=======
 #include "code\controllers\configuration\entries\policy.dm"
 #include "code\controllers\configuration\entries\resources.dm"
 #include "code\controllers\configuration\entries\stamina_combat.dm"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 #include "code\controllers\subsystem\acid.dm"
 #include "code\controllers\subsystem\adjacent_air.dm"
 #include "code\controllers\subsystem\air.dm"
@@ -432,13 +425,10 @@
 #include "code\datums\components\explodable.dm"
 #include "code\datums\components\field_of_vision.dm"
 #include "code\datums\components\footstep.dm"
-<<<<<<< HEAD
 #include "code\datums\components\forced_gravity.dm"
-=======
 #include "code\datums\components\fried.dm"
 #include "code\datums\components\gps.dm"
 #include "code\datums\components\honkspam.dm"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 #include "code\datums\components\identification.dm"
 #include "code\datums\components\igniter.dm"
 #include "code\datums\components\infective.dm"
@@ -850,14 +840,11 @@
 #include "code\game\machinery\porta_turret\portable_turret.dm"
 #include "code\game\machinery\porta_turret\portable_turret_construct.dm"
 #include "code\game\machinery\porta_turret\portable_turret_cover.dm"
-<<<<<<< HEAD
-=======
 #include "code\game\machinery\poweredfans\fan_assembly.dm"
 #include "code\game\machinery\poweredfans\poweredfans.dm"
 #include "code\game\machinery\shuttle\custom_shuttle.dm"
 #include "code\game\machinery\shuttle\shuttle_engine.dm"
 #include "code\game\machinery\shuttle\shuttle_heater.dm"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 #include "code\game\machinery\telecomms\broadcasting.dm"
 #include "code\game\machinery\telecomms\machine_interactions.dm"
 #include "code\game\machinery\telecomms\telecomunications.dm"
@@ -1064,11 +1051,8 @@
 #include "code\game\objects\items\devices\multitool.dm"
 #include "code\game\objects\items\devices\paicard.dm"
 #include "code\game\objects\items\devices\pipe_painter.dm"
-<<<<<<< HEAD
-=======
 #include "code\game\objects\items\devices\polycircuit.dm"
 #include "code\game\objects\items\devices\portable_chem_mixer.dm"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 #include "code\game\objects\items\devices\powersink.dm"
 #include "code\game\objects\items\devices\pressureplates.dm"
 #include "code\game\objects\items\devices\quantum_keycard.dm"
@@ -1655,15 +1639,9 @@
 #include "code\modules\assembly\signaler.dm"
 #include "code\modules\assembly\timer.dm"
 #include "code\modules\assembly\voice.dm"
-<<<<<<< HEAD
-=======
 #include "code\modules\asset_cache\asset_cache_client.dm"
 #include "code\modules\asset_cache\asset_cache_item.dm"
 #include "code\modules\asset_cache\asset_list.dm"
-#include "code\modules\asset_cache\asset_list_items.dm"
-#include "code\modules\asset_cache\transports\asset_transport.dm"
-#include "code\modules\asset_cache\transports\webroot_transport.dm"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 #include "code\modules\atmospherics\multiz.dm"
 #include "code\modules\atmospherics\environmental\LINDA_fire.dm"
 #include "code\modules\atmospherics\environmental\LINDA_system.dm"
@@ -1806,7 +1784,6 @@
 #include "code\modules\cargo\packs\service.dm"
 #include "code\modules\cargo\packs\vending.dm"
 #include "code\modules\chatter\chatter.dm"
-#include "code\modules\client\asset_cache.dm"
 #include "code\modules\client\client_colour.dm"
 #include "code\modules\client\client_defines.dm"
 #include "code\modules\client\client_procs.dm"
@@ -2048,11 +2025,7 @@
 #include "code\modules\food_and_drinks\recipes\tablecraft\recipes_soup.dm"
 #include "code\modules\food_and_drinks\recipes\tablecraft\recipes_spaghetti.dm"
 #include "code\modules\games\cas.dm"
-<<<<<<< HEAD
 #include "code\modules\goonchat\browserOutput.dm"
-=======
-#include "code\modules\games\unum.dm"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 #include "code\modules\holiday\easter.dm"
 #include "code\modules\holiday\holidays.dm"
 #include "code\modules\holiday\halloween\bartholomew.dm"
@@ -2208,11 +2181,7 @@
 #include "code\modules\jobs\job_types\station_engineer.dm"
 #include "code\modules\jobs\job_types\virologist.dm"
 #include "code\modules\jobs\job_types\warden.dm"
-<<<<<<< HEAD
-#include "code\modules\jobs\map_changes\map_changes.dm"
 #include "code\modules\keybindings\bindings_admin.dm"
-=======
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 #include "code\modules\keybindings\bindings_atom.dm"
 #include "code\modules\keybindings\bindings_carbon.dm"
 #include "code\modules\keybindings\bindings_client.dm"
@@ -2706,12 +2675,9 @@
 #include "code\modules\modular_computers\file_system\program_events.dm"
 #include "code\modules\modular_computers\file_system\programs\airestorer.dm"
 #include "code\modules\modular_computers\file_system\programs\alarm.dm"
-<<<<<<< HEAD
-=======
 #include "code\modules\modular_computers\file_system\programs\arcade.dm"
 #include "code\modules\modular_computers\file_system\programs\atmosscan.dm"
 #include "code\modules\modular_computers\file_system\programs\borg_monitor.dm"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 #include "code\modules\modular_computers\file_system\programs\card.dm"
 #include "code\modules\modular_computers\file_system\programs\configurator.dm"
 #include "code\modules\modular_computers\file_system\programs\file_browser.dm"
@@ -2779,14 +2745,11 @@
 #include "code\modules\NTNet\network.dm"
 #include "code\modules\NTNet\relays.dm"
 #include "code\modules\NTNet\services\_service.dm"
-<<<<<<< HEAD
 #include "code\modules\oracle_ui\assets.dm"
 #include "code\modules\oracle_ui\hookup_procs.dm"
 #include "code\modules\oracle_ui\oracle_ui.dm"
 #include "code\modules\oracle_ui\themed.dm"
-=======
 #include "code\modules\paperwork\carbonpaper.dm"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 #include "code\modules\paperwork\clipboard.dm"
 #include "code\modules\paperwork\contract.dm"
 #include "code\modules\paperwork\filingcabinet.dm"
@@ -3057,12 +3020,8 @@
 #include "code\modules\research\research_disk.dm"
 #include "code\modules\research\server.dm"
 #include "code\modules\research\stock_parts.dm"
-<<<<<<< HEAD
-=======
-#include "code\modules\research\anomaly\anomaly_core.dm"
 #include "code\modules\research\anomaly\explosive_compressor.dm"
 #include "code\modules\research\anomaly\raw_anomaly.dm"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 #include "code\modules\research\designs\AI_module_designs.dm"
 #include "code\modules\research\designs\autobotter_designs.dm"
 #include "code\modules\research\designs\autoylathe_designs.dm"
@@ -3221,19 +3180,10 @@
 #include "code\modules\shuttle\supply.dm"
 #include "code\modules\shuttle\syndicate.dm"
 #include "code\modules\shuttle\white_ship.dm"
-<<<<<<< HEAD
-=======
-#include "code\modules\shuttle\shuttle_creation\shuttle_creator.dm"
-#include "code\modules\shuttle\shuttle_creation\shuttle_creator_actions.dm"
-#include "code\modules\shuttle\shuttle_creation\shuttle_creator_console.dm"
-#include "code\modules\shuttle\shuttle_creation\shuttle_creator_eye.dm"
-#include "code\modules\shuttle\shuttle_creation\shuttle_creator_overlay.dm"
-#include "code\modules\shuttle\shuttle_creation\shuttle_upgrades.dm"
 #include "code\modules\smithing\anvil.dm"
 #include "code\modules\smithing\finished_items.dm"
 #include "code\modules\smithing\furnace.dm"
 #include "code\modules\smithing\smithed_items.dm"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 #include "code\modules\spells\spell.dm"
 #include "code\modules\spells\spell_types\aimed.dm"
 #include "code\modules\spells\spell_types\area_teleport.dm"
@@ -3302,12 +3252,8 @@
 #include "code\modules\surgery\plastic_surgery.dm"
 #include "code\modules\surgery\prosthetic_replacement.dm"
 #include "code\modules\surgery\remove_embedded_object.dm"
-<<<<<<< HEAD
-=======
-#include "code\modules\surgery\repair_puncture.dm"
 #include "code\modules\surgery\robot_brain_surgery.dm"
 #include "code\modules\surgery\robot_healing.dm"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 #include "code\modules\surgery\surgery.dm"
 #include "code\modules\surgery\surgery_step.dm"
 #include "code\modules\surgery\tools.dm"

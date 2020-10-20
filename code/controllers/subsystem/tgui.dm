@@ -11,16 +11,12 @@ SUBSYSTEM_DEF(tgui)
 	var/basehtml // The HTML base used for all UIs.
 
 /datum/controller/subsystem/tgui/PreInit()
-<<<<<<< HEAD
 	basehtml = file2text('tgui-next/packages/tgui/public/tgui-main.html')
-=======
 	basehtml = file2text('tgui/public/tgui.html')
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /datum/controller/subsystem/tgui/Shutdown()
 	close_all_uis()
 
-<<<<<<< HEAD
 /datum/controller/subsystem/tgui/stat_entry()
 	..("P:[processing_uis.len]")
 
@@ -33,7 +29,6 @@ SUBSYSTEM_DEF(tgui)
 	while(currentrun.len)
 		var/datum/tgui/ui = currentrun[currentrun.len]
 		currentrun.len--
-=======
 /datum/controller/subsystem/tgui/stat_entry(msg)
 	msg = "P:[length(open_uis)]"
 	return ..()
@@ -47,7 +42,6 @@ SUBSYSTEM_DEF(tgui)
 		var/datum/tgui/ui = current_run[current_run.len]
 		current_run.len--
 		// TODO: Move user/src_object check to process()
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 		if(ui && ui.user && ui.src_object)
 			ui.process()
 		else
@@ -55,8 +49,6 @@ SUBSYSTEM_DEF(tgui)
 		if (MC_TICK_CHECK)
 			return
 
-<<<<<<< HEAD
-=======
 /**
  * public
  *
@@ -359,4 +351,3 @@ SUBSYSTEM_DEF(tgui)
 	// Clear the old list.
 	source.tgui_open_uis.Cut()
 	return TRUE
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

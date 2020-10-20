@@ -29,7 +29,6 @@
 #define EFFECT_DROWSY		"drowsy"
 #define EFFECT_JITTER		"jitter"
 
-<<<<<<< HEAD
 // /mob/living/combat_flags
 #define CAN_TOGGLE_COMBAT_MODE(mob)			FORCE_BOOLEAN((mob.stat == CONSCIOUS) && !(mob.combat_flags & COMBAT_FLAG_HARD_STAMCRIT))
 
@@ -42,7 +41,6 @@
 
 /// The user wants combat mode on
 #define COMBAT_FLAG_COMBAT_TOGGLED			(1<<0)
-=======
 // mob/living/var/combat_flags variable.
 /// Default combat flags for those affected by sprinting (combat mode has been made into its own component)
 #define COMBAT_FLAGS_DEFAULT				(COMBAT_FLAG_PARRY_CAPABLE | COMBAT_FLAG_BLOCK_CAPABLE)
@@ -51,7 +49,6 @@
 /// Default combat flags for those in stamina combat system
 #define COMBAT_FLAGS_STAMINA_COMBAT			(COMBAT_FLAG_PARRY_CAPABLE | COMBAT_FLAG_BLOCK_CAPABLE | COMBAT_FLAG_STAMINA_BUFFER)
 
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 /// The user wants sprint mode on
 #define COMBAT_FLAG_SPRINT_TOGGLED			(1<<1)
 /// Combat mode is currently active
@@ -65,17 +62,14 @@
 /// Currently attempting to resist up from the ground
 #define COMBAT_FLAG_RESISTING_REST			(1<<6)
 /// Intentionally resting
-<<<<<<< HEAD
 #define COMBAT_FLAG_INTENTIONALLY_RESTING	(1<<7)
 /// Currently stamcritted but not as violently
 #define COMBAT_FLAG_SOFT_STAMCRIT			(1<<8)
 /// Force combat mode on at all times, overrides everything including combat disable traits.
 #define COMBAT_FLAG_COMBAT_FORCED			(1<<9)
-=======
 #define COMBAT_FLAG_INTENTIONALLY_RESTING	(1<<5)
 /// This mob requires stamina buffer to do things that require stamina buffer. Not having this exempts the mob from stamina combat.
 #define COMBAT_FLAG_STAMINA_BUFFER			(1<<6)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 /// Force sprint mode on at all times, overrides everything including sprint disable traits.
 #define COMBAT_FLAG_SPRINT_FORCED			(1<<10)
 
@@ -88,17 +82,14 @@
 #define CHECK_STAMCRIT(mob)					(mob.combat_flags & COMBAT_FLAG_HARD_STAMCRIT)
 
 //stamina stuff
-<<<<<<< HEAD
 #define STAMINA_SOFTCRIT					100 //softcrit for stamina damage. prevents standing up, prevents performing actions that cost stamina, etc, but doesn't force a rest or stop movement
 #define STAMINA_CRIT						140 //crit for stamina damage. forces a rest, and stops movement until stamina goes back to stamina softcrit
 #define STAMINA_SOFTCRIT_TRADITIONAL		0	//same as STAMINA_SOFTCRIT except for the more traditional health calculations
 #define STAMINA_CRIT_TRADITIONAL			-40 //ditto, but for STAMINA_CRIT
-=======
 /// crit for stamina damage. forces a rest, and stops movement until stamina goes back to stamina softcrit
 #define STAMINA_CRIT						140
 /// Threshold under for which you are unable to draw from stamina health to replace stamina buffer
 #define STAMINA_NO_OVERDRAW_THRESHOLD		100
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 #define CRAWLUNDER_DELAY							30 //Delay for crawling under a standing mob
 
@@ -260,7 +251,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 //We will round to this value in damage calculations.
 #define DAMAGE_PRECISION 0.01
 
-<<<<<<< HEAD
 //items total mass, used to calculate their attacks' stamina costs. If not defined, the cost will be (w_class * 1.25)
 #define TOTAL_MASS_TINY_ITEM		1.25
 #define TOTAL_MASS_SMALL_ITEM		2.5
@@ -348,7 +338,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define BLOCK_PRIORITY_UNIFORM					25
 
 #define BLOCK_PRIORITY_DEFAULT BLOCK_PRIORITY_HELD_ITEM
-=======
 //stamina recovery defines. Blocked if combat mode is on.
 #define STAM_RECOVERY_STAM_CRIT		-7.5
 #define STAM_RECOVERY_RESTING		-6
@@ -360,4 +349,3 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
   * a "inefficiently" prefix will be added to the message.
   */
 #define FEEBLE_ATTACK_MSG_THRESHOLD 0.5
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

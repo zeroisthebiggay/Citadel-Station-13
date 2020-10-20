@@ -211,12 +211,10 @@ If not set, defaults to check_completion instead. Set it. It's used by cryo.
 	return won || ..()
 
 /datum/objective/assassinate/once/process()
-<<<<<<< HEAD
 	won = check_completion()
 	if(won)
 		STOP_PROCESSING(SSprocessing,src)
 
-=======
 	won = tick_check_completion()
 	if(won)
 		STOP_PROCESSING(SSprocessing,src)
@@ -227,7 +225,6 @@ If not set, defaults to check_completion instead. Set it. It's used by cryo.
 /datum/objective/assassinate/once/check_midround_completion()
 	return won //If they cryoed, only keep it if we already won
 
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 /datum/objective/assassinate/internal
 	var/stolen = 0 		//Have we already eliminated this target?
 

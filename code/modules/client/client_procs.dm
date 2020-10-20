@@ -20,9 +20,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	When somebody clicks a link in game, this Topic is called first.
 	It does the stuff in this proc and  then is redirected to the Topic() proc for the src=[0xWhatever]
 	(if specified in the link). ie locate(hsrc).Topic()
-
 	Such links can be spoofed.
-
 	Because of this certain things MUST be considered whenever adding a Topic() for something:
 		- Can it be fed harmful values which could cause runtimes?
 		- Is the Topic call an admin-only thing?
@@ -37,34 +35,13 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		return
 
 	// asset_cache
+	var/asset_cache_job
 	if(href_list["asset_cache_confirm_arrival"])
-<<<<<<< HEAD
-		var/job = text2num(href_list["asset_cache_confirm_arrival"])
-		//because we skip the limiter, we have to make sure this is a valid arrival and not somebody tricking us
-		//	into letting append to a list without limit.
-		if (job && job <= last_asset_job && !(job in completed_asset_jobs))
-			completed_asset_jobs += job
-=======
 		asset_cache_job = asset_cache_confirm_arrival(href_list["asset_cache_confirm_arrival"])
 		if (!asset_cache_job)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 			return
-		else if (job in completed_asset_jobs) //byond bug ID:2256651
-			to_chat(src, "<span class='danger'>An error has been detected in how your client is receiving resources. Attempting to correct.... (If you keep seeing these messages you might want to close byond and reconnect)</span>")
-			src << browse("...", "window=asset_cache_browser")
-			// Keypress passthrough
-	if(href_list["__keydown"])
-		var/keycode = browser_keycode_to_byond(href_list["__keydown"])
-		if(keycode)
-			keyDown(keycode)
-		return
-	if(href_list["__keyup"])
-		var/keycode = browser_keycode_to_byond(href_list["__keyup"])
-		if(keycode)
-			keyUp(keycode)
-		return
 
-
+	// Rate limiting
 	var/mtl = CONFIG_GET(number/minute_topic_limit)
 	if (!holder && mtl)
 		var/minute = round(world.time, 600)
@@ -80,7 +57,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				topiclimiter[ADMINSWARNED_AT] = minute
 				msg += " Administrators have been informed."
 				log_game("[key_name(src)] Has hit the per-minute topic limit of [mtl] topic calls in a given game minute")
-				message_admins("[ADMIN_LOOKUPFLW(src)] [ADMIN_KICK(usr)] Has hit the per-minute topic limit of [mtl] topic calls in a given game minute")
+				message_admins("[ADMIN_LOOKUPFLW(usr)] [ADMIN_KICK(usr)] Has hit the per-minute topic limit of [mtl] topic calls in a given game minute")
 			to_chat(src, "<span class='danger'>[msg]</span>")
 			return
 
@@ -101,8 +78,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!(href_list["_src_"] == "chat" && href_list["proc"] == "ping" && LAZYLEN(href_list) == 2))
 		log_href("[src] (usr:[usr]\[[COORD(usr)]\]) : [hsrc ? "[hsrc] " : ""][href]")
 
-<<<<<<< HEAD
-=======
 	//byond bug ID:2256651
 	if (asset_cache_job && (asset_cache_job in completed_asset_jobs))
 		to_chat(src, "<span class='danger'>An error has been detected in how your client is receiving resources. Attempting to correct.... (If you keep seeing these messages you might want to close byond and reconnect)</span>")
@@ -128,7 +103,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(tgui_Topic(href_list))
 		return
 
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	// Admin PM
 	if(href_list["priv_msg"])
 		cmd_admin_pm(href_list["priv_msg"],null)
@@ -292,11 +266,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	else
 		prefs = new /datum/preferences(src)
 		GLOB.preferences_datums[ckey] = prefs
-<<<<<<< HEAD
-=======
-		
+
 	addtimer(CALLBACK(src, .proc/ensure_keys_set), 10)	//prevents possible race conditions
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
@@ -364,17 +335,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				qdel(src)
 				return
 
-<<<<<<< HEAD
-	if(SSinput.initialized)
-		set_macros()
-
-	chatOutput.start() // Starts the chat
-=======
 	// Initialize tgui panel
 	tgui_panel.initialize()
 	src << browse(file('html/statbrowser.html'), "window=statbrowser")
 
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 	if(alert_mob_dupe_login)
 		spawn()
@@ -509,21 +473,16 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	fit_viewport()
 	Master.UpdateTickRate()
 
-<<<<<<< HEAD
-=======
 /client/proc/ensure_keys_set()
 	if(SSinput.initialized)
 		set_macros()
 		update_movement_keys(prefs)
 
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 //////////////
 //DISCONNECT//
 //////////////
 
 /client/Del()
-<<<<<<< HEAD
-=======
 	if(!gc_destroyed)
 		Destroy() //Clean up signals and timers.
 	return ..()
@@ -534,7 +493,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	log_access("Logout: [key_name(src)]")
 	GLOB.ahelp_tickets.ClientLogout(src)
 	// SSserver_maint.UpdateHubStatus()
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	if(credits)
 		QDEL_LIST(credits)
 	if(holder)
@@ -564,13 +522,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		UNSETEMPTY(movingmob.client_mobs_in_contents)
 	// seen_messages = null
 	Master.UpdateTickRate()
-<<<<<<< HEAD
-	return ..()
-
-/client/Destroy()
-=======
 	. = ..() //Even though we're going to be hard deleted there are still some things that want to know the destroy is happening
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	return QDEL_HINT_HARDDEL_NOW
 
 /client/proc/set_client_age_from_db(connectiontopic)
@@ -838,6 +790,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		ip_intel = res.intel
 
 /client/Click(atom/object, atom/location, control, params, ignore_spam = FALSE)
+	if(last_click > world.time - world.tick_lag)
+		return
+	last_click = world.time
 	var/ab = FALSE
 	var/list/L = params2list(params)
 	if (object && object == middragatom && L["left"])
@@ -861,7 +816,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 					log_game("[key_name(src)] is using the middle click aimbot exploit")
 					message_admins("[ADMIN_LOOKUPFLW(src)] [ADMIN_KICK(usr)] is using the middle click aimbot exploit</span>")
 					add_system_note("aimbot", "Is using the middle click aimbot exploit")
-
+					log_click(object, location, control, params, src, "lockout (spam - minute ab c [ab] s [middragtime])", TRUE)
+				else
+					log_click(object, location, control, params, src, "lockout (spam - minute)", TRUE)
 				log_game("[key_name(src)] Has hit the per-minute click limit of [mcl] clicks in a given game minute")
 				message_admins("[ADMIN_LOOKUPFLW(src)] [ADMIN_KICK(usr)] Has hit the per-minute click limit of [mcl] clicks in a given game minute")
 			to_chat(src, "<span class='danger'>[msg]</span>")
@@ -881,7 +838,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			return
 
 	if(ab) //Citadel edit, things with stuff.
+		log_click(object, location, control, params, src, "dropped (ab c [ab] s [middragtime])", TRUE)
 		return
+
+	if(prefs.log_clicks)
+		log_click(object, location, control, params, src)
 
 	if (prefs.hotkeys)
 		// If hotkey mode is enabled, then clicking the map will automatically
@@ -919,14 +880,14 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 #endif
 
 	spawn (10) //removing this spawn causes all clients to not get verbs.
+
+		//load info on what assets the client has
+		src << browse('code/modules/asset_cache/validate_assets.html', "window=asset_cache_browser")
+
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
-<<<<<<< HEAD
-		getFilesSlow(src, SSassets.preload, register_asset = FALSE)
-=======
 		if (CONFIG_GET(flag/asset_simple_preload))
 			addtimer(CALLBACK(SSassets.transport, /datum/asset_transport.proc/send_assets_slow, src, SSassets.transport.preload), 5 SECONDS)
 
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 		#if (PRELOAD_RSC == 0)
 		for (var/name in GLOB.vox_sounds)
 			var/file = GLOB.vox_sounds[name]
@@ -942,19 +903,14 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 /client/vv_edit_var(var_name, var_value)
 	switch (var_name)
-		if ("holder")
+		if (NAMEOF(src, holder))
 			return FALSE
-		if ("ckey")
+		if (NAMEOF(src, ckey))
 			return FALSE
-		if ("key")
+		if (NAMEOF(src, key))
 			return FALSE
-<<<<<<< HEAD
-		if("view")
-			change_view(var_value)
-=======
 		if (NAMEOF(src, view))
 			view_size.setDefault(var_value)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 			return TRUE
 	. = ..()
 
@@ -965,6 +921,23 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	x = clamp(x+change, min, max)
 	y = clamp(y+change, min,max)
 	view_size.setDefault("[x]x[y]")
+
+/client/proc/update_movement_keys(datum/preferences/direct_prefs)
+	var/datum/preferences/D = prefs || direct_prefs
+	if(!D?.key_bindings)
+		return
+	movement_keys = list()
+	for(var/key in D.key_bindings)
+		for(var/kb_name in D.key_bindings[key])
+			switch(kb_name)
+				if("North")
+					movement_keys[key] = NORTH
+				if("East")
+					movement_keys[key] = EAST
+				if("West")
+					movement_keys[key] = WEST
+				if("South")
+					movement_keys[key] = SOUTH
 
 /client/proc/change_view(new_size)
 	if (isnull(new_size))
@@ -1016,8 +989,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		screen -= S
 		qdel(S)
 	char_render_holders = null
-<<<<<<< HEAD
-=======
 
 /client/proc/can_have_part(part_name)
 	return prefs.pref_species.mutant_bodyparts[part_name] || (part_name in GLOB.unlocked_mutant_parts)
@@ -1039,4 +1010,3 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		verb_tabs |= verb_to_init.category
 		verblist[++verblist.len] = list(verb_to_init.category, verb_to_init.name)
 	src << output("[url_encode(json_encode(verb_tabs))];[url_encode(json_encode(verblist))]", "statbrowser:init_verbs")
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

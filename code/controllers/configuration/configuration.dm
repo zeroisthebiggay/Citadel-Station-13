@@ -140,11 +140,8 @@
 
 		if(entry == "$include")
 			if(!value)
-<<<<<<< HEAD
 				log_config("Warning: Invalid $include directive: [value]")
-=======
 				log_config("LINE [linenumber]: Warning: Invalid $include directive: [value]")
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 			else
 				LoadEntries(value, stack)
 				++.
@@ -152,11 +149,8 @@
 
 		var/datum/config_entry/E = _entries[entry]
 		if(!E)
-<<<<<<< HEAD
 			log_config("Unknown setting in configuration: '[entry]'")
-=======
 			log_config("LINE [linenumber]: Unknown setting in configuration: '[entry]'")
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 			continue
 
 		if(lockthis)
@@ -166,11 +160,8 @@
 			var/datum/config_entry/new_ver = entries_by_type[E.deprecated_by]
 			var/new_value = E.DeprecationUpdate(value)
 			var/good_update = istext(new_value)
-<<<<<<< HEAD
 			log_config("Entry [entry] is deprecated and will be removed soon. Migrate to [new_ver.name]![good_update ? " Suggested new value is: [new_value]" : ""]")
-=======
 			log_config("LINE [linenumber]: Entry [entry] is deprecated and will be removed soon. Migrate to [new_ver.name]![good_update ? " Suggested new value is: [new_value]" : ""]")
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 			if(!warned_deprecated_configs)
 				DelayedMessageAdmins("This server is using deprecated configuration settings. Please check the logs and update accordingly.")
 				warned_deprecated_configs = TRUE
@@ -473,8 +464,6 @@ Example config:
 				continue
 			runnable_modes[M] = probabilities[M.config_tag]
 	return runnable_modes
-<<<<<<< HEAD
-=======
 /*
 /datum/controller/configuration/proc/LoadChatFilter()
 	var/list/in_character_filter = list()
@@ -492,4 +481,3 @@ Example config:
 //Message admins when you can.
 /datum/controller/configuration/proc/DelayedMessageAdmins(text)
 	addtimer(CALLBACK(GLOBAL_PROC, /proc/message_admins, text), 0)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

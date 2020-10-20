@@ -98,13 +98,10 @@
 #define NO_APHRO			(1<<9)
 #define NO_ASS_SLAP			(1<<10)
 #define BIMBOFICATION		(1<<11)
-<<<<<<< HEAD
 
-=======
 #define NO_AUTO_WAG			(1<<12)
 #define GENITAL_EXAMINE		(1<<13)
 #define VORE_EXAMINE		(1<<14)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 #define TOGGLES_CITADEL 0
 
 //component stuff

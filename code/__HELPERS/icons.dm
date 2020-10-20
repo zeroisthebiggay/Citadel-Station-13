@@ -1148,12 +1148,10 @@ GLOBAL_DATUM_INIT(dummySave, /savefile, new("tmp/dummySave.sav")) //Cache of ico
 	if (!isicon(I))
 		if (isfile(thing)) //special snowflake
 			var/name = sanitize_filename("[generate_asset_name(thing)].png")
-<<<<<<< HEAD
 			register_asset(name, thing)
 			for (var/thing2 in targets)
 				send_asset(thing2, key, FALSE)
 			return "<img class='icon icon-misc' src=\"[url_encode(name)]\">"
-=======
 			if (!SSassets.cache[name])
 				SSassets.transport.register_asset(name, thing)
 			for (var/thing2 in targets)
@@ -1161,7 +1159,6 @@ GLOBAL_DATUM_INIT(dummySave, /savefile, new("tmp/dummySave.sav")) //Cache of ico
 			if(sourceonly)
 				return SSassets.transport.get_asset_url(name)
 			return "<img class='icon icon-misc' src='[SSassets.transport.get_asset_url(name)]'>"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 		var/atom/A = thing
 
 		I = A.icon
@@ -1189,18 +1186,15 @@ GLOBAL_DATUM_INIT(dummySave, /savefile, new("tmp/dummySave.sav")) //Cache of ico
 	I = icon(I, icon_state, dir, frame, moving)
 
 	key = "[generate_asset_name(I)].png"
-<<<<<<< HEAD
 	register_asset(key, I)
 	for (var/thing2 in targets)
 		send_asset(thing2, key, FALSE)
-=======
 	if(!SSassets.cache[key])
 		SSassets.transport.register_asset(key, I)
 	for (var/thing2 in targets)
 		SSassets.transport.send_assets(thing2, key)
 	if(sourceonly)
 		return SSassets.transport.get_asset_url(key)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 	return "<img class='icon icon-[icon_state]' src='[SSassets.transport.get_asset_url(key)]'>"
 

@@ -53,13 +53,8 @@
 	var/datum/admin_help/AH = C.current_ticket
 
 	if(AH)
-<<<<<<< HEAD
-		message_admins("[key_name_admin(src)] has started replying to [key_name(C, 0, 0)]'s admin help.")
-	var/msg = input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as message|null
-=======
 		message_admins("[key_name_admin(src)] has started replying to [key_name_admin(C, 0, 0)]'s admin help.")
 	var/msg = input(src,"Message:", "Private message to [C.holder?.fakekey ? "an Administrator" : key_name(C, 0, 0)].") as message|null
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	if (!msg)
 		message_admins("[key_name_admin(src)] has cancelled their reply to [key_name_admin(C, 0, 0)]'s admin help.")
 		return
@@ -103,19 +98,14 @@
 		to_chat(src, "<span class='danger'>Error: Admin-PM: Client not found.</span>", confidential = TRUE)
 		return
 
-<<<<<<< HEAD
-	if(irc)
-		if(!ircreplyamount)	//to prevent people from spamming irc
-=======
 	recipient_ckey = recipient.ckey
 	recipient_ticket = recipient.current_ticket
 
 	if(external)
 		if(!ircreplyamount)	//to prevent people from spamming irc/discord
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 			return
 		if(!msg)
-			msg = input(src,"Message:", "Private message to Administrator") as text|null
+			msg = input(src,"Message:", "Private message to Administrator") as message|null
 
 		if(!msg)
 			return
@@ -127,7 +117,7 @@
 	else
 		//get message text, limit it's length.and clean/escape html
 		if(!msg)
-			msg = input(src,"Message:", "Private message to [key_name(recipient, 0, 0)]") as message|null
+			msg = input(src,"Message:", "Private message to [recipient.holder?.fakekey ? "an Administrator" : key_name(recipient, 0, 0)].") as message|null
 			msg = trim(msg)
 			if(!msg)
 				return
@@ -155,13 +145,8 @@
 		return
 
 	//clean the message if it's not sent by a high-rank admin
-<<<<<<< HEAD
-	if(!check_rights(R_SERVER|R_DEBUG,0)||irc)//no sending html to the poor bots
-		msg = trim(sanitize(msg), MAX_MESSAGE_LEN)
-=======
 	if(!check_rights(R_SERVER|R_DEBUG,0)||external)//no sending html to the poor bots
 		msg = sanitize(copytext_char(msg, 1, MAX_MESSAGE_LEN))
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 		if(!msg)
 			return
 
@@ -228,20 +213,7 @@
 
 				//AdminPM popup for ApocStation and anybody else who wants to use it. Set it with POPUP_ADMIN_PM in config.txt ~Carn
 				if(CONFIG_GET(flag/popup_admin_pm))
-<<<<<<< HEAD
-					spawn()	//so we don't hold the caller proc up
-						var/sender = src
-						var/sendername = key
-						var/reply = input(recipient, msg,"Admin PM from-[sendername]", "") as text|null		//show message and await a reply
-						if(recipient && reply)
-							if(sender)
-								recipient.cmd_admin_pm(sender,reply)										//sender is still about, let's reply to them
-							else
-								adminhelp(reply)													//sender has left, adminhelp instead
-						return
-=======
 					INVOKE_ASYNC(src, .proc/popup_admin_pm, recipient, msg)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 			else		//neither are admins
 				to_chat(src, "<span class='danger'>Error: Admin-PM: Non-admin to non-admin PM communication is forbidden.</span>", confidential = TRUE)

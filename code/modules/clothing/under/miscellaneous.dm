@@ -66,7 +66,7 @@
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list("melee" = 100, "bullet" = 100, "laser" = 100,"energy" = 100, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	armor = list("melee" = 100, "bullet" = 100, "laser" = 100,"energy" = 100, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100, "wound" = 1000) //wound defense at 100 wont stop wounds
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -87,7 +87,6 @@
 	icon_state = "overalls"
 	item_state = "lb_suit"
 	can_adjust = FALSE
-	custom_price = 60
 
 /obj/item/clothing/under/misc/assistantformal
 	name = "assistant's formal uniform"
@@ -308,8 +307,6 @@
 	icon_state = "polyfemtankpantsu"
 	poly_states = 2
 	poly_colors = list("#808080", "#FF3535")
-<<<<<<< HEAD
-=======
 
 /obj/item/clothing/under/misc/black_dress
 	name = "little black dress"
@@ -328,7 +325,7 @@
 	desc = "A blue bathrobe."
 	icon_state = "bathrobe"
 	item_state = "bathrobe"
-	
+
 /obj/item/clothing/under/misc/mechsuitred
 	name = "red mech suit"
 	desc = "What are you, stupid?"
@@ -340,11 +337,9 @@
 	desc = "...Mom?"
 	icon_state = "white_mech_suit"
 	item_state = "white_mech_suit"
-	
+
 /obj/item/clothing/under/misc/mechsuitblue
 	name = "blue mech suit"
 	desc = "Get in the damn robot already!"
 	icon_state = "blue_mech_suit"
 	item_state = "blue_mech_suit"
-	
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

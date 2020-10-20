@@ -38,8 +38,6 @@
 	if(!uses)
 		qdel(src)
 
-<<<<<<< HEAD
-=======
 /obj/item/implant/warp
 	name = "warp implant"
 	desc = "Warps you to where you were 10 seconds before when activated."
@@ -120,7 +118,6 @@
 /obj/item/implanter/warp
 	name = "implanter (warp)"
 	imp_type = /obj/item/implant/warp
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /obj/item/implant/emp
 	name = "emp implant"

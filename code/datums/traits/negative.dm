@@ -44,7 +44,6 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 /datum/quirk/family_heirloom/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/heirloom_type
-<<<<<<< HEAD
 	switch(quirk_holder.mind.assigned_role)
 		if("Clown")
 			heirloom_type = pick(/obj/item/paint/anycolor, /obj/item/bikehorn/golden)
@@ -76,12 +75,10 @@ GLOBAL_LIST_EMPTY(family_heirlooms)
 			heirloom_type = /obj/item/camera/spooky/family
 		if("Captain")
 			heirloom_type = /obj/item/clothing/accessory/medal/gold/captain/family
-=======
 	var/species_heirloom_entry = GLOB.species_heirlooms[H.dna.species.id]
 	if(species_heirloom_entry)
 		if(prob(species_heirloom_entry[1]))
 			heirloom_type = pick(species_heirloom_entry[2])
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	if(!heirloom_type)
 		var/job_heirloom_entry = GLOB.job_heirlooms[quirk_holder.mind.assigned_role]
 		if(!job_heirloom_entry)

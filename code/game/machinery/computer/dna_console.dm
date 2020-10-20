@@ -109,12 +109,10 @@
 
 	stored_research = SSresearch.science_tech
 
-<<<<<<< HEAD
 /obj/machinery/computer/scan_consolenew/examine(mob/user)
 	. = ..()
 	if(jokerready < world.time)
 		. += "<span class='notice'>JOKER algorithm available.</span>"
-=======
 /obj/machinery/computer/scan_consolenew/ui_interact(mob/user, datum/tgui/ui)
 	// Most of ui_interact is spent setting variables for passing to the tgui
 	//  interface.
@@ -127,7 +125,6 @@
 	// Check for connected AND operational scanner.
 	if(scanner_op)
 		can_use_scanner = TRUE
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	else
 		. += "<span class='notice'>JOKER algorithm available in about [round(0.00166666667 * (jokerready - world.time))] minutes."
 
@@ -180,18 +177,15 @@
 			else
 				scanner_status += "<span class='good'>(Unlocked)</span>"
 
-<<<<<<< HEAD
-=======
 	// Attempt to update tgui ui, open and update if needed.
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "DnaConsole")
 		ui.open()
-		
+
 /obj/machinery/computer/scan_consolenew/ui_assets()
 	. = ..() || list()
 	. += get_asset_datum(/datum/asset/simple/genetics)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 	else
 		occupant_status += "<span class='bad'>----</span></div></div>"
@@ -584,11 +578,8 @@
 	temp_html += "</div></div>"
 	return temp_html
 
-<<<<<<< HEAD
 /obj/machinery/computer/scan_consolenew/Topic(href, href_list)
-=======
 /obj/machinery/computer/scan_consolenew/ui_act(action, list/params)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	if(..())
 		return
 	if(!isturf(usr.loc))
@@ -601,7 +592,6 @@
 	add_fingerprint(usr)
 	usr.set_machine(src)
 
-<<<<<<< HEAD
 	var/mob/living/carbon/viable_occupant = get_viable_occupant()
 
 	//Basic Tasks///////////////////////////////////////////
@@ -743,7 +733,6 @@
 
 							viable_occupant.dna.uni_identity = copytext_char(viable_occupant.dna.uni_identity, 1, num) + hex + copytext_char(viable_occupant.dna.uni_identity, num + 1)
 							viable_occupant.updateappearance(mutations_overlay_update=1)
-=======
 	switch(action)
 		// Connect this DNA Console to a nearby DNA Scanner
 		// Usually only activate as an option if there is no connected scanner
@@ -1004,7 +993,6 @@
 				if(scanner_operational())
 					I.damage_coeff = connected_scanner.damage_coeff*4
 					injectorready = world.time + INJECTOR_TIMEOUT * (1 - 0.1 * connected_scanner.precision_coeff)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 				else
 					current_screen = "mainmenu"
 

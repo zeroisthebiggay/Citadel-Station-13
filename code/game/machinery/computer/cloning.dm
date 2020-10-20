@@ -191,11 +191,9 @@
 				else if(loading)
 					dat += "[scanner_occupant] => Scanning..."
 				else
-<<<<<<< HEAD
 					if(scanner_occupant.ckey != scantemp_ckey)
 						scantemp = "Ready to Scan"
 						scantemp_ckey = scanner_occupant.ckey
-=======
 					if(use_records)
 						if(scanner_occupant.ckey != scantemp_ckey || scanner_occupant.name != scantemp_name)
 							scantemp = "Ready to Scan"
@@ -203,7 +201,6 @@
 							scantemp_name = scanner_occupant.name
 					else
 						scantemp = "Ready to Clone"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 					dat += "[scanner_occupant] => [scantemp]"
 				dat += "</div>"
 
@@ -300,26 +297,19 @@
 				autoprocess = FALSE
 				STOP_PROCESSING(SSmachines, src)
 				playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
-<<<<<<< HEAD
-=======
 		src.updateUsrDialog()
 		. = TRUE
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 	else if ((href_list["scan"]) && !isnull(scanner) && scanner.is_operational())
 		scantemp = ""
 
-<<<<<<< HEAD
 		loading = 1
 		src.updateUsrDialog()
-=======
 		loading = TRUE
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, 0)
 		say("Initiating scan...")
 		var/prev_locked = scanner.locked
 		scanner.locked = TRUE
-<<<<<<< HEAD
 		spawn(20)
 			src.scan_occupant(scanner.occupant)
 
@@ -328,11 +318,9 @@
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 			scanner.locked = prev_locked
 
-=======
 		src.updateUsrDialog()
 		addtimer(CALLBACK(src, .proc/finish_scan, scanner.occupant, prev_locked), 2 SECONDS)
 		. = TRUE
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 		//No locking an open scanner.
 	else if ((href_list["lock"]) && !isnull(scanner) && scanner.is_operational())
@@ -342,11 +330,8 @@
 		else
 			scanner.locked = FALSE
 			playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
-<<<<<<< HEAD
-=======
 		src.updateUsrDialog()
 		. = TRUE
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 	else if(href_list["view_rec"])
 		playsound(src, "terminal_type", 25, 0)
@@ -360,11 +345,8 @@
 				src.menu = 3
 		else
 			src.temp = "Record missing."
-<<<<<<< HEAD
-=======
 		src.updateUsrDialog()
 		. = TRUE
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 	else if (href_list["del_rec"])
 		if ((!src.active_record) || (src.menu < 3))
@@ -473,21 +455,16 @@
 			src.updateUsrDialog()
 			playsound(src, 'sound/machines/terminal_prompt_deny.ogg', 50, 0)
 
-<<<<<<< HEAD
 	else if (href_list["menu"])
 		src.menu = text2num(href_list["menu"])
-=======
 	else if (href_list["menu"] && use_records)
 		menu = text2num(href_list["menu"])
 		src.updateUsrDialog()
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 		playsound(src, "terminal_type", 25, 0)
 
 	src.add_fingerprint(usr)
-<<<<<<< HEAD
 	src.updateUsrDialog()
 	return
-=======
 
 	if(use_records)
 		scan_occupant(L)
@@ -498,8 +475,7 @@
 	scanner.locked = prev_locked
 	src.updateUsrDialog()
 	playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
-	
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
+
 
 /obj/machinery/computer/cloning/proc/scan_occupant(occupant)
 	var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)

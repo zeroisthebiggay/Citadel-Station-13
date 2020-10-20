@@ -285,13 +285,10 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return
 	if(anchored)
 		return
-<<<<<<< HEAD
-=======
 	if(loc == user && current_equipped_slot && current_equipped_slot != SLOT_HANDS)
 		if(current_equipped_slot in user.check_obscured_slots())
 			to_chat(user, "<span class='warning'>You are unable to unequip that while wearing other garments over it!</span>")
 			return FALSE
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 	if(resistance_flags & ON_FIRE)
 		var/mob/living/carbon/C = user
@@ -356,14 +353,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		return
 	if(anchored)
 		return
-<<<<<<< HEAD
-=======
 	if(loc == user && current_equipped_slot && current_equipped_slot != SLOT_HANDS)
 		if(current_equipped_slot in user.check_obscured_slots())
 			to_chat(user, "<span class='warning'>You are unable to unequip that while wearing other garments over it!</span>")
 			return FALSE
 
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 	SEND_SIGNAL(loc, COMSIG_TRY_STORAGE_TAKE, src, user.loc, TRUE)
 

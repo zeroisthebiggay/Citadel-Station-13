@@ -52,8 +52,6 @@
 #define CONTRACT_UPLINK_PAGE_CONTRACTS "CONTRACTS"
 #define CONTRACT_UPLINK_PAGE_HUB "HUB"
 
-<<<<<<< HEAD
-=======
 //Lingblood stuff
 #define LINGBLOOD_DETECTION_THRESHOLD 1
 #define LINGBLOOD_EXPLOSION_MULT 2
@@ -68,7 +66,6 @@
 #define PATH_RUST "Rust"
 #define PATH_FLESH "Flesh"
 
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 //Overthrow time to update heads obj
 #define OBJECTIVE_UPDATING_TIME 300
 

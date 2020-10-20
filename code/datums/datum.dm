@@ -49,8 +49,6 @@
 	/// A weak reference to another datum
 	var/datum/weakref/weak_reference
 
-<<<<<<< HEAD
-=======
 	/*
 	* Lazy associative list of currently active cooldowns.
 	*
@@ -59,7 +57,6 @@
 	*/
 	var/list/cooldowns
 
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 #ifdef TESTING
 	var/running_find_references
 	var/last_find_references = 0

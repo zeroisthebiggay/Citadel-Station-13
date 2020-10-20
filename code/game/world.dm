@@ -8,11 +8,9 @@ GLOBAL_LIST(topic_status_cache)
 //This happens after the Master subsystem new(s) (it's a global datum)
 //So subsystems globals exist, but are not initialised
 /world/New()
-<<<<<<< HEAD
 	var/extools = world.GetConfig("env", "EXTOOLS_DLL") || "./byond-extools.dll"
 	if (fexists(extools))
 		call(extools, "maptick_initialize")()
-=======
 	if (fexists(EXTOOLS))
 		call(EXTOOLS, "maptick_initialize")()
 	#ifdef EXTOOLS_LOGGING
@@ -20,7 +18,6 @@ GLOBAL_LIST(topic_status_cache)
 	else
 		CRASH("[EXTOOLS] does not exist!")
 	#endif
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	enable_debugger()
 
 	world.Profile(PROFILE_START)
@@ -259,13 +256,10 @@ GLOBAL_LIST(topic_status_cache)
 	shutdown_logging() // Past this point, no logging procs can be used, at risk of data loss.
 	..()
 
-<<<<<<< HEAD
-=======
 /world/Del()
 	shutdown_logging() // makes sure the thread is closed before end, else we terminate
 	..()
 
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 /world/proc/update_status()
 
 	var/list/features = list()

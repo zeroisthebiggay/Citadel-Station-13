@@ -1,6 +1,5 @@
+/// Station home gateway
 GLOBAL_DATUM(the_gateway, /obj/machinery/gateway/centerstation)
-<<<<<<< HEAD
-=======
 /// List of possible gateway destinations.
 GLOBAL_LIST_EMPTY(gateway_destinations)
 
@@ -140,74 +139,81 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 /obj/effect/gateway_portal_bumper/Destroy(force)
 	. = ..()
 	gateway = null
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /obj/machinery/gateway
 	name = "gateway"
 	desc = "A mysterious gateway built by unknown hands, it allows for faster than light travel to far-flung locations."
 	icon = 'icons/obj/machines/gateway.dmi'
 	icon_state = "off"
-	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	var/active = 0
-	var/checkparts = TRUE
-	var/list/obj/effect/landmark/randomspawns = list()
+
+	// 3x2 offset by one row
+	pixel_x = -32
+	pixel_y = -32
+	bound_height = 64
+	bound_width = 96
+	bound_x = -32
+	bound_y = 0
+	density = TRUE
+
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 100
+	active_power_usage = 5000
+
 	var/calibrated = TRUE
-	var/list/linked = list()
-	var/can_link = FALSE	//Is this the centerpiece?
+	/// Type of instanced gateway destination, needs to be subtype of /datum/gateway_destination/gateway
+	var/destination_type = /datum/gateway_destination/gateway
+	/// Name of the generated destination
+	var/destination_name = "Unknown Gateway"
+	/// This is our own destination, pointing at this gateway
+	var/datum/gateway_destination/gateway/destination
+	/// This is current active destination
+	var/datum/gateway_destination/target
+	/// bumper object, the thing that starts actual teleport
+	var/obj/effect/gateway_portal_bumper/portal
 
 /obj/machinery/gateway/Initialize()
-	randomspawns = GLOB.awaydestinations
+	generate_destination()
 	update_icon()
-	if(!istype(src, /obj/machinery/gateway/centerstation) && !istype(src, /obj/machinery/gateway/centeraway))
-		switch(dir)
-			if(SOUTH,SOUTHEAST,SOUTHWEST)
-				density = FALSE
 	return ..()
 
-/obj/machinery/gateway/proc/toggleoff()
-	for(var/obj/machinery/gateway/G in linked)
-		G.active = 0
-		G.update_icon()
-	active = 0
+/obj/machinery/gateway/proc/generate_destination()
+	destination = new destination_type
+	destination.name = destination_name
+	destination.target_gateway = src
+	GLOB.gateway_destinations += destination
+
+/obj/machinery/gateway/proc/deactivate()
+	var/datum/gateway_destination/dest = target
+	target = null
+	dest.deactivate(src)
+	QDEL_NULL(portal)
+	if(use_power == ACTIVE_POWER_USE)
+		use_power = IDLE_POWER_USE
 	update_icon()
 
-/obj/machinery/gateway/proc/detect()
-	if(!can_link)
-		return FALSE
-	linked = list()	//clear the list
-	var/turf/T = loc
-	var/ready = FALSE
-
-	for(var/i in GLOB.alldirs)
-		T = get_step(loc, i)
-		var/obj/machinery/gateway/G = locate(/obj/machinery/gateway) in T
-		if(G)
-			linked.Add(G)
-			continue
-
-		//this is only done if we fail to find a part
-		ready = FALSE
-		toggleoff()
-		break
-
-	if((linked.len == 8) || !checkparts)
-		ready = TRUE
-	return ready
+/obj/machinery/gateway/process()
+	if((stat & (NOPOWER)) && use_power)
+		if(target)
+			deactivate()
+		return
 
 /obj/machinery/gateway/update_icon_state()
-	icon_state = active ? "on" : "off"
+	if(target)
+		icon_state = "on"
+	else
+		icon_state = "off"
 
-/obj/machinery/gateway/attack_hand(mob/user)
-	. = ..()
-	if(.)
+/obj/machinery/gateway/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
+	return
+
+/obj/machinery/gateway/proc/generate_bumper()
+	portal = new(get_turf(src))
+	portal.gateway = src
+
+/obj/machinery/gateway/proc/activate(datum/gateway_destination/D)
+	if(!powered() || target)
 		return
-<<<<<<< HEAD
-	if(!detect())
-		return
-	if(!active)
-		toggleon(user)
-=======
 	target = D
 	target.activate(destination)
 	generate_bumper()
@@ -216,122 +222,40 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 
 /obj/machinery/gateway/proc/Transfer(atom/movable/AM)
 	if(!target || !target.incoming_pass_check(AM))
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 		return
-	toggleoff()
+	AM.forceMove(target.get_target_turf())
+	target.post_transfer(AM)
 
-/obj/machinery/gateway/proc/toggleon(mob/user)
-	return FALSE
-
-/obj/machinery/gateway/safe_throw_at()
-	return
+/* Station's primary gateway */
+/obj/machinery/gateway/centerstation
+	destination_type = /datum/gateway_destination/gateway/home
+	destination_name = "Home Gateway"
 
 /obj/machinery/gateway/centerstation/Initialize()
 	. = ..()
 	if(!GLOB.the_gateway)
 		GLOB.the_gateway = src
-	update_icon()
-	wait = world.time + CONFIG_GET(number/gateway_delay)	//+ thirty minutes default
-	awaygate = locate(/obj/machinery/gateway/centeraway)
 
 /obj/machinery/gateway/centerstation/Destroy()
 	if(GLOB.the_gateway == src)
 		GLOB.the_gateway = null
 	return ..()
 
-//this is da important part wot makes things go
-/obj/machinery/gateway/centerstation
-	density = TRUE
-	icon_state = "offcenter"
-	use_power = IDLE_POWER_USE
-
-	//warping vars
-	var/wait = 0				//this just grabs world.time at world start
-	var/obj/machinery/gateway/centeraway/awaygate = null
-	can_link = TRUE
-
-/obj/machinery/gateway/centerstation/update_icon_state()
-	icon_state = active ? "oncenter" : "offcenter"
-
-/obj/machinery/gateway/centerstation/process()
-	if((stat & (NOPOWER)) && use_power)
-		if(active)
-			toggleoff()
-		return
-
-	if(active)
-		use_power(5000)
-
-/obj/machinery/gateway/centerstation/toggleon(mob/user)
-	if(!detect())
-		return
-	if(!powered())
-		return
-	if(!awaygate)
-		to_chat(user, "<span class='notice'>Error: No destination found.</span>")
-		return
-	if(world.time < wait)
-		to_chat(user, "<span class='notice'>Error: Warpspace triangulation in progress. Estimated time to completion: [DisplayTimeText(wait - world.time)].</span>")
-		return
-
-	for(var/obj/machinery/gateway/G in linked)
-		G.active = 1
-		G.update_icon()
-	active = 1
-	update_icon()
-
-//okay, here's the good teleporting stuff
-/obj/machinery/gateway/centerstation/Bumped(atom/movable/AM)
-	if(!active)
-		return
-	if(!detect())
-		return
-	if(!awaygate || QDELETED(awaygate))
-		return
-
-	if(awaygate.calibrated)
-		AM.forceMove(get_step(awaygate.loc, SOUTH))
-		AM.setDir(SOUTH)
-		if (ismob(AM))
-			var/mob/M = AM
-			if (M.client)
-				M.client.move_delay = max(world.time + 5, M.client.move_delay)
-		return
+/obj/machinery/gateway/multitool_act(mob/living/user, obj/item/I)
+	if(calibrated)
+		to_chat(user, "<span class='alert'>The gate is already calibrated, there is no work for you to do here.</span>")
 	else
-		var/obj/effect/landmark/dest = pick(randomspawns)
-		if(dest)
-			AM.forceMove(get_turf(dest))
-			AM.setDir(SOUTH)
-			use_power(5000)
-		return
+		to_chat(user, "<span class='boldnotice'>Recalibration successful!</span>: \black This gate's systems have been fine tuned. Travel to this gate will now be on target.")
+		calibrated = TRUE
+	return TRUE
 
-/obj/machinery/gateway/centeraway/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/multitool))
-		if(calibrated)
-			to_chat(user, "\black The gate is already calibrated, there is no work for you to do here.")
-			return
-		else
-			to_chat(user, "<span class='boldnotice'>Recalibration successful!</span>: \black This gate's systems have been fine tuned.  Travel to this gate will now be on target.")
-			calibrated = TRUE
-			return
-
-/////////////////////////////////////Away////////////////////////
-
-
-/obj/machinery/gateway/centeraway
+/* Doesn't need control console or power, always links to home when interacting. */
+/obj/machinery/gateway/away
 	density = TRUE
-	icon_state = "offcenter"
 	use_power = NO_POWER_USE
-	var/obj/machinery/gateway/centerstation/stationgate = null
-	can_link = TRUE
 
-
-/obj/machinery/gateway/centeraway/Initialize()
+/obj/machinery/gateway/away/interact(mob/user, special_state)
 	. = ..()
-<<<<<<< HEAD
-	update_icon()
-	stationgate = locate(/obj/machinery/gateway/centerstation)
-=======
 	if(!target)
 		if(!GLOB.the_gateway)
 			to_chat(user,"<span class='warning'>Home gateway is not responding!</span>")
@@ -340,75 +264,63 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 		activate(GLOB.the_gateway.destination)
 	else
 		deactivate()
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
+/* Gateway control computer */
+/obj/machinery/computer/gateway_control
+	name = "Gateway Control"
+	desc = "Human friendly interface to the mysterious gate next to it."
+	var/obj/machinery/gateway/G
 
-/obj/machinery/gateway/centeraway/update_icon_state()
-	icon_state = active ? "oncenter" : "offcenter"
-
-/obj/machinery/gateway/centeraway/toggleon(mob/user)
-	if(!detect())
-		return
-	if(!stationgate)
-		to_chat(user, "<span class='notice'>Error: No destination found.</span>")
-		return
-
-	for(var/obj/machinery/gateway/G in linked)
-		G.active = 1
-		G.update_icon()
-	active = 1
-	update_icon()
-
-/obj/machinery/gateway/centeraway/proc/check_exile_implant(mob/living/L)
-	for(var/obj/item/implant/exile/E in L.implants)//Checking that there is an exile implant
-		to_chat(L, "\black The station gate has detected your exile implant and is blocking your entry.")
-		return TRUE
-	return FALSE
-
-/obj/machinery/gateway/centeraway/Bumped(atom/movable/AM)
-	if(!detect())
-		return
-	if(!active)
-		return
-<<<<<<< HEAD
-	if(!stationgate || QDELETED(stationgate))
-=======
-	if(!D.is_available() || G.target)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
-		return
-	if(isliving(AM))
-		if(check_exile_implant(AM))
-			return
-	else
-		for(var/mob/living/L in AM.contents)
-			if(check_exile_implant(L))
-				say("Rejecting [AM]: Exile implant detected in contained lifeform.")
-				return
-	if(AM.has_buckled_mobs())
-		for(var/mob/living/L in AM.buckled_mobs)
-			if(check_exile_implant(L))
-				say("Rejecting [AM]: Exile implant detected in close proximity lifeform.")
-				return
-	AM.forceMove(get_step(stationgate.loc, SOUTH))
-	AM.setDir(SOUTH)
-	if (ismob(AM))
-		var/mob/M = AM
-		if (M.client)
-			M.client.move_delay = max(world.time + 5, M.client.move_delay)
-
-
-/obj/machinery/gateway/centeraway/admin
-	desc = "A mysterious gateway built by unknown hands, this one seems more compact."
-
-/obj/machinery/gateway/centeraway/admin/Initialize()
+/obj/machinery/computer/gateway_control/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
-	if(stationgate && !stationgate.awaygate)
-		stationgate.awaygate = src
+	try_to_linkup()
 
-/obj/machinery/gateway/centeraway/admin/detect()
-	return TRUE
+/obj/machinery/computer/gateway_control/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Gateway", name)
+		ui.open()
 
+/obj/machinery/computer/gateway_control/ui_data(mob/user)
+	. = ..()
+	.["gateway_present"] = G
+	.["gateway_status"] = G ? G.powered() : FALSE
+	.["current_target"] = G?.target?.get_ui_data()
+	var/list/destinations = list()
+	if(G)
+		for(var/datum/gateway_destination/D in GLOB.gateway_destinations)
+			if(D == G.destination)
+				continue
+			destinations += list(D.get_ui_data())
+	.["destinations"] = destinations
+
+/obj/machinery/computer/gateway_control/ui_act(action, list/params)
+	. = ..()
+	if(.)
+		return
+	switch(action)
+		if("linkup")
+			try_to_linkup()
+			return TRUE
+		if("activate")
+			var/datum/gateway_destination/D = locate(params["destination"]) in GLOB.gateway_destinations
+			try_to_connect(D)
+			return TRUE
+		if("deactivate")
+			if(G && G.target)
+				G.deactivate()
+			return TRUE
+
+/obj/machinery/computer/gateway_control/proc/try_to_linkup()
+	G = locate(/obj/machinery/gateway) in view(7,get_turf(src))
+
+/obj/machinery/computer/gateway_control/proc/try_to_connect(datum/gateway_destination/D)
+	if(!D || !G)
+		return
+	if(!D.is_available() || G.target)
+		return
+	G.activate(D)
 
 /obj/item/paper/fluff/gateway
-	info = "Congratulations,<br><br>Your station has been selected to carry out the Gateway Project.<br><br>The equipment will be shipped to you at the start of the next quarter.<br> You are to prepare a secure location to house the equipment as outlined in the attached documents.<br><br>--Nanotrasen Blue Space Research"
+	info = "Congratulations,<br><br>Your station has been selected to carry out the Gateway Project.<br><br>The equipment will be shipped to you at the start of the next quarter.<br> You are to prepare a secure location to house the equipment as outlined in the attached documents.<br><br>--Nanotrasen Bluespace Research"
 	name = "Confidential Correspondence, Pg 1"

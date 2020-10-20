@@ -71,7 +71,6 @@ SUBSYSTEM_DEF(input)
 		"Insert", "Delete", "Ctrl", "Alt",
 		"F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12",
 		)
-<<<<<<< HEAD
 
 	for(var/i in 1 to oldmode_keys.len)
 		var/key = oldmode_keys[i]
@@ -109,7 +108,6 @@ SUBSYSTEM_DEF(input)
 		)
 
 	movement_keys = default_movement_keys.Copy()
-=======
 	for(var/key in classic_mode_keys)
 		macroset_classic_input[key] = "\"KeyDown [key]\""
 		macroset_classic_input["[key]+UP"] = "\"KeyUp [key]\""
@@ -176,7 +174,6 @@ SUBSYSTEM_DEF(input)
 
 	macroset_hotkey |= hard_binds
 	macroset_hotkey |= hard_bind_anti_collision
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 // Badmins just wanna have fun ♪
 /datum/controller/subsystem/input/proc/refresh_client_macro_sets()

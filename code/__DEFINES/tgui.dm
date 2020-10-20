@@ -1,9 +1,7 @@
-<<<<<<< HEAD
 #define UI_INTERACTIVE 2	// Green/Interactive
 #define UI_UPDATE 1			// Orange/Updates Only
 #define UI_DISABLED 0		// Red/Disabled
 #define UI_CLOSE -1			// Closed
-=======
 /// Green eye; fully interactive
 #define UI_INTERACTIVE 2
 /// Orange eye; updates but is not interactive
@@ -39,4 +37,3 @@
 		"type" = type, \
 		"payload" = payload, \
 	))))
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

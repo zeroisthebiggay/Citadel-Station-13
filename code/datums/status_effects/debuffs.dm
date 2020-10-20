@@ -394,8 +394,6 @@
 	owner.underlays -= marked_underlay //if this is being called, we should have an owner at this point.
 	..()
 
-<<<<<<< HEAD
-=======
 /datum/status_effect/eldritch
 	duration = 15 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
@@ -619,7 +617,6 @@
 	QDEL_NULL(mob_overlay)
 
 
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 /datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"
 	tick_interval = 6
@@ -1022,8 +1019,6 @@ datum/status_effect/pacify
 	name = "Genetic Breakdown"
 	desc = "I don't feel so good. Your body can't handle the mutations! You have one minute to remove your mutations, or you will be met with a horrible fate."
 	icon_state = "dna_melt"
-<<<<<<< HEAD
-=======
 
 /datum/status_effect/fake_virus
 	id = "fake_virus"
@@ -1065,4 +1060,3 @@ datum/status_effect/pacify
 	else if(fake_msg)
 		to_chat(owner, fake_msg)
 	msg_stage++
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

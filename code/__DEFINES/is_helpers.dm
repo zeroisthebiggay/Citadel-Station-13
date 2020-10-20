@@ -41,11 +41,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isplatingturf(A) (istype(A, /turf/open/floor/plating))
 
-<<<<<<< HEAD
-=======
 #define istransparentturf(A) (istype(A, /turf/open/transparent)||istype(A, /turf/open/space/transparent))
 
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 //Mobs
 #define isliving(A) (istype(A, /mob/living))
 
@@ -77,11 +74,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define ismush(A) (is_species(A, /datum/species/mush))
 #define isshadow(A) (is_species(A, /datum/species/shadow))
 #define isskeleton(A) (is_species(A, /datum/species/skeleton))
-<<<<<<< HEAD
-=======
 #define isrobotic(A) (is_species(A, /datum/species/ipc) || is_species(A, /datum/species/synthliz))
 #define isethereal(A) (is_species(A, /datum/species/ethereal))
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 // Citadel specific species
 #define isipcperson(A) (is_species(A, /datum/species/ipc))

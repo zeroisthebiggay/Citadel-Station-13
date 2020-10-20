@@ -1024,8 +1024,6 @@ Proc for attack log creation, because really why not
 				max_grav = max(G.setting,max_grav)
 			return max_grav
 	return SSmapping.level_trait(T.z, ZTRAIT_GRAVITY)
-<<<<<<< HEAD
-=======
 
 /**
   * Causes effects when the atom gets hit by a rust effect from heretics
@@ -1068,4 +1066,3 @@ Proc for attack log creation, because really why not
 		// first of all make sure we valid
 		var/mouseparams = list2params(paramslist)
 		usr_client.Click(src, loc, null, mouseparams)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

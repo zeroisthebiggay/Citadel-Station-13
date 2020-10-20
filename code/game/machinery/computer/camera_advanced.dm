@@ -274,7 +274,6 @@
 		C.clear_fullscreen("flash", 3) //Shorter flash than normal since it's an ~~advanced~~ console!
 	else
 		playsound(origin, 'sound/machines/terminal_prompt_deny.ogg', 25, 0)
-<<<<<<< HEAD
 
 
 //Used by servants of Ratvar! They let you beam to the station.
@@ -383,5 +382,3 @@
 
 /datum/action/innate/servant_warp/proc/is_canceled()
 	return !cancel
-=======
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

@@ -11,13 +11,10 @@
 #define MOVE_INTENT_WALK "walk"
 #define MOVE_INTENT_RUN  "run"
 
-<<<<<<< HEAD
 //Blood levels
-=======
 // Blood levels
 #define BLOOD_VOLUME_MAX_LETHAL		2150
 #define BLOOD_VOLUME_EXCESS			2100
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 #define BLOOD_VOLUME_MAXIMUM		2000
 #define BLOOD_VOLUME_SLIME_SPLIT	1120
 #define BLOOD_VOLUME_NORMAL			560
@@ -109,7 +106,6 @@
 #define BRAIN_TRAUMA_SEVERE /datum/brain_trauma/severe
 #define BRAIN_TRAUMA_SPECIAL /datum/brain_trauma/special
 
-<<<<<<< HEAD
 #define TRAUMA_RESILIENCE_BASIC 1      //Curable with chems
 #define TRAUMA_RESILIENCE_SURGERY 2    //Curable with brain surgery
 #define TRAUMA_RESILIENCE_LOBOTOMY 3   //Curable with lobotomy
@@ -119,7 +115,6 @@
 //Limit of traumas for each resilience tier
 #define TRAUMA_LIMIT_BASIC 3
 #define TRAUMA_LIMIT_SURGERY 2
-=======
 #define TRAUMA_RESILIENCE_BASIC    1	// Curable with chems
 #define TRAUMA_RESILIENCE_SURGERY  2	// Curable with brain surgery
 #define TRAUMA_RESILIENCE_LOBOTOMY 3	// Curable with lobotomy
@@ -131,7 +126,6 @@
 #define TRAUMA_LIMIT_BASIC	  3
 #define TRAUMA_LIMIT_SURGERY  2
 #define TRAUMA_LIMIT_WOUND	  2
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 #define TRAUMA_LIMIT_LOBOTOMY 3
 #define TRAUMA_LIMIT_MAGIC	  3
 #define TRAUMA_LIMIT_ABSOLUTE INFINITY
@@ -150,7 +144,6 @@
 #define SCREWYHUD_DEAD	  2
 #define SCREWYHUD_HEALTHY 3
 
-<<<<<<< HEAD
 //Moods levels for humans
 #define MOOD_LEVEL_HAPPY4 15
 #define MOOD_LEVEL_HAPPY3 10
@@ -166,7 +159,6 @@
 #define SANITY_AMAZING 150
 #define SANITY_GREAT 125
 #define SANITY_NEUTRAL 100
-=======
 // Threshold levels for beauty for humans
 #define BEAUTY_LEVEL_HORRID -66
 #define BEAUTY_LEVEL_BAD    -33
@@ -189,7 +181,6 @@
 #define SANITY_AMAZING	 150
 #define SANITY_GREAT	 125
 #define SANITY_NEUTRAL	 100
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 #define SANITY_DISTURBED 75
 #define SANITY_UNSTABLE	 50
 #define SANITY_CRAZY	 25
@@ -212,9 +203,7 @@
 #define DISGUST_LEVEL_VERYGROSS	 50
 #define DISGUST_LEVEL_GROSS		 25
 
-<<<<<<< HEAD
 //Slime evolution threshold. Controls how fast slimes can split/grow
-=======
 // Charge levels for Ethereals
 #define ETHEREAL_CHARGE_NONE		0
 #define ETHEREAL_CHARGE_LOWPOWER   20
@@ -225,7 +214,6 @@
 #define ETHEREAL_CHARGE_DANGEROUS 150
 
 // Slime evolution threshold. Controls how fast slimes can split/grow
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 #define SLIME_EVOLUTION_THRESHOLD 10
 
 // Slime extract crossing. Controls how many extracts is required to feed to a slime to core-cross.
@@ -303,7 +291,6 @@
 
 // Offsets defines
 
-<<<<<<< HEAD
 #define OFFSET_UNIFORM "uniform"
 #define OFFSET_ID "id"
 #define OFFSET_GLOVES "gloves"
@@ -335,7 +322,6 @@
 
 #define	HUNGER_FACTOR		0.1	//factor at which mob nutrition decreases
 #define	REAGENTS_METABOLISM 0.4	//How many units of reagent are consumed per tick, by default.
-=======
 #define OFFSET_UNIFORM	"uniform"
 #define OFFSET_ID		"id"
 #define OFFSET_GLOVES	"gloves"
@@ -368,7 +354,6 @@
 #define	HUNGER_FACTOR			 0.1	// factor at which mob nutrition decreases
 #define	ETHEREAL_CHARGE_FACTOR	 0.08	// factor at which ethereal's charge decreases
 #define	REAGENTS_METABOLISM		 0.4	// How many units of reagent are consumed per tick, by default.
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 #define REAGENTS_EFFECT_MULTIPLIER (REAGENTS_METABOLISM / 0.4)	// By defining the effect multiplier this way, it'll exactly adjust all effects according to how they originally were with the 0.4 metabolism
 
 // Roundstart trait system
@@ -399,8 +384,6 @@
 #define FOV_90_DEGREES	90
 #define FOV_180_DEGREES	180
 #define FOV_270_DEGREES	270
-<<<<<<< HEAD
-=======
 
 // / How far away you can be to make eye contact with someone while examining
 #define EYE_CONTACT_RANGE	5
@@ -409,4 +392,3 @@
 #define EXAMINE_MORE_TIME	1 SECONDS
 
 #define SILENCE_RANGED_MESSAGE	(1<<0)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

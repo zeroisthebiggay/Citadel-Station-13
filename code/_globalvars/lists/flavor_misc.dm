@@ -43,8 +43,6 @@ GLOBAL_LIST_EMPTY(arachnid_spinneret_list)
 GLOBAL_LIST_EMPTY(arachnid_mandibles_list)
 GLOBAL_LIST_EMPTY(caps_list)
 
-<<<<<<< HEAD
-=======
 //a way to index the right bodypart list given the type of bodypart
 GLOBAL_LIST_INIT(mutant_reference_list, list(
 	"tail_lizard" = GLOB.tails_list_lizard,
@@ -88,7 +86,6 @@ GLOBAL_LIST_INIT(mutant_transform_list, list("wingsopen" = "wings",
 	"waggingspines" = "spines",
 	"mam_waggingtail" = "mam_tail"))
 
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 GLOBAL_LIST_INIT(ghost_forms_with_directions_list, list("ghost")) //stores the ghost forms that support directional sprites
 GLOBAL_LIST_INIT(ghost_forms_with_accessories_list, list("ghost")) //stores the ghost forms that support hair and other such things
 
@@ -272,8 +269,6 @@ GLOBAL_LIST_INIT(station_numerals, greek_letters + phonetic_alphabet + numbers_a
 GLOBAL_LIST_INIT(admiral_messages, list("Do you know how expensive these stations are?","Stop wasting my time.","I was sleeping, thanks a lot.","Stand and fight you cowards!","You knew the risks coming in.","Stop being paranoid.","Whatever's broken just build a new one.","No.", "<i>null</i>","<i>Error: No comment given.</i>", "It's a good day to die!"))
 
 GLOBAL_LIST_INIT(redacted_strings, list("\[REDACTED\]", "\[CLASSIFIED\]", "\[ARCHIVED\]", "\[EXPLETIVE DELETED\]", "\[EXPUNGED\]", "\[INFORMATION ABOVE YOUR SECURITY CLEARANCE\]", "\[MOVE ALONG CITIZEN\]", "\[NOTHING TO SEE HERE\]", "\[ACCESS DENIED\]"))
-<<<<<<< HEAD
-=======
 
 GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/wisdoms.txt"))
 
@@ -336,4 +331,3 @@ GLOBAL_LIST_INIT(nongendered_limb_types, list("fly", "zombie" ,"synth", "shadow"
 
 //list of eye types, corresponding to a respective left and right icon state for the set of eyes
 GLOBAL_LIST_INIT(eye_types, list("normal", "insect", "moth", "double", "double2", "double3", "cyclops"))
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

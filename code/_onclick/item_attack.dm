@@ -76,7 +76,7 @@
 	if(force && damtype != STAMINA && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 		return
-	
+
 	if(!UseStaminaBufferStandard(user, STAM_COST_ATTACK_MOB_MULT, null, TRUE))
 		return DISCARD_LAST_ACTION
 
@@ -94,9 +94,7 @@
 	log_combat(user, M, "attacked", src.name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
 
-<<<<<<< HEAD
 	user.adjustStaminaLossBuffered(getweight(user, STAM_COST_ATTACK_MOB_MULT))//CIT CHANGE - makes attacking things cause stamina loss
-=======
 	// CIT SCREENSHAKE
 	if(force >= 15)
 		shake_camera(user, ((force - 10) * 0.01 + 1), ((force - 10) * 0.01))
@@ -107,32 +105,21 @@
 				if (2)
 					if(!CHECK_MOBILITY(M, MOBILITY_MOVE))
 						shake_camera(M, ((force - 10) * 0.015 + 1), ((force - 10) * 0.015))
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 //the equivalent of the standard version of attack() but for object targets.
 /obj/item/proc/attack_obj(obj/O, mob/living/user)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_OBJ, O, user) & COMPONENT_NO_ATTACK_OBJ)
 		return
 	if(item_flags & NOBLUDGEON)
-<<<<<<< HEAD
-		return
-	if(IS_STAMCRIT(user)) // CIT CHANGE - makes it impossible to attack in stamina softcrit
-		to_chat(user, "<span class='warning'>You're too exhausted.</span>") // CIT CHANGE - ditto
-		return // CIT CHANGE - ditto
-	user.adjustStaminaLossBuffered(getweight(user, STAM_COST_ATTACK_OBJ_MULT))//CIT CHANGE - makes attacking things cause stamina loss
-	user.changeNext_move(CLICK_CD_MELEE)
-=======
 		return DISCARD_LAST_ACTION
 	if(!UseStaminaBufferStandard(user, STAM_COST_ATTACK_OBJ_MULT, warn = TRUE))
 		return DISCARD_LAST_ACTION
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	user.do_attack_animation(O)
 	O.attacked_by(src, user)
 
 /atom/movable/proc/attacked_by()
 	return
 
-<<<<<<< HEAD
 /obj/attacked_by(obj/item/I, mob/living/user)
 	var/totitemdamage = I.force
 	var/bad_flag = NONE
@@ -142,14 +129,12 @@
 	if(I.used_skills && user.mind)
 		if(totitemdamage)
 			totitemdamage = user.mind.item_action_skills_mod(I, totitemdamage, I.skill_difficulty, SKILL_ATTACK_OBJ, bad_flag)
-=======
 /obj/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
 	var/totitemdamage = I.force * damage_multiplier
 
 	if(I.used_skills && user.mind)
 		if(totitemdamage)
 			totitemdamage = user.mind.item_action_skills_mod(I, totitemdamage, I.skill_difficulty, SKILL_ATTACK_OBJ)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 		for(var/skill in I.used_skills)
 			if(!(I.used_skills[skill] & SKILL_TRAIN_ATTACK_OBJ))
 				continue
@@ -185,7 +170,6 @@
 
 /mob/living/proc/pre_attacked_by(obj/item/I, mob/living/user)
 	. = I.force
-<<<<<<< HEAD
 	var/bad_flag = NONE
 	if(!(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE) && iscarbon(user))
 		. *= 0.5
@@ -196,7 +180,6 @@
 		return
 	if(.)
 		. = user.mind.item_action_skills_mod(I, ., I.skill_difficulty, SKILL_ATTACK_MOB, bad_flag)
-=======
 	if(!.)
 		return
 
@@ -209,7 +192,6 @@
 		return
 	if(.)
 		. = user.mind.item_action_skills_mod(I, ., I.skill_difficulty, SKILL_ATTACK_MOB)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	for(var/skill in I.used_skills)
 		if(!(I.used_skills[skill] & SKILL_TRAIN_ATTACK_MOB))
 			continue
@@ -257,14 +239,12 @@
 	. = (total_mass || w_class * STAM_COST_W_CLASS_MULT) * multiplier
 	if(!user)
 		return
-<<<<<<< HEAD
 	var/bad_flag = NONE
 	if(iscarbon(user) && !(user.combat_flags & COMBAT_FLAG_COMBAT_ACTIVE))
 		. *= STAM_COST_NO_COMBAT_MULT
 		bad_flag |= SKILL_COMBAT_MODE
 	if(used_skills && user.mind)
 		. = user.mind.item_action_skills_mod(src, ., skill_difficulty, flags, bad_flag, FALSE)
-=======
 	if(used_skills && user.mind)
 		. = user.mind.item_action_skills_mod(src, ., skill_difficulty, trait, null, FALSE)
 
@@ -275,7 +255,6 @@
 	ASSERT(user)
 	var/cost = getweight(user, multiplier, trait)
 	return user.UseStaminaBuffer(cost, warn)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /// How long this staggers for. 0 and negatives supported.
 /obj/item/proc/melee_stagger_duration(force_override)

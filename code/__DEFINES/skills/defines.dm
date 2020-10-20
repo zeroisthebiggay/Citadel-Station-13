@@ -26,7 +26,6 @@
 
 #define DEF_SKILL_GAIN					1
 #define SKILL_GAIN_SURGERY_PER_STEP		0.25
-<<<<<<< HEAD
 
 #define SKILL_AFFINITY_MOOD_BONUS 		1.25
 
@@ -47,7 +46,6 @@
 #define THRESHOLD_COMPETENT	1
 #define THRESHOLD_EXPERT	2
 #define THRESHOLD_MASTER	3
-=======
 #define STD_USE_TOOL_MULT				1
 #define EASY_USE_TOOL_MULT				0.75
 #define TRIVIAL_USE_TOOL_MULT			0.5
@@ -76,7 +74,6 @@
 #define THRESHOLD_COMPETENT	"competent"
 #define THRESHOLD_EXPERT	"expert"
 #define THRESHOLD_MASTER	"master"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /// Level/Experience skills defines.
 #define STD_XP_LVL_UP 100

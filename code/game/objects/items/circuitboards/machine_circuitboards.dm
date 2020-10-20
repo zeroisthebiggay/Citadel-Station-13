@@ -48,6 +48,13 @@
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/stack/sheet/glass = 1)
 
+/obj/item/circuitboard/machine/medipen_refiller
+	name = "Medipen Refiller (Machine Board)"
+	icon_state = "medical"
+	build_path = /obj/machinery/medipen_refiller
+	req_components = list(
+		/obj/item/stock_parts/matter_bin = 1)
+
 /obj/item/circuitboard/machine/clonepod
 	name = "Clone Pod (Machine Board)"
 	build_path = /obj/machinery/clonepod
@@ -60,6 +67,14 @@
 /obj/item/circuitboard/machine/clonepod/experimental
 	name = "Experimental Clone Pod (Machine Board)"
 	build_path = /obj/machinery/clonepod/experimental
+
+/obj/item/circuitboard/machine/sheetifier
+	name = "Sheet-meister 2000 (Machine Board)"
+	icon_state = "supply"
+	build_path = /obj/machinery/sheetifier
+	req_components = list(
+		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stock_parts/matter_bin = 2)
 
 /obj/item/circuitboard/machine/abductor
 	name = "alien board (Report This)"
@@ -504,6 +519,10 @@
 		/obj/item/stack/sheet/glass = 1)
 	needs_anchored = FALSE
 
+/obj/item/circuitboard/machine/hydroponics/automagic
+	name = "Automatic Hydroponics Tray (Machine Board)"
+	build_path = /obj/machinery/hydroponics/constructable/automagic
+
 /obj/item/circuitboard/machine/seed_extractor
 	name = "Seed Extractor (Machine Board)"
 	build_path = /obj/machinery/seed_extractor
@@ -692,6 +711,17 @@
 	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high)
 	needs_anchored = FALSE
 
+/obj/item/circuitboard/machine/chem_dispenser/apothecary
+	name = "Apotechary Chem Dispenser (Machine Board)"
+	build_path = /obj/machinery/chem_dispenser/apothecary
+	req_components = list(
+		/obj/item/stock_parts/matter_bin = 1,
+		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/stock_parts/cell = 1)
+	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/upgraded/plus)
+
 /obj/item/circuitboard/machine/chem_dispenser/drinks
 	name = "Soda Dispenser (Machine Board)"
 	build_path = /obj/machinery/chem_dispenser/drinks
@@ -706,6 +736,10 @@
 	build_path = /obj/machinery/chem_dispenser/abductor
 	def_components = list(/obj/item/stock_parts/cell = /obj/item/stock_parts/cell/high)
 	needs_anchored = FALSE
+
+/obj/item/circuitboard/machine/sleeper/party
+	name = "Party Pod (Machine Board)"
+	build_path = /obj/machinery/sleeper/party
 
 /obj/item/circuitboard/machine/smoke_machine
 	name = "Smoke Machine (Machine Board)"
@@ -883,6 +917,16 @@
 /obj/item/circuitboard/machine/protolathe/department/service
 	name = "Departmental Protolathe - Service (Machine Board)"
 	build_path = /obj/machinery/rnd/production/protolathe/department/service
+
+/obj/item/circuitboard/machine/bepis
+	name = "BEPIS Chamber (Machine Board)"
+	build_path = /obj/machinery/rnd/bepis
+	req_components = list(
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/stock_parts/manipulator = 1,
+		/obj/item/stock_parts/micro_laser = 1,
+		/obj/item/stock_parts/scanning_module = 1)
 
 /obj/item/circuitboard/machine/techfab
 	name = "\improper Techfab (Machine Board)"
@@ -1068,8 +1112,6 @@
 		/obj/item/stock_parts/matter_bin = 3,
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stack/sheet/glass = 1)
-<<<<<<< HEAD
-=======
 
 /obj/item/circuitboard/machine/hypnochair
 	name = "Enhanced Interrogation Chamber (Machine Board)"
@@ -1109,4 +1151,3 @@
 	name = "Explosive Compressor (Machine Board)"
 	build_path = /obj/machinery/research/explosive_compressor
 	req_components = list(/obj/item/stock_parts/matter_bin = 3)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

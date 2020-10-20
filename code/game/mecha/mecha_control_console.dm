@@ -109,14 +109,12 @@
 /obj/item/mecha_parts/mecha_tracking/proc/shock()
 	if(recharging)
 		return
-<<<<<<< HEAD
 	var/obj/mecha/M = in_mecha()
 	if(M)
 		M.emp_act(EMP_HEAVY)
 		addtimer(CALLBACK(src, /obj/item/mecha_parts/mecha_tracking/proc/recharge), 15 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 		recharging = 1
 
-=======
 	if(chassis)
 		chassis.emp_act(80)
 		addtimer(CALLBACK(src, /obj/item/mecha_parts/mecha_tracking/proc/recharge), 5 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
@@ -125,7 +123,6 @@
 /**
   * Resets recharge variable, allowing tracker to be EMP pulsed again
   */
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 /obj/item/mecha_parts/mecha_tracking/proc/recharge()
 	recharging = 0
 

@@ -27,14 +27,12 @@
 //////////////////////////////////////////////////////////////////
 
 // /datum signals
-<<<<<<< HEAD
 #define COMSIG_COMPONENT_ADDED "component_added"				//sent to the new datum parent when a component is added to them: (/datum/component)
 #define COMSIG_COMPONENT_REMOVING "component_removing"			//sent to the datum parent before a component is removed from them because of RemoveComponent: (/datum/component)
 #define COMSIG_COMPONENT_UNREGISTER_PARENT "component_unregister_parent" //sent to the component itself when unregistered from a parent
 #define COMSIG_COMPONENT_REGISTER_PARENT "component_register_parent"	 //sent to the component itself when registered to a parent
 #define COMSIG_PARENT_PREQDELETED "parent_preqdeleted"			//before a datum's Destroy() is called: (force), returning a nonzero value will cancel the qdel operation
 #define COMSIG_PARENT_QDELETING "parent_qdeleting"				//just before a datum's Destroy() is called: (force), at this point none of the other components chose to interrupt qdel and Destroy will be called
-=======
 /// when a component is added to a datum: (/datum/component)
 #define COMSIG_COMPONENT_ADDED "component_added"
 /// before a component is removed from a datum because of RemoveComponent: (/datum/component)
@@ -55,20 +53,16 @@
 #define COMSIG_COMPONENT_UNREGISTER_PARENT "component_unregister_parent"
 /// sent to the component itself when registered to a parent
 #define COMSIG_COMPONENT_REGISTER_PARENT "component_register_parent"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /// Trait signals
 #define COMPONENT_ADD_TRAIT (1<<0)
 #define COMPONENT_REMOVE_TRAIT (1<<1)
 
 // /atom signals
-<<<<<<< HEAD
-=======
 //from base of atom/proc/Initialize(): sent any time a new atom is created
 #define COMSIG_ATOM_CREATED "atom_created"
 //from SSatoms InitAtom - Only if the  atom was not deleted or failed initialization
 #define COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE "atom_init_success"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 #define COMSIG_PARENT_ATTACKBY "atom_attackby"			        //from base of atom/attackby(): (/obj/item, /mob/living, params)
 	#define COMPONENT_NO_AFTERATTACK 1								//Return this in response if you don't want afterattack to be called
 #define COMSIG_ATOM_HULK_ATTACK "hulk_attack"					//from base of atom/attack_hulk(): (/mob/living/carbon/human)
@@ -88,7 +82,6 @@
 #define COMSIG_ATOM_EXIT "atom_exit"							//from base of atom/Exit(): (/atom/movable/exiting, /atom/newloc)
 	#define COMPONENT_ATOM_BLOCK_EXIT 1
 #define COMSIG_ATOM_EXITED "atom_exited"						//from base of atom/Exited(): (atom/movable/exiting, atom/newloc)
-<<<<<<< HEAD
 #define COMSIG_ATOM_EX_ACT "atom_ex_act"						//from base of atom/ex_act(): (severity, target)
 #define COMSIG_ATOM_EMP_ACT "atom_emp_act"						//from base of atom/emp_act(): (severity)
 #define COMSIG_ATOM_FIRE_ACT "atom_fire_act"					//from base of atom/fire_act(): (exposed_temperature, exposed_volume)
@@ -113,7 +106,6 @@
 	#define COMPONENT_RAD_WAVE_HANDLED 1
 #define COMSIG_ATOM_CANREACH "atom_can_reach"					//from internal loop in atom/movable/proc/CanReach(): (list/next)
 	#define COMPONENT_BLOCK_REACH 1
-=======
 ///from base of atom/ex_act(): (severity, target)
 #define COMSIG_ATOM_EX_ACT "atom_ex_act"
 ///from base of atom/emp_act(): (severity)
@@ -162,7 +154,6 @@
 #define COMSIG_ATOM_CANREACH "atom_can_reach"
 	#define COMPONENT_BLOCK_REACH (1<<0)
 
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 #define COMSIG_ATOM_SCREWDRIVER_ACT "atom_screwdriver_act"		//from base of atom/screwdriver_act(): (mob/living/user, obj/item/I)
 #define COMSIG_ATOM_INTERCEPT_TELEPORT "intercept_teleport"		//called when teleporting into a protected turf: (channel, turf/origin, turf/destination)
 	#define COMPONENT_BLOCK_TELEPORT 1
@@ -285,15 +276,12 @@
 #define COMSIG_MOB_ANTAG_ON_GAIN "mob_antag_on_gain"			//from base of /datum/antagonist/on_gain(): (antag_datum)
 
 #define COMSIG_MOB_SPELL_CAN_CAST "mob_spell_can_cast"			//from base of /obj/effect/proc_holder/spell/can_cast(): (spell)
-<<<<<<< HEAD
-=======
 #define COMSIG_MOB_SWAP_HANDS "mob_swap_hands"					//from base of mob/swap_hand(): (obj/item)
 	#define COMPONENT_BLOCK_SWAP 1
 
 #define COMSIG_PROCESS_BORGCHARGER_OCCUPANT "living_charge"
 ///from base of mob/AltClickOn(): (atom/A)
 #define COMSIG_MOB_ALTCLICKON "mob_altclickon"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 #define COMSIG_ROBOT_UPDATE_ICONS "robot_update_icons"			//from base of robot/update_icons(): ()
 
@@ -330,9 +318,7 @@
 #define COMSIG_LIVING_STATUS_STAGGER "living_stagger"			//from base of mob/living/Stagger() (amount, update, ignore)
 	#define COMPONENT_NO_STUN 1			//For all of them
 
-<<<<<<< HEAD
 // /mob/living/carbon signals
-=======
 #define COMSIG_LIVING_LIFE "life_tick"							//from base of mob/living/Life() (seconds, times_fired)
 	#define COMPONENT_INTERRUPT_LIFE_BIOLOGICAL 1		// interrupt biological processes
 	#define COMPONENT_INTERRUPT_LIFE_PHYSICAL 2			// interrupt physical handling
@@ -349,7 +335,6 @@
 	#define COMPONENT_NO_ATTACH (1<<0)
 #define COMSIG_CARBON_REMOVE_LIMB "carbon_remove_limb"			//from base of /obj/item/bodypart/proc/drop_limb(special, dismembered)
 
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 #define COMSIG_CARBON_SOUNDBANG "carbon_soundbang"					//from base of mob/living/carbon/soundbang_act(): (list(intensity))
 #define COMSIG_CARBON_IDENTITY_TRANSFERRED_TO "carbon_id_transferred_to" //from datum/dna/transfer_identity(): (datum/dna, transfer_SE)
 #define COMSIG_CARBON_TACKLED "carbon_tackled"						//sends from tackle.dm on tackle completion

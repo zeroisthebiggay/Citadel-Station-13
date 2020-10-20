@@ -486,9 +486,7 @@
 		addtimer(CALLBACK(src, .proc/end), 15)
 
 /obj/effect/constructing_effect/proc/end()
-<<<<<<< HEAD
 	qdel(src)
-=======
 	qdel(src)
 
 /obj/effect/temp_visual/dir_setting/space_wind
@@ -510,4 +508,3 @@
 /obj/effect/temp_visual/slime_puddle/reverse
 	icon_state = "from_puddle"
 	duration = 7
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

@@ -5,25 +5,18 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-<<<<<<< HEAD
-#define SAVEFILE_VERSION_MAX	31
-=======
 #define SAVEFILE_VERSION_MAX	38
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
 	This proc checks if the current directory of the savefile S needs updating
 	It is to be used by the load_character and load_preferences procs.
 	(S.cd=="/" is preferences, S.cd=="/character[integer]" is a character slot, etc)
-
 	if the current directory's version is below SAVEFILE_VERSION_MIN it will simply wipe everything in that directory
 	(if we're at root "/" then it'll just wipe the entire savefile, for instance.)
-
 	if its version is below SAVEFILE_VERSION_MAX but above the minimum, it will load data but later call the
 	respective update_preferences() or update_character() proc.
 	Those procs allow coders to specify format changes so users do not lose their setups and have to redo them again.
-
 	Failing all that, the standard sanity checks are performed. They simply check the data is suitable, reverting to
 	initial() values if necessary.
 */
@@ -46,7 +39,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 //if your savefile is 3 months out of date, then 'tough shit'.
 
 /datum/preferences/proc/update_preferences(current_version, savefile/S)
-	return
+	if(current_version < 32)	//If you remove this, remove force_reset_keybindings() too.
+		addtimer(CALLBACK(src, .proc/force_reset_keybindings), 30)	//No mob available when this is run, timer allows user choice.
 
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	if(current_version < 19)
@@ -198,8 +192,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		S["wing_color"]			>> features["wings_color"]
 		S["horn_color"]			>> features["horns_color"]
 
-<<<<<<< HEAD
-=======
 	if(current_version < 33)
 		features["flavor_text"] = html_encode(features["flavor_text"])
 		features["silicon_flavor_text"] = html_encode(features["silicon_flavor_text"])
@@ -231,7 +223,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				left_eye_color = "#BAB99E"
 				right_eye_color = "#BAB99E"
 
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
 		return
@@ -262,6 +253,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			fdel(bacpath) //only keep 1 version of backup
 		fcopy(S, bacpath) //byond helpfully lets you use a savefile for the first arg.
 		return FALSE
+
+	. = TRUE
 
 	//general preferences
 	S["ooccolor"]			>> ooccolor
@@ -294,14 +287,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["parallax"]			>> parallax
 	S["ambientocclusion"]	>> ambientocclusion
 	S["auto_fit_viewport"]	>> auto_fit_viewport
-<<<<<<< HEAD
-	S["sprint_spacebar"]	>> sprint_spacebar
-	S["sprint_toggle"]		>> sprint_toggle
-=======
 	S["widescreenpref"]		>> widescreenpref
 	S["pixel_size"]	    	>> pixel_size
 	S["scaling_method"]	    >> scaling_method
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	S["hud_toggle_flash"]	>> hud_toggle_flash
 	S["hud_toggle_color"]	>> hud_toggle_color
 	S["menuoptions"]		>> menuoptions
@@ -310,6 +298,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["pda_style"]			>> pda_style
 	S["pda_color"]			>> pda_color
 	S["pda_skin"]			>> pda_skin
+
+	// Custom hotkeys
+	S["key_bindings"]		>> key_bindings
+	S["modless_key_bindings"]		>> modless_key_bindings
 
 	//citadel code
 	S["arousable"]			>> arousable
@@ -348,14 +340,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, null)
 	ambientocclusion	= sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
 	auto_fit_viewport	= sanitize_integer(auto_fit_viewport, 0, 1, initial(auto_fit_viewport))
-<<<<<<< HEAD
-	sprint_spacebar	= sanitize_integer(sprint_spacebar, 0, 1, initial(sprint_spacebar))
-	sprint_toggle	= sanitize_integer(sprint_toggle, 0, 1, initial(sprint_toggle))
-=======
 	widescreenpref		= sanitize_integer(widescreenpref, 0, 1, initial(widescreenpref))
 	pixel_size		= sanitize_integer(pixel_size, PIXEL_SCALING_AUTO, PIXEL_SCALING_3X, initial(pixel_size))
 	scaling_method  = sanitize_text(scaling_method, initial(scaling_method))
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	hud_toggle_flash = sanitize_integer(hud_toggle_flash, 0, 1, initial(hud_toggle_flash))
 	hud_toggle_color = sanitize_hexcolor(hud_toggle_color, 6, 1, initial(hud_toggle_color))
 	ghost_form		= sanitize_inlist(ghost_form, GLOB.ghost_forms, initial(ghost_form))
@@ -373,6 +360,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	cit_toggles			= sanitize_integer(cit_toggles, 0, 16777215, initial(cit_toggles))
 	auto_ooc			= sanitize_integer(auto_ooc, 0, 1, initial(auto_ooc))
 	no_tetris_storage		= sanitize_integer(no_tetris_storage, 0, 1, initial(no_tetris_storage))
+	key_bindings 			= sanitize_islist(key_bindings, list())
+	modless_key_bindings 	= sanitize_islist(modless_key_bindings, list())
+
+	verify_keybindings_valid()		// one of these days this will runtime and you'll be glad that i put it in a different proc so no one gets their saves wiped
 
 	if(needs_update >= 0) //save the updated version
 		var/old_default_slot = default_slot
@@ -394,9 +385,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	return TRUE
 
-<<<<<<< HEAD
-/datum/preferences/proc/save_preferences()
-=======
 /datum/preferences/proc/verify_keybindings_valid()
 	// Sanitize the actual keybinds to make sure they exist.
 	for(var/key in key_bindings)
@@ -416,7 +404,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			modless_key_bindings -= key
 
 /datum/preferences/proc/save_preferences(bypass_cooldown = FALSE)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	if(!path)
 		return 0
 	if(!bypass_cooldown)
@@ -461,8 +448,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["parallax"], parallax)
 	WRITE_FILE(S["ambientocclusion"], ambientocclusion)
 	WRITE_FILE(S["auto_fit_viewport"], auto_fit_viewport)
-	WRITE_FILE(S["sprint_spacebar"], sprint_spacebar)
-	WRITE_FILE(S["sprint_toggle"], sprint_toggle)
 	WRITE_FILE(S["hud_toggle_flash"], hud_toggle_flash)
 	WRITE_FILE(S["hud_toggle_color"], hud_toggle_color)
 	WRITE_FILE(S["menuoptions"], menuoptions)
@@ -471,6 +456,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["pda_style"], pda_style)
 	WRITE_FILE(S["pda_color"], pda_color)
 	WRITE_FILE(S["pda_skin"], pda_skin)
+	WRITE_FILE(S["key_bindings"], key_bindings)
+	WRITE_FILE(S["modless_key_bindings"], modless_key_bindings)
 
 	//citadel code
 	WRITE_FILE(S["screenshake"], screenshake)
@@ -512,6 +499,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(needs_update == -2)		//fatal, can't load any data
 		return FALSE
 
+	. = TRUE
+
 	//Species
 	var/species_id
 	S["species"]			>> species_id
@@ -525,12 +514,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(newtype)
 			pref_species = new newtype
 
-<<<<<<< HEAD
-=======
 
 	scars_index = rand(1,5) // WHY
 
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	//Character
 	S["real_name"]				>> real_name
 	S["nameless"]				>> nameless
@@ -559,6 +545,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["backbag"]				>> backbag
 	S["jumpsuit_style"]			>> jumpsuit_style
 	S["uplink_loc"]				>> uplink_spawn_loc
+	S["custom_speech_verb"]		>> custom_speech_verb
+	S["custom_tongue"]			>> custom_tongue
 	S["feature_mcolor"]					>> features["mcolor"]
 	S["feature_lizard_tail"]			>> features["tail_lizard"]
 	S["feature_lizard_snout"]			>> features["snout"]
@@ -573,8 +561,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["feature_insect_wings"]			>> features["insect_wings"]
 	S["feature_insect_fluff"]			>> features["insect_fluff"]
 	S["feature_insect_markings"]		>> features["insect_markings"]
-<<<<<<< HEAD
-=======
 	S["feature_arachnid_legs"]			>> features["arachnid_legs"]
 	S["feature_arachnid_spinneret"]		>> features["arachnid_spinneret"]
 	S["feature_arachnid_mandibles"]		>> features["arachnid_mandibles"]
@@ -594,7 +580,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		modified_limbs = list()
 	S["chosen_limb_id"]					>> chosen_limb_id
 	S["hide_ckey"]						>> hide_ckey //saved per-character
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 	//Custom names
 	for(var/custom_name_id in GLOB.preferences_custom_names)
@@ -611,6 +596,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Quirks
 	S["all_quirks"]			>> all_quirks
+
+	//Records
+	S["security_records"]			>>			security_records
+	S["medical_records"]			>>			medical_records
 
 	//Citadel code
 	S["feature_genitals_use_skintone"]	>> features["genitals_use_skintone"]
@@ -665,13 +654,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else //We have no old flavortext, default to new
 		S["feature_flavor_text"]		>> features["flavor_text"]
 
+
+	S["silicon_feature_flavor_text"]		>> features["silicon_flavor_text"]
+
 	S["feature_ooc_notes"]				>> features["ooc_notes"]
+	S["silicon_flavor_text"] >> features["silicon_flavor_text"]
 
 	S["vore_flags"]						>> vore_flags
 	S["vore_taste"]						>> vore_taste
-<<<<<<< HEAD
-	S["belly_prefs"]					>> belly_prefs
-=======
 	var/char_vr_path = "[vr_path]/character_[default_slot]_v2.json"
 	if(fexists(char_vr_path))
 		var/list/json_from_file = json_decode(file2text(char_vr_path))
@@ -691,7 +681,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 				continue
 			chosen_gear += path
 			gear_points -= init_cost
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 	//try to fix any outdated data if necessary
 	//preference updating will handle saving the updated data for us.
@@ -720,22 +709,16 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	facial_hair_style			= sanitize_inlist(facial_hair_style, GLOB.facial_hair_styles_list)
 	underwear					= sanitize_inlist(underwear, GLOB.underwear_list)
 	undershirt 					= sanitize_inlist(undershirt, GLOB.undershirt_list)
-	undie_color						= sanitize_hexcolor(undie_color, 3, FALSE, initial(undie_color))
-	shirt_color						= sanitize_hexcolor(shirt_color, 3, FALSE, initial(shirt_color))
+	undie_color						= sanitize_hexcolor(undie_color, 6, FALSE, initial(undie_color))
+	shirt_color						= sanitize_hexcolor(shirt_color, 6, FALSE, initial(shirt_color))
 	socks							= sanitize_inlist(socks, GLOB.socks_list)
-	socks_color						= sanitize_hexcolor(socks_color, 3, FALSE, initial(socks_color))
+	socks_color						= sanitize_hexcolor(socks_color, 6, FALSE, initial(socks_color))
 	age								= sanitize_integer(age, AGE_MIN, AGE_MAX, initial(age))
-<<<<<<< HEAD
-	hair_color						= sanitize_hexcolor(hair_color, 3, 0)
-	facial_hair_color				= sanitize_hexcolor(facial_hair_color, 3, 0)
-	eye_color						= sanitize_hexcolor(eye_color, 3, 0)
-=======
 	hair_color						= sanitize_hexcolor(hair_color, 6, FALSE)
 	facial_hair_color				= sanitize_hexcolor(facial_hair_color, 6, FALSE)
 	eye_type						= sanitize_inlist(eye_type, GLOB.eye_types, DEFAULT_EYES_TYPE)
 	left_eye_color					= sanitize_hexcolor(left_eye_color, 6, FALSE)
 	right_eye_color					= sanitize_hexcolor(right_eye_color, 6, FALSE)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 	var/static/allow_custom_skintones
 	if(isnull(allow_custom_skintones))
@@ -746,12 +729,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else
 		skin_tone					= sanitize_inlist(skin_tone, GLOB.skin_tones - GLOB.nonstandard_skin_tones, initial(skin_tone))
 
-	features["horns_color"]			= sanitize_hexcolor(features["horns_color"], 3, FALSE, "85615a")
-	features["wings_color"]			= sanitize_hexcolor(features["wings_color"], 3, FALSE, "FFFFFF")
+	features["horns_color"]			= sanitize_hexcolor(features["horns_color"], 6, FALSE, "85615a")
+	features["wings_color"]			= sanitize_hexcolor(features["wings_color"], 6, FALSE, "FFFFFF")
 	backbag							= sanitize_inlist(backbag, GLOB.backbaglist, initial(backbag))
 	jumpsuit_style					= sanitize_inlist(jumpsuit_style, GLOB.jumpsuitlist, initial(jumpsuit_style))
 	uplink_spawn_loc				= sanitize_inlist(uplink_spawn_loc, GLOB.uplink_spawn_loc_list, initial(uplink_spawn_loc))
-	features["mcolor"]				= sanitize_hexcolor(features["mcolor"], 3, 0)
+	features["mcolor"]				= sanitize_hexcolor(features["mcolor"], 6, FALSE)
 	features["tail_lizard"]			= sanitize_inlist(features["tail_lizard"], GLOB.tails_list_lizard)
 	features["tail_human"]			= sanitize_inlist(features["tail_human"], GLOB.tails_list_human)
 	features["snout"]				= sanitize_inlist(features["snout"], GLOB.snouts_list)
@@ -798,18 +781,31 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	features["cock_shape"]			= sanitize_inlist(features["cock_shape"], GLOB.cock_shapes_list, DEF_COCK_SHAPE)
 	features["balls_shape"]			= sanitize_inlist(features["balls_shape"], GLOB.balls_shapes_list, DEF_BALLS_SHAPE)
 	features["vag_shape"]			= sanitize_inlist(features["vag_shape"], GLOB.vagina_shapes_list, DEF_VAGINA_SHAPE)
-	features["breasts_color"]		= sanitize_hexcolor(features["breasts_color"], 3, FALSE, "FFF")
-	features["cock_color"]			= sanitize_hexcolor(features["cock_color"], 3, FALSE, "FFF")
-	features["balls_color"]			= sanitize_hexcolor(features["balls_color"], 3, FALSE, "FFF")
-	features["vag_color"]			= sanitize_hexcolor(features["vag_color"], 3, FALSE, "FFF")
+	features["breasts_color"]		= sanitize_hexcolor(features["breasts_color"], 6, FALSE, "FFFFFF")
+	features["cock_color"]			= sanitize_hexcolor(features["cock_color"], 6, FALSE, "FFFFFF")
+	features["balls_color"]			= sanitize_hexcolor(features["balls_color"], 6, FALSE, "FFFFFF")
+	features["vag_color"]			= sanitize_hexcolor(features["vag_color"], 6, FALSE, "FFFFFF")
 	features["breasts_visibility"]	= sanitize_inlist(features["breasts_visibility"], safe_visibilities, GEN_VISIBLE_NO_UNDIES)
 	features["cock_visibility"]		= sanitize_inlist(features["cock_visibility"], safe_visibilities, GEN_VISIBLE_NO_UNDIES)
 	features["balls_visibility"]	= sanitize_inlist(features["balls_visibility"], safe_visibilities, GEN_VISIBLE_NO_UNDIES)
 	features["vag_visibility"]		= sanitize_inlist(features["vag_visibility"], safe_visibilities, GEN_VISIBLE_NO_UNDIES)
 
+	custom_speech_verb				= sanitize_inlist(custom_speech_verb, GLOB.speech_verbs, "default")
+	custom_tongue					= sanitize_inlist(custom_tongue, GLOB.roundstart_tongues, "default")
+
+	security_records				= copytext(security_records, 1, MAX_FLAVOR_LEN)
+	medical_records					= copytext(medical_records, 1, MAX_FLAVOR_LEN)
 
 	features["flavor_text"]			= copytext(features["flavor_text"], 1, MAX_FLAVOR_LEN)
+	features["silicon_flavor_text"]			= copytext(features["silicon_flavor_text"], 1, MAX_FLAVOR_LEN)
 	features["ooc_notes"]			= copytext(features["ooc_notes"], 1, MAX_FLAVOR_LEN)
+
+	persistent_scars = sanitize_integer(persistent_scars)
+	scars_list["1"] = sanitize_text(scars_list["1"])
+	scars_list["2"] = sanitize_text(scars_list["2"])
+	scars_list["3"] = sanitize_text(scars_list["3"])
+	scars_list["4"] = sanitize_text(scars_list["4"])
+	scars_list["5"] = sanitize_text(scars_list["5"])
 
 	joblessrole	= sanitize_integer(joblessrole, 1, 3, initial(joblessrole))
 	//Validate job prefs
@@ -868,12 +864,17 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["shirt_color"]				, shirt_color)
 	WRITE_FILE(S["socks"]					, socks)
 	WRITE_FILE(S["socks_color"]				, socks_color)
-	WRITE_FILE(S["horns_color"]				, features["horns_color"])
-	WRITE_FILE(S["wings_color"]				, features["wings_color"])
 	WRITE_FILE(S["backbag"]					, backbag)
 	WRITE_FILE(S["jumpsuit_style"]			, jumpsuit_style)
 	WRITE_FILE(S["uplink_loc"]				, uplink_spawn_loc)
 	WRITE_FILE(S["species"]					, pref_species.id)
+	WRITE_FILE(S["custom_speech_verb"]		, custom_speech_verb)
+	WRITE_FILE(S["custom_tongue"]			, custom_tongue)
+
+	// records
+	WRITE_FILE(S["security_records"]		, security_records)
+	WRITE_FILE(S["medical_records"]			, medical_records)
+
 	WRITE_FILE(S["feature_mcolor"]					, features["mcolor"])
 	WRITE_FILE(S["feature_lizard_tail"]				, features["tail_lizard"])
 	WRITE_FILE(S["feature_human_tail"]				, features["tail_human"])
@@ -885,6 +886,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["feature_lizard_body_markings"]	, features["body_markings"])
 	WRITE_FILE(S["feature_lizard_legs"]				, features["legs"])
 	WRITE_FILE(S["feature_deco_wings"]				, features["deco_wings"])
+	WRITE_FILE(S["feature_horns_color"]				, features["horns_color"])
+	WRITE_FILE(S["feature_wings_color"]				, features["wings_color"])
 	WRITE_FILE(S["feature_insect_wings"]			, features["insect_wings"])
 	WRITE_FILE(S["feature_insect_fluff"]			, features["insect_fluff"])
 	WRITE_FILE(S["feature_insect_markings"]			, features["insect_markings"])
@@ -946,8 +949,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		fdel(char_vr_path)
 	text2file(belly_prefs_json,char_vr_path)
 
-<<<<<<< HEAD
-=======
 	WRITE_FILE(S["persistent_scars"]			, persistent_scars)
 	WRITE_FILE(S["scars1"]						, scars_list["1"])
 	WRITE_FILE(S["scars2"]						, scars_list["2"])
@@ -966,7 +967,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	else
 		S["loadout"] << "" //empty string to reset the value
 
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	cit_character_pref_save(S)
 
 	return 1

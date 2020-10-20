@@ -42,8 +42,5 @@ GLOBAL_LIST_EMPTY(ai_status_displays)
 
 GLOBAL_LIST_EMPTY(mob_spawners) 		    // All mob_spawn objects
 GLOBAL_LIST_EMPTY(alert_consoles)			// Station alert consoles, /obj/machinery/computer/station_alert
-<<<<<<< HEAD
-=======
 
 GLOBAL_LIST_EMPTY(rockpaperscissors_players) // List of everyone playing rock paper scissors
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

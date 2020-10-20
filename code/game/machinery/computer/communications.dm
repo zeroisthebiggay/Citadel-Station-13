@@ -142,16 +142,13 @@
 				var/input = stripped_multiline_input(usr, "[warning]  Please be aware that this process is very expensive, and abuse will lead to... termination.", "Send a message to an allied station.", "")
 				if(!input || !(usr in view(1,src)) || !checkCCcooldown())
 					return
-<<<<<<< HEAD
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
 				send2otherserver("[station_name()]", input,"Comms_Console")
-=======
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 				if(dest == "all")
 					send2otherserver("[station_name()]", input,"Comms_Console")
 				else
 					send2otherserver("[station_name()]", input,"Comms_Console", list(dest))
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 				minor_announce(input, title = "Outgoing message to allied station")
 				usr.log_talk(input, LOG_SAY, tag="message to the other server")
 				message_admins("[ADMIN_LOOKUPFLW(usr)] has sent a message to the other server.")

@@ -4,10 +4,8 @@
 #define SEND_SOUND(target, sound) DIRECT_OUTPUT(target, sound)
 #define SEND_TEXT(target, text) DIRECT_OUTPUT(target, text)
 #define WRITE_FILE(file, text) DIRECT_OUTPUT(file, text)
-<<<<<<< HEAD
 #define WRITE_LOG(log, text) rustg_log_write(log, text)
 
-=======
 #ifdef EXTOOLS_LOGGING
 // proc hooked, so we can just put in standard TRUE and FALSE
 #define WRITE_LOG(log, text) extools_log_write(log,text,TRUE)
@@ -17,7 +15,6 @@
 #define WRITE_LOG(log, text) rustg_log_write(log, text, "true")
 #define WRITE_LOG_NO_FORMAT(log, text) rustg_log_write(log, text, "false")
 #endif
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 //print a warning message to world.log
 #define WARNING(MSG) warning("[MSG] in [__FILE__] at line [__LINE__] src: [UNLINT(src)] usr: [usr].")
 /proc/warning(msg)
@@ -193,12 +190,10 @@
 /proc/start_log(log)
 	WRITE_LOG(log, "Starting up round ID [GLOB.round_id].\n-------------------------")
 
-<<<<<<< HEAD
-/* ui logging */ 
+/* ui logging */
 
 /proc/log_tgui(text)
 	WRITE_LOG(GLOB.tgui_log, text)
-=======
 /**
  * Appends a tgui-related log entry. All arguments are optional.
  */
@@ -230,7 +225,6 @@
 	if(message)
 		entry += "\n[message]"
 	WRITE_LOG(GLOB.tgui_log, entry)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /* Close open log handles. This should be called as late as possible, and no logging should hapen after. */
 /proc/shutdown_logging()

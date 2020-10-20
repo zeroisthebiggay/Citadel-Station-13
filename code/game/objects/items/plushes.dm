@@ -437,13 +437,13 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 /obj/item/toy/plush/random/Initialize()
 	var/newtype
 	var/list/snowflake_list = CONFIG_GET(keyed_list/snowflake_plushies)
-	
+
 	/// If there are no snowflake plushies we'll default to base plush, so we grab from the valid list
 	if (snowflake_list.len)
 		newtype = prob(CONFIG_GET(number/snowflake_plushie_prob)) ? /obj/item/toy/plush/random_snowflake : pick(GLOB.valid_plushie_paths)
-	else 
+	else
 		newtype = pick(GLOB.valid_plushie_paths)
-	
+
 	new newtype(loc)
 	return INITIALIZE_HINT_QDEL
 
@@ -743,8 +743,6 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	attack_verb = list("headbutt", "scritched", "bit")
 	squeak_override = list('modular_citadel/sound/voice/nya.ogg' = 1)
 	can_random_spawn = FALSE
-<<<<<<< HEAD
-=======
 
 
 /obj/item/toy/plush/hairball
@@ -835,4 +833,3 @@ GLOBAL_LIST_INIT(valid_plushie_paths, valid_plushie_paths())
 	if(!Kisser)
 		return
 	plushie_absorb(Kisser)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

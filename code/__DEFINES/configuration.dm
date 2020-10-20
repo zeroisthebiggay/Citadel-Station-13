@@ -11,8 +11,6 @@
 //flags
 #define CONFIG_ENTRY_LOCKED 1	//can't edit
 #define CONFIG_ENTRY_HIDDEN 2	//can't see value
-<<<<<<< HEAD
-=======
 
 // Policy config keys
 // MAKE SURE THESE ARE UPPERCASE
@@ -24,4 +22,3 @@
 #define POLICYCONFIG_ON_DEFIB_LATE "ON_DEFIB_LATE"
 /// Displayed to pyroclastic slimes on spawn
 #define POLICYCONFIG_ON_PYROCLASTIC_SENTIENT "PYROCLASTIC_SLIME"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
