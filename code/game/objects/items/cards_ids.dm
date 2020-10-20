@@ -705,6 +705,11 @@
 	name = "Prisoner #13-007"
 	registered_name = "Prisoner #13-007"
 
+/obj/item/card/id/prisoner/seven
+	icon_state = "prisoner_008"
+	name = "Prisoner #13-008"
+	registered_name = "Prisoner #13-008"
+
 /obj/item/card/id/mining
 	name = "mining ID"
 	icon_state = "retro"
