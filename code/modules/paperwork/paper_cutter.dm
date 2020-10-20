@@ -67,14 +67,7 @@
 		return
 	..()
 
-<<<<<<< HEAD
-/obj/item/papercutter/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
-=======
 /obj/item/papercutter/on_attack_hand(mob/user)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	add_fingerprint(user)
 	if(!storedcutter)
 		to_chat(user, "<span class='warning'>The cutting blade is gone! You can't use [src] now.</span>")

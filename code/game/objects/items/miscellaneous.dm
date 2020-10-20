@@ -18,6 +18,8 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gangtool-blue"
 	item_state = "radio"
+	var/list/stored_options
+	var/force_refresh = FALSE //if set to true, the beacon will recalculate its display options whenever opened
 
 /obj/item/choice_beacon/attack_self(mob/user)
 	if(canUseBeacon(user))
@@ -34,18 +36,22 @@
 		return FALSE
 
 /obj/item/choice_beacon/proc/generate_options(mob/living/M)
-	var/list/display_names = generate_display_names()
-	if(!display_names.len)
+	if(!stored_options || force_refresh)
+		stored_options = generate_display_names()
+	if(!stored_options.len)
 		return
-	var/choice = input(M,"Which item would you like to order?","Select an Item") as null|anything in display_names
+	var/choice = input(M,"Which item would you like to order?","Select an Item") as null|anything in stored_options
 	if(!choice || !M.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 
-	spawn_option(display_names[choice],M)
+	spawn_option(stored_options[choice],M)
 	qdel(src)
 
-/obj/item/choice_beacon/proc/spawn_option(obj/choice,mob/living/M)
-	var/obj/new_item = new choice()
+/obj/item/choice_beacon/proc/create_choice_atom(atom/choice, mob/owner)
+	return new choice()
+
+/obj/item/choice_beacon/proc/spawn_option(atom/choice,mob/living/M)
+	var/obj/new_item = create_choice_atom(choice, M)
 	var/obj/structure/closet/supplypod/bluespacepod/pod = new()
 	pod.explosionSize = list(0,0,0,0)
 	new_item.forceMove(pod)

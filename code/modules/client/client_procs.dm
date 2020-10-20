@@ -20,7 +20,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	When somebody clicks a link in game, this Topic is called first.
 	It does the stuff in this proc and  then is redirected to the Topic() proc for the src=[0xWhatever]
 	(if specified in the link). ie locate(hsrc).Topic()
+
 	Such links can be spoofed.
+
 	Because of this certain things MUST be considered whenever adding a Topic() for something:
 		- Can it be fed harmful values which could cause runtimes?
 		- Is the Topic call an admin-only thing?
@@ -266,7 +268,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	else
 		prefs = new /datum/preferences(src)
 		GLOB.preferences_datums[ckey] = prefs
-
+		
 	addtimer(CALLBACK(src, .proc/ensure_keys_set), 10)	//prevents possible race conditions
 
 	prefs.last_ip = address				//these are gonna be used for banning

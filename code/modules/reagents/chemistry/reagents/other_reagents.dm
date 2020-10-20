@@ -76,6 +76,10 @@
 		B = new(T)
 	if(data["blood_DNA"])
 		B.blood_DNA[data["blood_DNA"]] = data["blood_type"]
+		if(!B.blood_DNA["color"])
+			B.blood_DNA["color"] = data["bloodcolor"]
+		else
+			B.blood_DNA["color"] = BlendRGB(B.blood_DNA["color"], data["bloodcolor"])
 	if(B.reagents)
 		B.reagents.add_reagent(type, reac_volume)
 	B.update_icon()
@@ -83,7 +87,7 @@
 /datum/reagent/blood/on_new(list/data)
 	if(istype(data))
 		SetViruses(src, data)
-		color = bloodtype_to_color(data["blood_type"])
+		color = data["bloodcolor"]
 		if(data["blood_type"] == "SY")
 			name = "Synthetic Blood"
 			taste_description = "oil"
@@ -246,6 +250,11 @@
 	glass_desc = "The father of all refreshments."
 	shot_glass_icon_state = "shotglassclear"
 
+/datum/reagent/water/on_mob_life(mob/living/carbon/M)
+	. = ..()
+	if(M.blood_volume)
+		M.blood_volume += 0.1 // water is good for you!
+
 /*
  *	Water reaction to turf
  */
@@ -265,7 +274,7 @@
 	if(hotspot && !isspaceturf(T))
 		if(T.air)
 			var/datum/gas_mixture/G = T.air
-			G.temperature = max(min(G.temperature-(CT*1000),G.temperature/CT),TCMB)
+			G.set_temperature(max(min(G.return_temperature()-(CT*1000),G.return_temperature()/CT),TCMB))
 			G.react(src)
 			qdel(hotspot)
 	var/obj/effect/acid/A = (locate(/obj/effect/acid) in T)
@@ -310,8 +319,6 @@
 	metabolization_rate = 45 * REAGENTS_METABOLISM
 	. = 1
 
-<<<<<<< HEAD
-=======
 ///For weird backwards situations where water manages to get added to trays nutrients, as opposed to being snowflaked away like usual.
 /datum/reagent/water/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
 	if(chems.has_reagent(src.type, 1))
@@ -326,7 +333,6 @@
 	taste_description = "emptyiness"
 
 
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 /datum/reagent/water/holywater
 	name = "Holy Water"
 	description = "Water blessed by some deity."
@@ -361,6 +367,8 @@
 	return ..()
 
 /datum/reagent/water/holywater/on_mob_life(mob/living/carbon/M)
+	if(M.blood_volume)
+		M.blood_volume += 0.1 // water is good for you!
 	if(!data)
 		data = list("misc" = 1)
 	data["misc"]++
@@ -916,7 +924,7 @@
 	if(istype(O, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/sheet/metal/M = O
 		reac_volume = min(reac_volume, M.amount)
-		new/obj/item/stack/tile/bronze(get_turf(M), reac_volume)
+		new/obj/item/stack/sheet/bronze(get_turf(M), reac_volume)
 		M.use(reac_volume)
 
 /datum/reagent/nitrogen
@@ -983,6 +991,7 @@
 	color = "#1C1300" // rgb: 30, 20, 0
 	taste_description = "sour chalk"
 	pH = 5
+	material = /datum/material/diamond
 
 /datum/reagent/carbon/reaction_turf(turf/T, reac_volume)
 	if(!isspaceturf(T))
@@ -1129,6 +1138,7 @@
 	pH = 6
 	overdose_threshold = 30
 	color = "#c2391d"
+	material = /datum/material/iron
 
 /datum/reagent/iron/on_mob_life(mob/living/carbon/C)
 	if((HAS_TRAIT(C, TRAIT_NOMARROW)))
@@ -1160,6 +1170,7 @@
 	reagent_state = SOLID
 	color = "#F7C430" // rgb: 247, 196, 48
 	taste_description = "expensive metal"
+	material = /datum/material/gold
 
 /datum/reagent/silver
 	name = "Silver"
@@ -1167,6 +1178,7 @@
 	reagent_state = SOLID
 	color = "#D0D0D0" // rgb: 208, 208, 208
 	taste_description = "expensive yet reasonable metal"
+	material = /datum/material/silver
 
 /datum/reagent/silver/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(M.has_bane(BANE_SILVER))
@@ -1180,6 +1192,7 @@
 	color = "#B8B8C0" // rgb: 184, 184, 192
 	taste_description = "the inside of a reactor"
 	pH = 4
+	material = /datum/material/uranium
 
 /datum/reagent/uranium/on_mob_life(mob/living/carbon/M)
 	M.apply_effect(1/M.metabolism_efficiency,EFFECT_IRRADIATE,0)
@@ -1209,6 +1222,7 @@
 	taste_description = "fizzling blue"
 	pH = 12
 	value = REAGENT_VALUE_RARE
+	material = /datum/material/bluespace
 
 /datum/reagent/bluespace/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(method == TOUCH || method == VAPOR)
@@ -1226,6 +1240,13 @@
 /mob/living/proc/bluespace_shuffle()
 	do_teleport(src, get_turf(src), 5, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 
+/datum/reagent/telecrystal
+	name = "Telecrystal Dust"
+	description = "A blood-red dust comprised of something that was much more useful when it was intact."
+	reagent_state = SOLID
+	color = "#660000" // rgb: 102, 0, 0.
+	taste_description = "contraband"
+
 /datum/reagent/aluminium
 	name = "Aluminium"
 	description = "A silvery white and ductile member of the boron group of chemical elements."
@@ -1240,6 +1261,7 @@
 	color = "#A8A8A8" // rgb: 168, 168, 168
 	taste_mult = 0
 	pH = 10
+	material = /datum/material/glass
 
 /datum/reagent/fuel
 	name = "Welding fuel"
@@ -1881,6 +1903,22 @@
 			H.facial_hair_style = "Very Long Beard"
 			H.update_hair()
 
+/datum/reagent/baldium
+	name = "Baldium"
+	description = "A major cause of hair loss across the world."
+	reagent_state = LIQUID
+	color = "#ecb2cf"
+	taste_description = "bitterness"
+
+/datum/reagent/baldium/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
+	if(method == TOUCH || method == VAPOR)
+		if(M && ishuman(M))
+			var/mob/living/carbon/human/H = M
+			to_chat(H, "<span class='danger'>Your hair is falling out in clumps!</span>")
+			H.hair_style = "Bald"
+			H.facial_hair_style = "Shaved"
+			H.update_hair()
+
 /datum/reagent/saltpetre
 	name = "Saltpetre"
 	description = "Volatile. Controversial. Third Thing."
@@ -2324,13 +2362,6 @@
 		M.emote("nya")
 	if(prob(20))
 		to_chat(M, "<span class = 'notice'>[pick("Headpats feel nice.", "The feeling of a hairball...", "Backrubs would be nice.", "Whats behind those doors?")]</span>")
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		var/list/adjusted = H.adjust_arousal(2,aphro = TRUE)
-		for(var/g in adjusted)
-			var/obj/item/organ/genital/G = g
-			to_chat(M, "<span class='userlove'>You feel like playing with your [G.name]!</span>")
-
 	..()
 
 /datum/reagent/preservahyde
@@ -2339,8 +2370,6 @@
 	reagent_state = LIQUID
 	color = "#f7685e"
 	metabolization_rate = REAGENTS_METABOLISM * 0.25
-<<<<<<< HEAD
-=======
 
 
 /datum/reagent/wittel
@@ -2634,4 +2663,3 @@ datum/reagent/eldritch
 	M.SetSleeping(0, 0)
 	..()
 
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

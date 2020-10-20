@@ -1,5 +1,6 @@
 
 /*
+
 CONTAINS:
 T-RAY
 HEALTH ANALYZER
@@ -7,6 +8,7 @@ GAS ANALYZER
 SLIME SCANNER
 NANITE SCANNER
 GENETICS SCANNER
+
 */
 
 // Describes the three modes of scanning available for health analyzers
@@ -626,9 +628,9 @@ GENETICS SCANNER
 	var/turf/location = get_turf(user)
 	if(!istype(location))
 		return
-
+	
 	scan_turf(user, location)
-
+	
 /obj/item/analyzer/AltClick(mob/user) //Barometer output for measuring when the next storm happens
 	. = ..()
 

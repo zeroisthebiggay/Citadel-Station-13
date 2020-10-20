@@ -81,11 +81,11 @@
 		owner.adjustStaminaLoss(-0.5) //reduce stamina loss by 0.5 per tick, 10 per 2 seconds
 	if(human_owner && human_owner.drunkenness)
 		human_owner.drunkenness *= 0.997 //reduce drunkenness by 0.3% per tick, 6% per 2 seconds
-	if(prob(20))
-		if(carbon_owner)
-			carbon_owner.handle_dreams()
-		if(prob(10) && owner.health > owner.crit_threshold)
-			owner.emote("snore")
+	if(carbon_owner && !carbon_owner.dreaming && prob(2))
+		carbon_owner.dream()
+	// 2% per second, tick interval is in deciseconds
+	if(prob((tick_interval+1) * 0.2) && owner.health > owner.crit_threshold)
+		owner.emote("snore")
 
 /datum/status_effect/staggered
 	id = "staggered"
@@ -95,6 +95,21 @@
 /datum/status_effect/staggered/on_creation(mob/living/new_owner, set_duration)
 	if(isnum(set_duration))
 		duration = set_duration
+	return ..()
+
+/datum/status_effect/off_balance
+	id = "offbalance"
+	alert_type = null
+
+/datum/status_effect/off_balance/on_creation(mob/living/new_owner, set_duration)
+	if(isnum(set_duration))
+		duration = set_duration
+	return ..()
+
+/datum/status_effect/off_balance/on_remove()
+	var/active_item = owner.get_active_held_item()
+	if(is_type_in_typecache(active_item, GLOB.shove_disarming_types))
+		owner.visible_message("<span class='warning'>[owner.name] regains their grip on \the [active_item]!</span>", "<span class='warning'>You regain your grip on \the [active_item]</span>", null, COMBAT_MESSAGE_RANGE)
 	return ..()
 
 /obj/screen/alert/status_effect/asleep
@@ -123,11 +138,13 @@
 /datum/status_effect/mesmerize/on_creation(mob/living/new_owner, set_duration)
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_MUTE, "mesmerize")
+	ADD_TRAIT(owner, TRAIT_COMBAT_MODE_LOCKED, "mesmerize")
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/mesmerize)
 
 /datum/status_effect/mesmerize/on_remove()
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_MUTE, "mesmerize")
+	REMOVE_TRAIT(owner, TRAIT_COMBAT_MODE_LOCKED, "mesmerize")
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/mesmerize)
 
 /datum/status_effect/mesmerize/on_creation(mob/living/new_owner, set_duration)
@@ -145,7 +162,6 @@
 	id = "tased"
 	alert_type = null
 	var/movespeed_mod = /datum/movespeed_modifier/status_effect/tased
-	var/nextmove_modifier = 1
 	var/stamdmg_per_ds = 0		//a 20 duration would do 20 stamdmg, disablers do 24 or something
 	var/last_tick = 0			//fastprocess processing speed is a goddamn sham, don't trust it.
 
@@ -174,13 +190,9 @@
 			C.adjustStaminaLoss(max(0, stamdmg_per_ds * diff)) //if you really want to try to stamcrit someone with a taser alone, you can, but it'll take time and good timing.
 	last_tick = world.time
 
-/datum/status_effect/electrode/nextmove_modifier() //why is this a proc. its no big deal since this doesnt get called often at all but literally w h y
-	return nextmove_modifier
-
 /datum/status_effect/electrode/no_combat_mode
 	id = "tased_strong"
 	movespeed_mod = /datum/movespeed_modifier/status_effect/tased/no_combat_mode
-	nextmove_modifier = 2
 	blocks_combatmode = TRUE
 	stamdmg_per_ds = 1
 
@@ -366,9 +378,9 @@
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
 	var/mutable_appearance/marked_underlay
-	var/obj/item/twohanded/kinetic_crusher/hammer_synced
+	var/obj/item/kinetic_crusher/hammer_synced
 
-/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, obj/item/twohanded/kinetic_crusher/new_hammer_synced)
+/datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, obj/item/kinetic_crusher/new_hammer_synced)
 	. = ..()
 	if(.)
 		hammer_synced = new_hammer_synced
@@ -654,10 +666,19 @@
 
 /datum/status_effect/neck_slice/tick()
 	var/mob/living/carbon/human/H = owner
-	if(H.stat == DEAD || H.bleed_rate <= 8)
+	var/obj/item/bodypart/throat = H.get_bodypart(BODY_ZONE_HEAD)
+	if(H.stat == DEAD || !throat)
 		H.remove_status_effect(/datum/status_effect/neck_slice)
 	if(prob(10))
 		H.emote(pick("gasp", "gag", "choke"))
+	var/still_bleeding = FALSE
+	for(var/thing in throat.wounds)
+		var/datum/wound/W = thing
+		if(W.wound_type == WOUND_SLASH && W.severity > WOUND_SEVERITY_MODERATE)
+			still_bleeding = TRUE
+			break
+	if(!still_bleeding)
+		H.remove_status_effect(/datum/status_effect/neck_slice)
 
 /mob/living/proc/apply_necropolis_curse(set_curse, duration = 10 MINUTES)
 	var/datum/status_effect/necropolis_curse/C = has_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE)
@@ -767,8 +788,8 @@
 	owner.DefaultCombatKnockdown(15, TRUE, FALSE, 15)
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
-		C.silent = max(2, C.silent)
-		C.stuttering = max(5, C.stuttering)
+		C.silent = max(5, C.silent) //Increased, now lasts until five seconds after it ends, instead of 2
+		C.stuttering = max(10, C.stuttering) //Increased, now lasts for five seconds after the mute ends, instead of 3
 	if(!old_health)
 		old_health = owner.health
 	if(!old_oxyloss)
@@ -935,8 +956,9 @@ datum/status_effect/pacify
 	if(hearing_args[HEARING_SPEAKER] == owner)
 		return
 	var/mob/living/carbon/C = owner
+	var/hypnomsg = uncostumize_say(hearing_args[HEARING_RAW_MESSAGE], hearing_args[HEARING_MESSAGE_MODE])
 	C.cure_trauma_type(/datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY) //clear previous hypnosis
-	addtimer(CALLBACK(C, /mob/living/carbon.proc/gain_trauma, /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, hearing_args[HEARING_RAW_MESSAGE]), 10)
+	addtimer(CALLBACK(C, /mob/living/carbon.proc/gain_trauma, /datum/brain_trauma/hypnosis, TRAUMA_RESILIENCE_SURGERY, hypnomsg), 10)
 	addtimer(CALLBACK(C, /mob/living.proc/Stun, 60, TRUE, TRUE), 15) //Take some time to think about it
 	qdel(src)
 

@@ -9,26 +9,21 @@
 	blacklisted = 1
 	ignored_by = list(/mob/living/simple_animal/hostile/faithless)
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
-	species_traits = list(NOBLOOD,NOEYES)
+	species_traits = list(NOBLOOD,NOEYES,HAS_FLESH,HAS_BONE)
 	inherent_traits = list(TRAIT_RADIMMUNE,TRAIT_VIRUSIMMUNE,TRAIT_NOBREATH)
 
 	dangerous_existence = 1
 	mutanteyes = /obj/item/organ/eyes/night_vision
 
-<<<<<<< HEAD
-=======
 	species_category = SPECIES_CATEGORY_SHADOW
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
-/datum/species/shadow/spec_life(mob/living/carbon/human/H)
-	var/turf/T = H.loc
-	if(istype(T))
-		var/light_amount = T.get_lumcount()
+/datum/species/shadow/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	. = ..()
+	C.AddElement(/datum/element/photosynthesis, 1, 1, 0, 0, 0, 0, SHADOW_SPECIES_LIGHT_THRESHOLD, SHADOW_SPECIES_LIGHT_THRESHOLD)
 
-		if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD) //if there's enough light, start dying
-			H.take_overall_damage(1,1)
-		else if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //heal in the dark
-			H.heal_overall_damage(1,1)
+/datum/species/shadow/on_species_loss(mob/living/carbon/C)
+	. = ..()
+	C.RemoveElement(/datum/element/photosynthesis, 1, 1, 0, 0, 0, 0, SHADOW_SPECIES_LIGHT_THRESHOLD, SHADOW_SPECIES_LIGHT_THRESHOLD)
 
 /datum/species/shadow/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])
@@ -87,12 +82,10 @@
 	M.AddSpell(SW)
 	shadowwalk = SW
 
-
 /obj/item/organ/brain/nightmare/Remove(special = FALSE)
 	if(shadowwalk && owner)
 		owner.RemoveSpell(shadowwalk)
 	return ..()
-
 
 /obj/item/organ/heart/nightmare
 	name = "heart of darkness"
@@ -171,7 +164,7 @@
 	righthand_file = 'icons/mob/inhands/antag/changeling_righthand.dmi'
 	item_flags = ABSTRACT | DROPDEL
 	w_class = WEIGHT_CLASS_HUGE
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	total_mass = TOTAL_MASS_HAND_REPLACEMENT
 
 /obj/item/light_eater/Initialize()
@@ -190,11 +183,8 @@
 			T.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	else if(isliving(AM))
 		var/mob/living/L = AM
-<<<<<<< HEAD
-=======
 		if(isethereal(AM))
 			AM.emp_act(50)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 		if(iscyborg(AM))
 			var/mob/living/silicon/robot/borg = AM
 			if(borg.lamp_intensity)

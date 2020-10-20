@@ -71,15 +71,10 @@ h1.alert, h2.alert		{color: #000000;}
 .disarm					{color: #990000;}
 .passive				{color: #660000;}
 
-<<<<<<< HEAD
-.userdanger				{color: #ff0000;	font-weight: bold; font-size: 3;}
-.danger					{color: #ff0000;}
-=======
 .userdanger				{color: #ff0000;	font-weight: bold;	font-size: 3;}
 .danger					{color: #ff0000;	font-weight: bold;}
 .tinydanger				{color: #ff0000; font-size: 85%;}
 .smalldanger			{color: #ff0000; font-size: 90%;}
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 .warning				{color: #ff0000;	font-style: italic;}
 .boldwarning			{color: #ff0000;	font-style: italic;	font-weight: bold}
 .announce				{color: #228b22;	font-weight: bold;}
@@ -88,6 +83,9 @@ h1.alert, h2.alert		{color: #000000;}
 .rose					{color: #ff5050;}
 .info					{color: #0000CC;}
 .notice					{color: #000099;}
+.tinynotice				{color: #000099; font-size: 85%;}
+.smallnotice			{color: #000099; font-size: 90%;}
+.smallnoticeital		{color: #000099; font-style: italic;	font-size: 90%;}
 .boldnotice				{color: #000099;	font-weight: bold;}
 .hear					{color: #000099;	font-style: italic;}
 .adminnotice			{color: #0000ff;}

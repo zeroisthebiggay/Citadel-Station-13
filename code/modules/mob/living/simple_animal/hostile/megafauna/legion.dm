@@ -21,26 +21,15 @@ SHITCODE AHEAD. BE ADVISED. Also comment extravaganza
 
 /mob/living/simple_animal/hostile/megafauna/legion
 	name = "Legion"
-<<<<<<< HEAD
-	threat = 30
-	health = 800
-	maxHealth = 800
-=======
 	health = 700
 	maxHealth = 700
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	spacewalk = TRUE
 	icon_state = "mega_legion"
 	icon_living = "mega_legion"
 	desc = "One of many."
-<<<<<<< HEAD
-	icon = 'icons/mob/lavaland/legion.dmi'
-	attacktext = "chomps"
-=======
 	icon = 'icons/mob/lavaland/96x96megafauna.dmi'
 	attack_verb_continuous = "chomps"
 	attack_verb_simple = "chomp"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	attack_sound = 'sound/magic/demon_attack1.ogg'
 	speak_emote = list("echoes")
 	armour_penetration = 50
@@ -63,13 +52,10 @@ SHITCODE AHEAD. BE ADVISED. Also comment extravaganza
 	elimination = 1
 	appearance_flags = 0
 	mouse_opacity = MOUSE_OPACITY_ICON
-<<<<<<< HEAD
-=======
 	wound_bonus = -40
 	bare_wound_bonus = 20
 	var/size = 3
 	var/charging = FALSE
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /mob/living/simple_animal/hostile/megafauna/legion/Initialize()
 	. = ..()

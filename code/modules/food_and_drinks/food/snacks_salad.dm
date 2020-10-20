@@ -124,9 +124,6 @@
 	trash = /obj/item/kitchen/knife
 	bonus_reagents = list(/datum/reagent/medicine/earthsblood = 1, /datum/reagent/iron = 4)
 	tastes = list("iron" = 1, "conspiracy" = 1)
-<<<<<<< HEAD
-	foodtype = VEGETABLES
-=======
 	foodtype = VEGETABLES
 
 /obj/item/reagent_containers/food/snacks/salad/edensalad
@@ -146,4 +143,3 @@
 	list_reagents = list(/datum/reagent/consumable/capsaicin = 2, /datum/reagent/consumable/nutriment/vitamin = 3, /datum/reagent/consumable/nutriment = 5)
 	tastes = list("building heat" = 2, "savory meat and vegtables" = 1)
 	foodtype = GRAIN | MEAT | VEGETABLES
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

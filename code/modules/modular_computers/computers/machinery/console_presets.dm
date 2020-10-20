@@ -47,16 +47,12 @@
 	desc = "A stationary computer. This one comes preloaded with research programs."
 	_has_ai = TRUE
 
-/obj/machinery/modular_computer/console/preset/research/examine(mob/user)
-	. = ..()
-	. += "<span class='notice'>Alt-click to eject the intelliCard.</span>"
-
 /obj/machinery/modular_computer/console/preset/research/install_programs()
 	var/obj/item/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
 	hard_drive.store_file(new/datum/computer_file/program/ntnetmonitor())
-	hard_drive.store_file(new/datum/computer_file/program/nttransfer())
 	hard_drive.store_file(new/datum/computer_file/program/chatclient())
 	hard_drive.store_file(new/datum/computer_file/program/aidiag())
+	hard_drive.store_file(new/datum/computer_file/program/robocontrol())
 
 
 // ===== COMMAND CONSOLE =====
@@ -67,11 +63,6 @@
 	_has_second_id_slot = TRUE
 	_has_printer = TRUE
 
-<<<<<<< HEAD
-/obj/machinery/modular_computer/console/preset/command/examine(mob/user)
-	. = ..()
-	. += "<span class='notice'>Alt-click [src] to eject the identification card.</span>"
-=======
 /obj/machinery/modular_computer/console/preset/command/install_programs()
 	var/obj/item/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
 	hard_drive.store_file(new/datum/computer_file/program/chatclient())
@@ -85,12 +76,13 @@
 	desc = "A stationary computer. This one comes preloaded with identification modification programs."
 	_has_second_id_slot = TRUE
 	_has_printer = TRUE
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
-/obj/machinery/modular_computer/console/preset/command/install_programs()
+/obj/machinery/modular_computer/console/preset/id/install_programs()
 	var/obj/item/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
 	hard_drive.store_file(new/datum/computer_file/program/chatclient())
 	hard_drive.store_file(new/datum/computer_file/program/card_mod())
+	hard_drive.store_file(new/datum/computer_file/program/job_management())
+	hard_drive.store_file(new/datum/computer_file/program/crew_manifest())
 
 // ===== CIVILIAN CONSOLE =====
 /obj/machinery/modular_computer/console/preset/civilian
@@ -101,4 +93,4 @@
 /obj/machinery/modular_computer/console/preset/civilian/install_programs()
 	var/obj/item/computer_hardware/hard_drive/hard_drive = cpu.all_components[MC_HDD]
 	hard_drive.store_file(new/datum/computer_file/program/chatclient())
-	hard_drive.store_file(new/datum/computer_file/program/nttransfer())
+	hard_drive.store_file(new/datum/computer_file/program/arcade())

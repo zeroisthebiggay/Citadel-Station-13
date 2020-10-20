@@ -2,7 +2,7 @@
 
 /obj/item/electronics/firealarm
 	name = "fire alarm electronics"
-	custom_price = 50
+	custom_price = PRICE_CHEAP
 	desc = "A fire alarm circuit. Can handle heat levels up to 40 degrees celsius."
 
 /obj/item/wallframe/firealarm
@@ -141,7 +141,7 @@
 	if(user)
 		log_game("[user] reset a fire alarm at [COORD(src)]")
 
-/obj/machinery/firealarm/attack_hand(mob/user)
+/obj/machinery/firealarm/on_attack_hand(mob/user, act_intent = user.a_intent, unarmed_attack_flags)
 	if(buildstage != 2)
 		return ..()
 	add_fingerprint(user)

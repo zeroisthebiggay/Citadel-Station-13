@@ -27,6 +27,7 @@
 /turf/open/space/Initialize()
 	icon_state = SPACE_ICON_STATE
 	air = space_gas
+	update_air_ref()
 	vis_contents.Cut() //removes inherited overlays
 	visibilityChanged()
 
@@ -178,6 +179,12 @@
 		A.inertia_moving = TRUE
 
 
+/turf/open/space/Exited(atom/movable/AM, atom/OldLoc)
+	. = ..()
+	var/turf/old = get_turf(OldLoc)
+	if(!isspaceturf(old) && ismob(AM))
+		var/mob/M = AM
+		M.update_gravity(M.mob_has_gravity())
 
 /turf/open/space/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return

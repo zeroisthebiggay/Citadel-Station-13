@@ -24,8 +24,6 @@
 	design_ids = list("defib_decay", "defib_shock", "defib_heal", "defib_speed")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
-<<<<<<< HEAD
-=======
 /datum/techweb_node/plumbing
 	id = "plumbing"
 	display_name = "Reagent Plumbing Technology"
@@ -43,7 +41,6 @@
 	design_ids = list("plumb_rcd", "autohydrotray", "rplunger")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 //////////////////////Cybernetics/////////////////////
 
 /datum/techweb_node/surplus_limbs
@@ -124,7 +121,7 @@
 	display_name = "Advanced Surgery Tools"
 	description = "Refined and improved redesigns for the run-of-the-mill medical utensils."
 	prereq_ids = list("adv_biotech", "adv_surgery")
-	design_ids = list("drapes", "retractor_adv", "surgicaldrill_adv", "scalpel_adv")
+	design_ids = list("drapes", "retractor_adv", "surgicaldrill_adv", "scalpel_adv", "bonesetter", "surgical_tape")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /datum/techweb_node/adv_surgery

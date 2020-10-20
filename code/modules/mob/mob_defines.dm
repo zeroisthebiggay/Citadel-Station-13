@@ -11,6 +11,13 @@
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 
 	vis_flags = VIS_INHERIT_PLANE //when this be added to vis_contents of something it inherit something.plane, important for visualisation of mob in openspace.
+	
+	attack_hand_is_action = TRUE
+	attack_hand_unwieldlyness = CLICK_CD_MELEE
+	attack_hand_speed = 0
+
+	/// What receives our keyboard input. src by default.
+	var/datum/focus
 
 	var/lighting_alpha = LIGHTING_PLANE_ALPHA_VISIBLE
 	var/datum/mind/mind
@@ -32,9 +39,10 @@
 	var/list/logging = list()
 	var/atom/machine = null
 
-	var/next_move = null
 	var/create_area_cooldown
-	var/notransform = null	//Carbon
+	/// Whether or not the mob is currently being transformed into another mob or into another state of being. This will prevent it from moving or doing realistically anything.
+	/// Don't you DARE use this for a cheap way to ensure someone is stunned in your code.
+	var/mob_transforming = FALSE
 	var/eye_blind = 0		//Carbon
 	var/eye_blurry = 0		//Carbon
 	var/real_name = null
@@ -125,11 +133,21 @@
 
 	var/list/progressbars = null	//for stacking do_after bars
 
+	///For storing what do_after's someone has, in case we want to restrict them to only one of a certain do_after at a time
+	var/list/do_afters
+
 	var/list/mousemove_intercept_objects
 
 	var/datum/click_intercept
 
 	var/registered_z
+
+	var/list/alerts = list() // contains /obj/screen/alert only // On /mob so clientless mobs will throw alerts properly
+	var/list/screens = list()
+	var/list/client_colours = list()
+	var/hud_type = /datum/hud
+
+	var/datum/hSB/sandbox = null
 
 	var/mob/audiovisual_redirect //Mob to redirect messages, speech, and sounds to
 
@@ -150,4 +168,4 @@
 	/// The timer that will remove our indicator for early aborts (like when an user finishes their message)
 	var/typing_indicator_timerid
 	/// Current state of our typing indicator. Used for cut overlay, DO NOT RUNTIME ASSIGN OTHER THAN FROM SHOW/CLEAR. Used to absolutely ensure we do not get stuck overlays.
-	var/typing_indicator_current
+	var/mutable_appearance/typing_indicator_current

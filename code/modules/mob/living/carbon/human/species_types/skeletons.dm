@@ -1,25 +1,17 @@
 /datum/species/skeleton
-<<<<<<< HEAD
-	// 2spooky
-	name = "Spooky Scary Skeleton"
-	id = "skeleton"
-=======
 	name = "Skeleton"
 	id = SPECIES_SKELETON
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	say_mod = "rattles"
 	blacklisted = 0
 	sexes = 0
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton
-	species_traits = list(NOBLOOD,NOGENITALS,NOAROUSAL)
-	inherent_traits = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NOHUNGER,TRAIT_EASYDISMEMBER,TRAIT_LIMBATTACHMENT,TRAIT_FAKEDEATH, TRAIT_CALCIUM_HEALER)
+	species_traits = list(NOBLOOD,NOGENITALS,NOAROUSAL,HAS_BONE,NOTRANSSTING)
+	inherent_traits = list(TRAIT_EASYDISMEMBER,TRAIT_LIMBATTACHMENT,TRAIT_CALCIUM_HEALER)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	mutanttongue = /obj/item/organ/tongue/bone
 	damage_overlay_type = ""//let's not show bloody wounds or burns over bones.
 	disliked_food = NONE
 	liked_food = GROSS | MEAT | RAW | DAIRY
-<<<<<<< HEAD
-=======
 	brutemod = 1.25
 	burnmod = 1.25
 
@@ -31,7 +23,6 @@
 		brutemod = 1
 		burnmod = 1
 	..()
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /datum/species/skeleton/check_roundstart_eligible()
 	if(SSevents.holidays && SSevents.holidays[HALLOWEEN])

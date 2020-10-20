@@ -32,11 +32,8 @@
 	var/special_name_chance = 5
 	var/owner //dobby is a free golem
 
-<<<<<<< HEAD
-=======
 	species_category = SPECIES_CATEGORY_GOLEM
 
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 /datum/species/golem/random_name(gender,unique,lastname)
 	var/golem_surname = pick(GLOB.golem_names)
 	// 3% chance that our golem has a human surname, because
@@ -285,25 +282,15 @@
 	. = ..()
 	C.faction |= "plants"
 	C.faction |= "vines"
+	C.AddElement(/datum/element/photosynthesis)
 
 /datum/species/golem/wood/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	C.faction -= "plants"
 	C.faction -= "vines"
+	C.RemoveElement(/datum/element/photosynthesis)
 
 /datum/species/golem/wood/spec_life(mob/living/carbon/human/H)
-	if(H.stat == DEAD)
-		return
-	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
-	if(isturf(H.loc)) //else, there's considered to be no light
-		var/turf/T = H.loc
-		light_amount = min(1,T.get_lumcount()) - 0.5
-		H.adjust_nutrition(light_amount * 10, NUTRITION_LEVEL_FULL)
-		if(light_amount > 0.2) //if there's enough light, heal
-			H.heal_overall_damage(1,1)
-			H.adjustToxLoss(-1)
-			H.adjustOxyLoss(-1)
-
 	if(H.nutrition < NUTRITION_LEVEL_STARVING + 50)
 		H.take_overall_damage(2,0)
 
@@ -437,9 +424,9 @@
 		else
 			reactive_teleport(H)
 
-/datum/species/golem/bluespace/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
+/datum/species/golem/bluespace/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style, act_intent, unarmed_attack_flags)
 	..()
-	if(world.time > last_teleport + teleport_cooldown && M != H &&  M.a_intent != INTENT_HELP)
+	if(world.time > last_teleport + teleport_cooldown && M != H && act_intent != INTENT_HELP)
 		reactive_teleport(H)
 
 /datum/species/golem/bluespace/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
@@ -534,9 +521,9 @@
 	var/golem_name = "[uppertext(clown_name)]"
 	return golem_name
 
-/datum/species/golem/bananium/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
+/datum/species/golem/bananium/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style, act_intent, unarmed_attack_flags)
 	..()
-	if(world.time > last_banana + banana_cooldown && M != H &&  M.a_intent != INTENT_HELP)
+	if(world.time > last_banana + banana_cooldown && M != H && act_intent != INTENT_HELP)
 		new/obj/item/grown/bananapeel/specialpeel(get_turf(H))
 		last_banana = world.time
 
@@ -845,9 +832,9 @@
 	if(world.time > last_gong_time + gong_cooldown)
 		gong(H)
 
-/datum/species/golem/bronze/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style)
+/datum/species/golem/bronze/spec_attack_hand(mob/living/carbon/human/M, mob/living/carbon/human/H, datum/martial_art/attacker_style, act_intent, unarmed_attack_flags)
 	..()
-	if(world.time > last_gong_time + gong_cooldown &&  M.a_intent != INTENT_HELP)
+	if(world.time > last_gong_time + gong_cooldown && act_intent != INTENT_HELP)
 		gong(H)
 
 /datum/species/golem/bronze/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)

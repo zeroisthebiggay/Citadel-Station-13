@@ -8,14 +8,16 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	name = "Guardian Spirit"
 	real_name = "Guardian Spirit"
 	desc = "A mysterious being that stands by its charge, ever vigilant."
-	threat = 5
 	speak_emote = list("hisses")
 	gender = NEUTER
 	mob_biotypes = NONE
 	bubble_icon = "guardian"
-	response_help  = "passes through"
-	response_disarm = "flails at"
-	response_harm   = "punches"
+	response_help_continuous = "passes through"
+	response_help_simple = "pass through"
+	response_disarm_continuous = "flails at"
+	response_disarm_simple = "flail at"
+	response_harm_continuous = "punches"
+	response_harm_simple = "punch"
 	icon = 'icons/mob/guardian.dmi'
 	icon_state = "magicbase"
 	icon_living = "magicbase"
@@ -29,7 +31,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	maxbodytemp = INFINITY
-	attacktext = "punches"
+	attack_verb_continuous = "punches"
+	attack_verb_simple = "punch"
 	maxHealth = INFINITY //The spirit itself is invincible
 	health = INFINITY
 	healable = FALSE //don't brusepack the guardian
@@ -56,11 +59,13 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/magic_fluff_string = "<span class='holoparasite'>You draw the Coder, symbolizing bugs and errors. This shouldn't happen! Submit a bug report!</span>"
 	var/tech_fluff_string = "<span class='holoparasite'>BOOT SEQUENCE COMPLETE. ERROR MODULE LOADED. THIS SHOULDN'T HAPPEN. Submit a bug report!</span>"
 	var/carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP SOME SORT OF HORRIFIC BUG BLAME THE CODERS CARP CARP CARP</span>"
+	/// sigh, fine.
+	var/datum/song/holoparasite/music_datum
 
 /mob/living/simple_animal/hostile/guardian/Initialize(mapload, theme)
 	GLOB.parasites += src
 	updatetheme(theme)
-
+	music_datum = new(src, get_allowed_instrument_ids())
 	. = ..()
 
 /mob/living/simple_animal/hostile/guardian/med_hud_set_health()
@@ -80,7 +85,15 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 
 /mob/living/simple_animal/hostile/guardian/Destroy()
 	GLOB.parasites -= src
+	QDEL_NULL(music_datum)
 	return ..()
+
+/mob/living/simple_animal/hostile/guardian/verb/music_interact()
+	set name = "Access Internal Synthesizer"
+	set desc = "Access your internal musical synthesizer"
+	set category = "IC"
+
+	music_datum.ui_interact(src)
 
 /mob/living/simple_animal/hostile/guardian/proc/updatetheme(theme) //update the guardian's theme
 	if(!theme)
@@ -109,7 +122,8 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 			icon_dead = "holocarp"
 			speak_emote = list("gnashes")
 			desc = "A mysterious fish that stands by its charge, ever vigilant."
-			attacktext = "bites"
+			attack_verb_continuous = "bites"
+			attack_verb_simple = "bite"
 			attack_sound = 'sound/weapons/bite.ogg'
 			recolorentiresprite = TRUE
 	if(!recolorentiresprite) //we want this to proc before stand logs in, so the overlay isnt gone for some reason
@@ -155,7 +169,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	to_chat(src, "<span class='notice'>Your new name <span class='name'>[new_name]</span> anchors itself in your mind.</span>")
 	fully_replace_character_name(null, new_name)
 
-/mob/living/simple_animal/hostile/guardian/Life() //Dies if the summoner dies
+/mob/living/simple_animal/hostile/guardian/PhysicalLife() //Dies if the summoner dies
 	. = ..()
 	update_health_hud() //we need to update all of our health displays to match our summoner and we can't practically give the summoner a hook to do it
 	med_hud_set_health()
@@ -635,15 +649,12 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /obj/item/guardiancreator/tech/choose/dextrous
 	possible_guardians = list("Assassin", "Chaos", "Gravitokinetic", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
-<<<<<<< HEAD
-=======
 /obj/item/guardiancreator/tech/choose/nukie // lacks support and protector as encouraging nukies to play turtle isnt fun and dextrous is epic
 	possible_guardians = list("Assassin", "Chaos", "Gravitokinetic", "Charger", "Dextrous", "Explosive", "Lightning", "Ranged", "Standard")
 
 /obj/item/guardiancreator/tech/choose/nukie/check_uplink_validity()
 	return !used
 
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 /obj/item/paper/guides/antag/guardian
 	name = "Holoparasite Guide"
 	icon_state = "paper_words"
@@ -685,7 +696,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
  <br>
  <b>Charger</b>: Moves extremely fast, does medium damage on attack, and can charge at targets, damaging the first target hit and forcing them to drop any items they are holding.<br>
  <br>
- <b>Dexterous</b>: Does low damage on attack, but is capable of holding items and storing a single item within it. It will drop items held in its hands when it recalls, but it will retain the stored item.<br>
+ <b>Dextrous</b>: Does low damage on attack, but is capable of holding items and storing a single item within it. It will drop items held in its hands when it recalls, but it will retain the stored item.<br>
  <br>
  <b>Explosive</b>: High damage resist and medium power attack that may explosively teleport targets. Can turn any object, including objects too large to pick up, into a bomb, dealing explosive damage to the next person to touch it. The object will return to normal after the trap is triggered or after a delay.<br>
  <br>
@@ -701,8 +712,6 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
  <br>
 "}
 
-<<<<<<< HEAD
-=======
 /obj/item/paper/guides/antag/guardian/nukie
 	name = "Guardian Guide"
 	info = {"<b>A list of Guardian Types</b><br>
@@ -728,7 +737,6 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
  <br>
 "}
 
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /obj/item/storage/box/syndie_kit/guardian
 	name = "holoparasite injector kit"
@@ -736,6 +744,13 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 /obj/item/storage/box/syndie_kit/guardian/PopulateContents()
 	new /obj/item/guardiancreator/tech/choose/traitor(src)
 	new /obj/item/paper/guides/antag/guardian(src)
+
+/obj/item/storage/box/syndie_kit/nukieguardian
+	name = "holoparasite injector kit"
+
+/obj/item/storage/box/syndie_kit/nukieguardian/PopulateContents()
+	new /obj/item/guardiancreator/tech/choose/nukie(src)
+	new /obj/item/paper/guides/antag/guardian/nukie(src)
 
 /obj/item/guardiancreator/carp
 	name = "holocarp fishsticks"

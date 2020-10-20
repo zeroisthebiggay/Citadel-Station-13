@@ -193,6 +193,7 @@
 	name = "robotic voicebox"
 	desc = "A voice synthesizer that can interface with organic lifeforms."
 	status = ORGAN_ROBOTIC
+	organ_flags = ORGAN_NO_SPOIL
 	icon_state = "tonguerobot"
 	say_mod = "states"
 	attack_verb = list("beeped", "booped")
@@ -234,8 +235,6 @@
 	desc = "A voice synthesizer used by IPCs to smoothly interface with organic lifeforms."
 	electronics_magic = FALSE
 	organ_flags = ORGAN_SYNTHETIC
-<<<<<<< HEAD
-=======
 
 /obj/item/organ/tongue/ethereal
 	name = "electric discharger"
@@ -278,4 +277,3 @@
 /obj/item/organ/tongue/arachnid/Initialize(mapload)
 	. = ..()
 	languages_possible = languages_possible_arachnid
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

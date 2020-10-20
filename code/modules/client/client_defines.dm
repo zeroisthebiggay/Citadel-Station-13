@@ -179,3 +179,4 @@
 
 	//world.time of when the crew manifest can be accessed
 	var/crew_manifest_delay
+

@@ -24,10 +24,6 @@
 /obj/structure/closet/crate/necropolis/tendril
 	desc = "It's watching you suspiciously."
 
-<<<<<<< HEAD
-/obj/structure/closet/crate/necropolis/tendril/PopulateContents()
-	var/loot = rand(1,28)
-=======
 /obj/structure/closet/crate/necropolis/tendril/magic
 	name = "relic necropolis chest"
 
@@ -41,7 +37,6 @@
 
 /obj/structure/closet/crate/necropolis/tendril/magic/PopulateContents()
 	var/loot = rand(1,10)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	switch(loot)
 		if(1)
 			new /obj/item/soulstone/anybody(src)
@@ -166,7 +161,7 @@
 		if(11)
 			new /obj/item/disk/tech_disk/illegal(src)
 		if(12)
-			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker(src)
+			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker/old(src)
 		if(13)
 			new /obj/item/nullrod/scythe/talking(src)
 		if(14)
@@ -191,13 +186,8 @@
 		if(23)
 			new /obj/item/book/granter/spell/summonitem(src)
 		if(24)
-<<<<<<< HEAD
-			new /obj/item/reagent_containers/food/drinks/bottle/holywater/hell(src)
-			new /obj/item/clothing/suit/space/hardsuit/ert/paranormal/inquisitor(src)
-=======
 			new /obj/item/borg/upgrade/modkit/lifesteal(src)
 			new /obj/item/bedsheet/cult(src)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 		if(25)
 			new /obj/item/clothing/neck/necklace/memento_mori(src)
 		if(26)
@@ -205,15 +195,11 @@
 		if(27)
 			new /obj/item/immortality_talisman(src)
 		if(28)
-<<<<<<< HEAD
-			new /obj/item/clothing/neck/necklace/memento_mori(src)
-=======
 			new /obj/item/gun/magic/wand/book/healing(src)
 		if(29)
 			new /obj/item/reagent_containers/glass/bottle/ichor/red(src)
 			new /obj/item/reagent_containers/glass/bottle/ichor/blue(src)
 			new /obj/item/reagent_containers/glass/bottle/ichor/green(src)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 //KA modkit design discs
 /obj/item/disk/design_disk/modkit_disc
@@ -624,7 +610,7 @@
 	setDir(user.dir)
 
 	user.forceMove(src)
-	user.notransform = TRUE
+	user.mob_transforming = TRUE
 	user.status_flags |= GODMODE
 
 	can_destroy = FALSE
@@ -633,7 +619,7 @@
 
 /obj/effect/immortality_talisman/proc/unvanish(mob/user)
 	user.status_flags &= ~GODMODE
-	user.notransform = FALSE
+	user.mob_transforming = FALSE
 	user.forceMove(get_turf(src))
 
 	user.visible_message("<span class='danger'>[user] pops back into reality!</span>")
@@ -791,7 +777,7 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	hitsound_on = 'sound/weapons/bladeslice.ogg'
 	w_class = WEIGHT_CLASS_BULKY
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	faction_bonus_force = 30
 	nemesis_factions = list("mining", "boss")
 	var/transform_cooldown
@@ -799,6 +785,8 @@
 	var/bleed_stacks_per_hit = 3
 	total_mass = 2.75
 	total_mass_on = 5
+	attack_speed = 0
+	attack_unwieldlyness = CLICK_CD_MELEE * 0.5
 
 /obj/item/melee/transforming/cleaving_saw/examine(mob/user)
 	. = ..()
@@ -817,8 +805,12 @@
 		return FALSE
 	. = ..()
 	if(.)
+		if(active)
+			attack_unwieldlyness = CLICK_CD_MELEE
+		else
+			attack_unwieldlyness = CLICK_CD_MELEE * 0.5
 		transform_cooldown = world.time + (CLICK_CD_MELEE * 0.5)
-		user.changeNext_move(CLICK_CD_MELEE * 0.25)
+		user.SetNextAction(CLICK_CD_MELEE * 0.25, considered_action = FALSE, flush = TRUE)
 
 /obj/item/melee/transforming/cleaving_saw/transform_messages(mob/living/user, supress_message_text)
 	if(!supress_message_text)
@@ -832,11 +824,6 @@
 	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		to_chat(user, "<span class='warning'>You accidentally cut yourself with [src], like a doofus!</span>")
 		user.take_bodypart_damage(10)
-
-/obj/item/melee/transforming/cleaving_saw/melee_attack_chain(mob/user, atom/target, params)
-	..()
-	if(!active)
-		user.changeNext_move(CLICK_CD_MELEE * 0.5) //when closed, it attacks very rapidly
 
 /obj/item/melee/transforming/cleaving_saw/nemesis_effects(mob/living/user, mob/living/target)
 	var/datum/status_effect/stacking/saw_bleed/B = target.has_status_effect(STATUS_EFFECT_SAWBLEED)
@@ -897,7 +884,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags_1 = CONDUCT_1
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_BULKY
 	force = 1
 	throwforce = 1
@@ -1062,6 +1049,9 @@
 
 /obj/item/lava_staff/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
+	INVOKE_ASYNC(src, .proc/attempt_lava, target, user, proximity_flag, click_parameters)
+
+/obj/item/lava_staff/proc/attempt_lava(atom/target, mob/user, proximity_flag, click_parameters)
 	if(timer > world.time)
 		return
 
@@ -1238,7 +1228,7 @@
 	var/blast_range = 13 //how long the cardinal blast's walls are
 	var/obj/effect/hierophant/beacon //the associated beacon we teleport to
 	var/teleporting = FALSE //if we ARE teleporting
-	var/friendly_fire_check = FALSE //if the blasts we make will consider our faction against the faction of hit targets
+	var/friendly_fire_check = TRUE //if the blasts we make will consider our faction against the faction of hit targets
 
 /obj/item/hierophant_club/ComponentInitialize()
 	. = ..()

@@ -5,10 +5,7 @@
 	icon_state_unpowered = "tablet"
 	icon_state_powered = "tablet"
 	icon_state_menu = "menu"
-<<<<<<< HEAD
-=======
 	// worn_icon_state = "tablet"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	hardware_flag = PROGRAM_TABLET
 	max_hardware_size = 1
 	w_class = WEIGHT_CLASS_SMALL
@@ -37,3 +34,17 @@
 	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
 	comp_light_luminosity = 6.3
 	has_variants = FALSE
+
+/// Given to Nuke Ops members.
+/obj/item/modular_computer/tablet/nukeops
+	icon_state = "tablet-syndicate"
+	comp_light_luminosity = 6.3
+	has_variants = FALSE
+	device_theme = "syndicate"
+
+/obj/item/modular_computer/tablet/nukeops/emag_act(mob/user)
+	if(!enabled)
+		to_chat(user, "<span class='warning'>You'd need to turn the [src] on first.</span>")
+		return FALSE
+	to_chat(user, "<span class='notice'>You swipe \the [src]. It's screen briefly shows a message reading \"MEMORY CODE INJECTION DETECTED AND SUCCESSFULLY QUARANTINED\".</span>")
+	return FALSE

@@ -24,7 +24,8 @@
 	variable = TRUE
 
 /datum/movespeed_modifier/damage_slowdown_flying
-	movetypes = FLOATING
+	movetypes = FLYING
+	blacklisted_movetypes = FLOATING
 	variable = TRUE
 
 /datum/movespeed_modifier/equipment_speedmod
@@ -77,9 +78,6 @@
 	blacklisted_movetypes = FLOATING
 	variable = TRUE
 
-/datum/movespeed_modifier/shove
-	multiplicative_slowdown = SHOVE_SLOWDOWN_STRENGTH
-
 /datum/movespeed_modifier/human_carry
 	variable = TRUE
 
@@ -124,8 +122,6 @@
 /datum/movespeed_modifier/liver_cirrhosis
 	blacklisted_movetypes = FLOATING
 	variable = TRUE
-<<<<<<< HEAD
-=======
 
 /datum/movespeed_modifier/active_block
 	variable = TRUE
@@ -157,4 +153,3 @@
 	var/current_tiles = 10 / max(existing, world.tick_lag)
 	var/minimum_speed = 10 / min(max(SAMT.config_entry_value, current_tiles), current_tiles + SMTI.config_entry_value)
 	. = min(., max(minimum_speed, existing - SSI.config_entry_value))
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

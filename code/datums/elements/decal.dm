@@ -34,35 +34,11 @@
 			RegisterSignal(A, COMSIG_PARENT_EXAMINE, .proc/examine)
 		RegisterSignal(A, COMSIG_ATOM_UPDATE_OVERLAYS, .proc/apply_overlay, TRUE)
 
-	apply(A, TRUE)
-
 	num_decals_per_atom[A]++
+	apply(A)
 
 /datum/element/decal/Detach(datum/target)
 	var/atom/A = target
-<<<<<<< HEAD
-	remove(A, A.dir)
-	UnregisterSignal(A, list(COMSIG_ATOM_DIR_CHANGE, COMSIG_COMPONENT_CLEAN_ACT, COMSIG_PARENT_EXAMINE))
-	LAZYREMOVE(num_decals_per_atom, A)
-	return ..()
-
-/datum/element/decal/proc/remove(atom/target, old_dir)
-	pic.dir = first_dir == NORTH ? target.dir : turn(first_dir, dir2angle(old_dir))
-	for(var/i in 1 to num_decals_per_atom[target])
-		target.cut_overlay(pic, TRUE)
-	if(isitem(target))
-		addtimer(CALLBACK(target, /obj/item/.proc/update_slot_icon), 0, TIMER_UNIQUE)
-
-/datum/element/decal/proc/apply(atom/target, init = FALSE)
-	pic.dir = first_dir == NORTH ? target.dir : turn(first_dir, dir2angle(target.dir))
-	if(init)
-		target.add_overlay(pic, TRUE)
-	else
-		for(var/i in 1 to num_decals_per_atom[target])
-			target.add_overlay(pic, TRUE)
-	if(isitem(target))
-		addtimer(CALLBACK(target, /obj/item/.proc/update_slot_icon), 0, TIMER_UNIQUE)
-=======
 	num_decals_per_atom[A]--
 	if(!num_decals_per_atom[A])
 		UnregisterSignal(A, list(COMSIG_ATOM_DIR_CHANGE, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE,
@@ -88,13 +64,11 @@
 		pic.dir = first_dir == SOUTH ? source.dir : turn(first_dir, dir2angle(source.dir)-180) //Never turn a dir by 0.
 	for(var/i in 1 to num_decals_per_atom[source])
 		overlay_list += pic
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
-/datum/element/decal/proc/rotate_react(datum/source, old_dir, new_dir)
+/datum/element/decal/proc/rotate_react(atom/source, old_dir, new_dir)
 	if(old_dir == new_dir)
 		return
-	remove(source, old_dir)
-	apply(source)
+	source.update_icon()
 
 /datum/element/decal/proc/clean_react(datum/source, strength)
 	if(strength >= cleanable)

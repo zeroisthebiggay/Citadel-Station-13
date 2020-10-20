@@ -11,9 +11,9 @@
 
 	outfit = /datum/outfit/job/paramedic
 
-	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_MINERAL_STOREROOM, ACCESS_MAINT_TUNNELS, ACCESS_PARAMEDIC)
+	access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_GENETICS, ACCESS_CLONING, ACCESS_MINERAL_STOREROOM, ACCESS_MAINT_TUNNELS)
 
-	minimal_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_CLONING, ACCESS_MINERAL_STOREROOM, ACCESS_MAINT_TUNNELS, ACCESS_PARAMEDIC)
+	minimal_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_CLONING, ACCESS_MINERAL_STOREROOM, ACCESS_MAINT_TUNNELS)
 	paycheck = PAYCHECK_MEDIUM
 	paycheck_department = ACCOUNT_MED
 
@@ -36,7 +36,7 @@
 	suit =  /obj/item/clothing/suit/toggle/labcoat/paramedic
 	belt = /obj/item/storage/belt/medical
 	l_hand = /obj/item/storage/firstaid/regular
-	suit_store = /obj/item/flashlight/pen
+	suit_store = /obj/item/flashlight/pen/paramedic
 	id = /obj/item/card/id
 	r_pocket = /obj/item/pinpointer/crew
 	l_pocket = /obj/item/pda/medical
@@ -48,13 +48,3 @@
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
 
 	chameleon_extras = /obj/item/gun/syringe
-
-/datum/outfit/job/paramedic/hardsuit
-	name = "Paramedic (Hardsuit)"
-
-	head = null
-	mask = /obj/item/clothing/mask/breath
-	suit = /obj/item/clothing/suit/space/hardsuit/paramedic
-	suit_store = /obj/item/tank/internals/oxygen
-	r_hand = /obj/item/flashlight/pen
-

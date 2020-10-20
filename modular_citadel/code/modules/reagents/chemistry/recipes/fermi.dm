@@ -164,7 +164,7 @@
 	if(amount_to_spawn <= 0)
 		amount_to_spawn = 1
 	for(var/i in 1 to amount_to_spawn)
-		var/mob/living/simple_animal/slime/S = new(T,"green")
+		var/mob/living/simple_animal/slime/S = new(T,"pyrite")
 		S.damage_coeff = list(BRUTE = 0.9 , BURN = 2, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
 		S.name = "Living teratoma"
 		S.real_name = "Living teratoma"
@@ -177,7 +177,7 @@
 	name = "Sucubus milk"
 	id = /datum/reagent/fermi/breast_enlarger
 	results = list(/datum/reagent/fermi/breast_enlarger = 8)
-	required_reagents = list(/datum/reagent/medicine/salglu_solution = 1, /datum/reagent/consumable/milk = 1, /datum/reagent/medicine/synthflesh = 2, /datum/reagent/silicon = 3, /datum/reagent/drug/aphrodisiac = 3)
+	required_reagents = list(/datum/reagent/medicine/salglu_solution = 2, /datum/reagent/consumable/milk = 1, /datum/reagent/medicine/synthflesh = 2, /datum/reagent/silicon = 5)
 	mix_message = "the reaction gives off a mist of milk."
 	//FermiChem vars:
 	OptimalTempMin 			= 200
@@ -217,7 +217,7 @@
 	name = "Incubus draft"
 	id = /datum/reagent/fermi/penis_enlarger
 	results = list(/datum/reagent/fermi/penis_enlarger = 8)
-	required_reagents = list(/datum/reagent/blood = 5, /datum/reagent/medicine/synthflesh = 2, /datum/reagent/carbon = 2, /datum/reagent/drug/aphrodisiac = 2, /datum/reagent/medicine/salglu_solution = 1)
+	required_reagents = list(/datum/reagent/blood = 5, /datum/reagent/medicine/synthflesh = 2, /datum/reagent/carbon = 5, /datum/reagent/medicine/salglu_solution = 2)
 	mix_message = "the reaction gives off a spicy mist."
 	//FermiChem vars:
 	OptimalTempMin 			= 200
@@ -384,7 +384,7 @@
 	name = "Furranium"
 	id = /datum/reagent/fermi/furranium
 	results = list(/datum/reagent/fermi/furranium = 5)
-	required_reagents = list(/datum/reagent/drug/aphrodisiac = 1, /datum/reagent/moonsugar = 1, /datum/reagent/silver = 2, /datum/reagent/medicine/salglu_solution = 1)
+	required_reagents = list(/datum/reagent/pax/catnip = 1, /datum/reagent/silver = 2, /datum/reagent/medicine/salglu_solution = 2)
 	mix_message = "You think you can hear a howl come from the beaker."
 	//FermiChem vars:
 	OptimalTempMin 	= 350
@@ -401,10 +401,6 @@
 	RateUpLim 		= 2
 	FermiChem 		= TRUE
 	PurityMin		= 0.3
-
-/datum/chemical_reaction/fermi/furranium/organic
-	id = "furranium_organic"
-	required_reagents = list(/datum/reagent/drug/aphrodisiac = 1, /datum/reagent/pax/catnip = 1, /datum/reagent/silver = 2, /datum/reagent/medicine/salglu_solution = 1)
 
 //FOR INSTANT REACTIONS - DO NOT MULTIPLY LIMIT BY 10.
 //There's a weird rounding error or something ugh.
@@ -480,8 +476,6 @@
 	RateUpLim 		= 15
 	FermiChem 		= TRUE
 
-<<<<<<< HEAD
-=======
 /datum/chemical_reaction/fermi/plushmium // done
 	name = "Plushification serum"
 	id = /datum/reagent/fermi/plushmium
@@ -512,7 +506,6 @@
 		new /obj/item/toy/plush/plushling(get_turf(my_atom))
 	my_atom.visible_message("<span class='warning'>The reaction suddenly zaps, creating a plushie!</b></span>")
 	my_atom.reagents.clear_reagents()
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /datum/chemical_reaction/fermi/basic_buffer/FermiFinish(datum/reagents/holder, atom/my_atom) //might need this
 	var/datum/reagent/fermi/basic_buffer/Fb = locate(/datum/reagent/fermi/basic_buffer) in my_atom.reagents.reagent_list
@@ -593,4 +586,24 @@
 	ThermicConstant = -15
 	HIonRelease 	= 0.1
 	RateUpLim 		= 2
+	FermiChem 		= TRUE
+
+/datum/chemical_reaction/fermi/zeolites
+	name = "Zeolites"
+	id = /datum/reagent/fermi/zeolites
+	results = list(/datum/reagent/fermi/zeolites = 5) //We make a lot!
+	required_reagents = list(/datum/reagent/medicine/potass_iodide = 1, /datum/reagent/aluminium = 1, /datum/reagent/silicon = 1, /datum/reagent/oxygen = 1)
+	//FermiChem vars:
+	OptimalTempMin 	= 300
+	OptimalTempMax 	= 900
+	ExplodeTemp 	= 1000 //check to see overflow doesn't happen!
+	OptimalpHMin 	= 4.0
+	OptimalpHMax 	= 6.0
+	ReactpHLim 		= 4
+	//CatalystFact 	= 0
+	CurveSharpT 	= 4
+	CurveSharppH 	= 0
+	ThermicConstant = 0
+	HIonRelease 	= 0.01
+	RateUpLim 		= 15
 	FermiChem 		= TRUE

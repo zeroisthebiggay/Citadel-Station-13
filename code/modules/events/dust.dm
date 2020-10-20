@@ -4,12 +4,7 @@
 	weight = 200
 	max_occurrences = 1000
 	earliest_start = 0 MINUTES
-<<<<<<< HEAD
-	alertadmins = 0
-	gamemode_blacklist = list("dynamic")
-=======
 	alert_observers = FALSE
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /datum/round_event/space_dust
 	startWhen		= 1

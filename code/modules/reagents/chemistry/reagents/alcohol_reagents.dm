@@ -1969,16 +1969,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/bug_spray/on_mob_life(mob/living/carbon/M)
 //Bugs should not drink Bug spray.
-<<<<<<< HEAD
-	if(ismoth(M) || isflyperson(M))
-=======
 	if(isinsect(M) || isflyperson(M) || isarachnid(M))
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 		M.adjustToxLoss(1,0)
 	return ..()
 
 /datum/reagent/consumable/ethanol/bug_spray/on_mob_add(mob/living/carbon/M)
-	if(ismoth(M) || isflyperson(M))
+	if(isinsect(M) || isflyperson(M))
 		M.emote("scream")
 	return ..()
 
@@ -2281,10 +2277,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 ////////////////////
 //Race-Base-Drinks//
 ////////////////////
-<<<<<<< HEAD
-
-/datum/reagent/consumable/ethanol/coldscales
-=======
 /datum/reagent/consumable/ethanol/species_drink
 	var/species_required
 	var/disgust = 26
@@ -2299,70 +2291,37 @@ All effects don't start immediately, but rather get worse over time; the rate is
 		return ..()
 
 /datum/reagent/consumable/ethanol/species_drink/coldscales
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	name = "Coldscales"
 	color = "#5AEB52" //(90, 235, 82)
 	description = "A cold looking drink made for people with scales."
-	boozepwr = 50 //strong!
 	taste_description = "dead flies"
 	glass_icon_state = "coldscales"
 	glass_name = "glass of Coldscales"
 	glass_desc = "A soft green drink that looks inviting!"
-<<<<<<< HEAD
-
-/datum/reagent/consumable/ethanol/coldscales/on_mob_life(mob/living/carbon/M)
-	if(islizard(M))
-		quality = RACE_DRINK
-	else
-		M.adjust_disgust(25)
-	return ..()
-=======
 	species_required = "lizard"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
-/datum/reagent/consumable/ethanol/oil_drum
+/datum/reagent/consumable/ethanol/species_drink/oil_drum
 	name = "Oil Drum"
 	color = "#000000" //(0, 0, 0)
-	description = "Industeral grade oil mixed with some ethanol to make it a drink. Somehow not known to be toxic."
+	description = "Industrial grade oil mixed with some ethanol to make it a drink. Somehow not known to be toxic."
 	boozepwr = 45
 	taste_description = "oil spill"
 	glass_icon_state = "oil_drum"
 	glass_name = "Drum of oil"
 	glass_desc = "A gray can of booze and oil..."
-<<<<<<< HEAD
-
-/datum/reagent/consumable/ethanol/oil_drum/on_mob_life(mob/living/carbon/M)
-	if(isipcperson(M) || issynthliz(M))
-		quality = RACE_DRINK
-	else
-		M.adjust_disgust(25)
-	return ..()
-=======
 	species_required = "robot"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
-/datum/reagent/consumable/ethanol/nord_king
+/datum/reagent/consumable/ethanol/species_drink/nord_king
 	name = "Nord King"
 	color = "#EB1010" //(235, 16, 16)
-	description = "Strong mead mixed with more honey and ethanol. Known to beloved by most palettes."
-	boozepwr = 50 //strong!
+	description = "Strong mead mixed with more honey and ethanol. Beloved by its human patrons."
 	taste_description = "honey and red wine"
 	glass_icon_state = "nord_king"
 	glass_name = "Keg of Nord King"
 	glass_desc = "A dripping keg of red mead."
-<<<<<<< HEAD
-
-/datum/reagent/consumable/ethanol/nord_king/on_mob_life(mob/living/carbon/M)
-	if(ishumanbasic(M) || isdwarf(M) || isangel(M)) //Humans and angel races are rare
-		quality = RACE_DRINK
-	else
-		M.adjust_disgust(25)
-	return ..()
-=======
 	species_required = "basic"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
-/datum/reagent/consumable/ethanol/velvet_kiss
+/datum/reagent/consumable/ethanol/species_drink/velvet_kiss
 	name = "Velvet Kiss"
 	color = "#EB1010" //(235, 16, 16)
 	description = "A bloody drink mixed with wine."
@@ -2371,19 +2330,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "velvet_kiss"
 	glass_name = "glass of Velvet Kiss"
 	glass_desc = "Red and white drink for the upper classes or undead."
-<<<<<<< HEAD
-
-/datum/reagent/consumable/ethanol/velvet_kiss/on_mob_life(mob/living/carbon/M)
-	if(iszombie(M) || isvampire(M) || isdullahan(M)) //Rare races!
-		quality = RACE_DRINK
-	else
-		M.adjust_disgust(25)
-	return ..()
-=======
 	species_required = "undead"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
-/datum/reagent/consumable/ethanol/abduction_fruit
+/datum/reagent/consumable/ethanol/species_drink/abduction_fruit
 	name = "Abduction Fruit"
 	color = "#DEFACD" //(222, 250, 205)
 	description = "Mixing of juices to make an alien taste."
@@ -2391,42 +2340,21 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "grass and lime"
 	glass_icon_state = "abduction_fruit"
 	glass_name = "glass of Abduction Fruit"
-<<<<<<< HEAD
-	glass_desc = "Mixed fruits that were never ment to be mixed..."
-
-/datum/reagent/consumable/ethanol/abduction_fruit/on_mob_life(mob/living/carbon/M)
-	if(isabductor(M) || isxenoperson(M))
-		quality = RACE_DRINK
-	else
-		M.adjust_disgust(25)
-	return ..()
-=======
 	glass_desc = "Mixed fruits that were never meant to be mixed..."
 	species_required = "alien"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
-/datum/reagent/consumable/ethanol/bug_zapper
+/datum/reagent/consumable/ethanol/species_drink/bug_zapper
 	name = "Bug Zapper"
 	color = "#F5882A" //(222, 250, 205)
-	description = "Metals and lemon juice. Hardly even a drink."
+	description = "Copper and lemon juice. Hardly even a drink."
 	boozepwr = 5 //No booze really
 	taste_description = "copper and AC power"
 	glass_icon_state = "bug_zapper"
 	glass_name = "glass of Bug Zapper"
 	glass_desc = "An odd mix of copper, lemon juice and power meant for non-human consumption."
-<<<<<<< HEAD
-
-/datum/reagent/consumable/ethanol/bug_zapper/on_mob_life(mob/living/carbon/M)
-	if(isinsect(M) || isflyperson(M) || ismoth(M))
-		quality = RACE_DRINK
-	else
-		M.adjust_disgust(25)
-	return ..()
-=======
 	species_required = "bug"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
-/datum/reagent/consumable/ethanol/mush_crush
+/datum/reagent/consumable/ethanol/species_drink/mush_crush
 	name = "Mush Crush"
 	color = "#F5882A" //(222, 250, 205)
 	description = "Soil in a glass."
@@ -2434,21 +2362,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "dirt and iron"
 	glass_icon_state = "mush_crush"
 	glass_name = "glass of Mush Crush"
-<<<<<<< HEAD
-	glass_desc = "Popular among people that want to grow their own food rather then drink the soil."
-
-/datum/reagent/consumable/ethanol/mush_crush/on_mob_life(mob/living/carbon/M)
-	if(ispodperson(M) || ismush(M))
-		quality = RACE_DRINK
-	else
-		M.adjust_disgust(25)
-	return ..()
-=======
 	glass_desc = "Popular among people that want to grow their own food rather than drink the soil."
 	species_required = "plant"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
-/datum/reagent/consumable/ethanol/darkbrew
+/datum/reagent/consumable/ethanol/species_drink/darkbrew
 	name = "Darkbrew"
 	color = "#000000" //(0, 0, 0)
 	description = "Contained dark matter mixed with coffee."
@@ -2457,41 +2374,20 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "darkbrew"
 	glass_name = "glass of Darkbrew"
 	glass_desc = "A pitch black drink that's commonly confused with a type of coffee."
-<<<<<<< HEAD
-
-/datum/reagent/consumable/ethanol/darkbrew/on_mob_life(mob/living/carbon/M)
-	if(isshadow(M))
-		quality = RACE_DRINK
-	else
-		M.adjust_disgust(25)
-	return ..()
-=======
 	species_required = "shadow"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
-/datum/reagent/consumable/ethanol/hollow_bone
+/datum/reagent/consumable/ethanol/species_drink/hollow_bone
 	name = "Hollow Bone"
 	color = "#FCF7D4" //(252, 247, 212)
-	description = "Shockingly none-harmful mix of toxins and milk."
+	description = "Shockingly non-harmful mix of toxins and milk."
 	boozepwr = 15
 	taste_description = "Milk and salt"
 	glass_icon_state = "hollow_bone"
 	glass_name = "skull of Hollow Bone"
-<<<<<<< HEAD
-	glass_desc = "Mixing of milk and bone hurting juice for enjoyment for rather skinny people."
-
-/datum/reagent/consumable/ethanol/hollow_bone/on_mob_life(mob/living/carbon/M)
-	if(isplasmaman(M) || isskeleton(M))
-		quality = RACE_DRINK
-	else
-		M.adjust_disgust(25)
-	return ..()
-=======
 	glass_desc = "Mixing of milk and bone hurting juice for the enjoyment of rather skinny people."
 	species_required = "skeleton"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
-/datum/reagent/consumable/ethanol/frisky_kitty
+/datum/reagent/consumable/ethanol/species_drink/frisky_kitty
 	name = "Frisky Kitty"
 	color = "#FCF7D4" //(252, 247, 212)
 	description = "Warm milk mixed with a catnip."
@@ -2500,19 +2396,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "frisky_kitty"
 	glass_name = "cup of Drisky Kitty"
 	glass_desc = "Warm milk and some catnip."
-<<<<<<< HEAD
-
-/datum/reagent/consumable/ethanol/frisky_kitty/on_mob_life(mob/living/carbon/M)
-	if(ismammal(M) || iscatperson(M)) //well its not to bad for mammals
-		quality = RACE_DRINK
-	else
-		M.adjust_disgust(25)
-	return ..()
-=======
 	species_required = "furry"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
-/datum/reagent/consumable/ethanol/jell_wyrm
+/datum/reagent/consumable/ethanol/species_drink/jell_wyrm
 	name = "Jell Wyrm"
 	color = "#FF6200" //(255, 98, 0)
 	description = "Horrible mix of Co2, toxins and heat. Meant for slime based life."
@@ -2521,20 +2407,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "jell_wyrm"
 	glass_name = "glass of Jell Wyrm"
 	glass_desc = "A bubbly drink that is rather inviting to those that don't know who it's meant for."
-<<<<<<< HEAD
-
-/datum/reagent/consumable/ethanol/jell_wyrm/on_mob_life(mob/living/carbon/M)
-	if(isjellyperson(M) || isstartjelly(M) || isslimeperson(M) || isluminescent(M))
-		quality = RACE_DRINK
-	else
-		M.adjust_disgust(25)
-		M.adjustToxLoss(1, 0) //Low tox do to being carp + jell toxins.
-	return ..()
-=======
 	species_required = "jelly"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
-/datum/reagent/consumable/ethanol/laval_spit //Yes Laval
+/datum/reagent/consumable/ethanol/species_drink/laval_spit //Yes Laval
 	name = "Laval Spit"
 	color = "#DE3009" //(222, 48, 9)
 	description = "Heat minerals and some mauna loa. Meant for rock based life."
@@ -2543,20 +2418,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "laval_spit"
 	glass_name = "glass of Laval Spit"
 	glass_desc = "Piping hot drink for those who can stomach the heat of lava."
-<<<<<<< HEAD
-
-/datum/reagent/consumable/ethanol/laval_spit/on_mob_life(mob/living/carbon/M)
-	if(isgolem(M))
-		quality = RACE_DRINK
-	else
-		M.adjust_disgust(25)
-	return ..()
-=======
 	species_required = "golem"
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 ///////////////
-//Barrle Wine//
+//Barrel Wine//
 ///////////////
 
 /datum/reagent/consumable/ethanol/fruit_wine

@@ -3,6 +3,7 @@
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey baby slime"
 	pass_flags = PASSTABLE
+	mob_size = MOB_SIZE_SMALL
 	ventcrawler = VENTCRAWLER_ALWAYS
 	gender = NEUTER
 	var/is_adult = 0
@@ -12,9 +13,12 @@
 	harm_intent_damage = 5
 	icon_living = "grey baby slime"
 	icon_dead = "grey baby slime dead"
-	response_help  = "pets"
-	response_disarm = "shoos"
-	response_harm   = "stomps on"
+	response_help_continuous  = "pets"
+	response_help_simple = "pet"
+	response_disarm_continuous = "shoos"
+	response_disarm_simple = "shoo"
+	response_harm_continuous = "stomps on"
+	response_harm_simple = "stomp on"
 	emote_see = list("jiggles", "bounces in place")
 	speak_emote = list("blorbles")
 	bubble_icon = "slime"
@@ -64,8 +68,6 @@
 	var/mutator_used = FALSE //So you can't shove a dozen mutators into a single slime
 	var/force_stasis = FALSE
 
-	do_footstep = TRUE
-
 	var/static/regex/slime_name_regex = new("\\w+ (baby|adult) slime \\(\\d+\\)")
 	///////////TIME FOR SUBSPECIES
 
@@ -103,11 +105,8 @@
 	create_reagents(100, NONE, NO_REAGENTS_VALUE)
 	set_colour(new_colour)
 	. = ..()
-<<<<<<< HEAD
-=======
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 7.5)
 	set_nutrition(rand(650, 800))
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /mob/living/simple_animal/slime/Destroy()
 	for (var/A in actions)
@@ -297,7 +296,7 @@
 		discipline_slime(user)
 		return ..()
 
-/mob/living/simple_animal/slime/attack_hand(mob/living/carbon/human/M)
+/mob/living/simple_animal/slime/on_attack_hand(mob/living/carbon/human/M)
 	if(buckled)
 		M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 		if(buckled == M)
@@ -357,7 +356,7 @@
 		attacked += 10
 		if(prob(25))
 			user.do_attack_animation(src)
-			user.changeNext_move(CLICK_CD_MELEE)
+			W.ApplyAttackCooldown(user, src)
 			to_chat(user, "<span class='danger'>[W] passes right through [src]!</span>")
 			return
 		if(Discipline && prob(50)) // wow, buddy, why am I getting attacked??

@@ -465,7 +465,7 @@
 		log_attack("[key_name(owner)] digested [key_name(M)].")
 
 	// If digested prey is also a pred... anyone inside their bellies gets moved up.
-	if(is_vore_predator(M))
+	if(has_vore_belly(M))
 		M.release_vore_contents(include_absorbed = TRUE, silent = TRUE)
 
 	//Drop all items into the belly
@@ -541,8 +541,6 @@
 /obj/belly/proc/relay_resist(var/mob/living/R)
 	if (!(R in contents))
 		return  // User is not in this belly
-
-	R.setClickCooldown(50)
 
 	if(owner.stat) //If owner is stat (dead, KO) we can actually escape
 		to_chat(R,"<span class='warning'>You attempt to climb out of \the [lowertext(name)]. (This will take around [escapetime/10] seconds.)</span>")

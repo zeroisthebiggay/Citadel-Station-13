@@ -29,6 +29,8 @@
 	var/colour = "black"	//what colour the ink is!
 	var/degrees = 0
 	var/font = PEN_FONT
+	embedding = list()
+	sharpness = SHARP_POINTY
 
 /obj/item/pen/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is scribbling numbers all over [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit sudoku...</span>")
@@ -43,6 +45,7 @@
 	desc = "It's a normal red ink pen."
 	icon_state = "pen_red"
 	colour = "red"
+	throw_speed = 4 // red ones go faster (in this case, fast enough to embed!)
 
 /obj/item/pen/invisible
 	desc = "It's an invisible pen marker."
@@ -58,8 +61,10 @@
 	switch(colour)
 		if("black")
 			colour = "red"
+			throw_speed++
 		if("red")
 			colour = "green"
+			throw_speed = initial(throw_speed)
 		if("green")
 			colour = "blue"
 		else
@@ -98,7 +103,7 @@
 	throw_speed = 4
 	colour = "crimson"
 	custom_materials = list(/datum/material/gold = 750)
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	resistance_flags = FIRE_PROOF
 	unique_reskin = list("Oak" = "pen-fountain-o",
 						"Gold" = "pen-fountain-g",
@@ -193,13 +198,9 @@
  */
 /obj/item/pen/edagger
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
-<<<<<<< HEAD
-	sharpness = IS_SHARP
-=======
 	// attack_verb_continuous = list("slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts") //these won't show up if the pen is off
 	// attack_verb_simple = list("slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	var/on = FALSE
 
 /obj/item/pen/edagger/ComponentInitialize()
@@ -237,18 +238,11 @@
 		w_class = WEIGHT_CLASS_NORMAL
 		name = "energy dagger"
 		hitsound = 'sound/weapons/blade1.ogg'
-<<<<<<< HEAD
-		embedding = getEmbeddingBehavior(embed_chance = 100, embedded_fall_chance = 0) //rule of cool
-=======
 		embedding = list(embed_chance = 100) //rule of cool
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 		throwforce = 35
 		playsound(user, 'sound/weapons/saberon.ogg', 5, TRUE)
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")
-<<<<<<< HEAD
-=======
 	updateEmbedding()
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	update_icon()
 
 /obj/item/pen/edagger/update_icon_state()
@@ -261,8 +255,6 @@
 		item_state = initial(item_state)
 		lefthand_file = initial(lefthand_file)
 		righthand_file = initial(righthand_file)
-<<<<<<< HEAD
-=======
 
 /obj/item/pen/survival
 	name = "survival pen"
@@ -279,4 +271,3 @@
 	grind_results = list(/datum/reagent/iron = 2, /datum/reagent/iodine = 1)
 	tool_behaviour = TOOL_MINING //For the classic "digging out of prison with a spoon but you're in space so this analogy doesn't work" situation.
 	toolspeed = 10 //You will never willingly choose to use one of these over a shovel.
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

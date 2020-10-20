@@ -2,8 +2,8 @@
 	icon_state = "refill_clothes"
 
 /obj/machinery/vending/wardrobe
-	default_price = 350
-	extra_price = 400
+	default_price = PRICE_NORMAL
+	extra_price = PRICE_EXPENSIVE
 	payment_department = NO_FREEBIES
 	input_display_header = "Returned Clothing"
 
@@ -36,6 +36,8 @@
 	refill_canister = /obj/item/vending_refill/wardrobe/sec_wardrobe
 	payment_department = ACCOUNT_SEC
 	cost_multiplier_per_dept = list(ACCOUNT_SEC = 0)
+	default_price = PRICE_ABOVE_NORMAL
+	extra_price = PRICE_EXPENSIVE
 
 /obj/item/vending_refill/wardrobe/sec_wardrobe
 	machine_name = "SecDrobe"
@@ -90,6 +92,7 @@
 					/obj/item/storage/backpack/medic = 5,
 					/obj/item/storage/backpack/satchel/med = 5,
 					/obj/item/clothing/suit/hooded/wintercoat/medical = 5,
+					/obj/item/clothing/suit/hooded/wintercoat/paramedic = 2,
 					/obj/item/clothing/under/rank/medical/doctor/nurse = 5,
 					/obj/item/clothing/head/nursehat = 5,
 					/obj/item/clothing/under/rank/medical/doctor/skirt= 5,
@@ -97,39 +100,15 @@
 					/obj/item/clothing/under/rank/medical/doctor/green = 5,
 					/obj/item/clothing/under/rank/medical/doctor/purple = 5,
 					/obj/item/clothing/under/rank/medical/doctor = 5,
-					/obj/item/clothing/suit/toggle/labcoat = 5,,
-					/obj/item/clothing/shoes/sneakers/white = 5,
-					/obj/item/clothing/suit/apron/surgical = 5,
-					/obj/item/clothing/mask/surgical = 5)
-	refill_canister = /obj/item/vending_refill/wardrobe/medi_wardrobe
-	payment_department = ACCOUNT_MED
-	cost_multiplier_per_dept = list(ACCOUNT_MED = 0)
-
-/obj/item/vending_refill/wardrobe/medi_wardrobe
-	machine_name = "MediDrobe"
-
-/obj/machinery/vending/wardrobe/para_wardrobe
-	name = "\improper ParaDrobe"
-	desc = "A vending machine rumoured to be capable of dispensing clothing for paramedical personnel."
-	icon_state = "paradrobe"
-	product_ads = "Patient dying in your arms? Better look good!!"
-	vend_reply = "Thank you for using the ParaDrobe!"
-	products = list(/obj/item/clothing/accessory/pocketprotector = 5,
-					/obj/item/storage/backpack/duffelbag/med = 5,
-					/obj/item/storage/backpack/medic = 5,
-					/obj/item/storage/backpack/satchel/med = 5,
 					/obj/item/clothing/under/rank/medical/paramedic = 5,
 					/obj/item/clothing/under/rank/medical/paramedic/light = 5,
 					/obj/item/clothing/under/rank/medical/paramedic/skirt = 5,
 					/obj/item/clothing/under/rank/medical/paramedic/skirt/light = 5,
+					/obj/item/clothing/suit/toggle/labcoat = 5,
 					/obj/item/clothing/suit/toggle/labcoat/paramedic = 5,
 					/obj/item/clothing/suit/toggle/labcoat/emt = 5,
 					/obj/item/clothing/suit/toggle/labcoat/depjacket/med = 5,
 					/obj/item/clothing/shoes/sneakers/white = 5,
-<<<<<<< HEAD
-					/obj/item/clothing/head/soft/emt = 5)
-	refill_canister = /obj/item/vending_refill/wardrobe/para_wardrobe
-=======
 					/obj/item/clothing/head/soft/emt = 5,
 					/obj/item/clothing/suit/apron/surgical = 5,
 					/obj/item/clothing/mask/surgical = 5,
@@ -138,12 +117,11 @@
 					/obj/item/clothing/suit/toggle/labcoat/emt/red = 5,
 					/obj/item/clothing/suit/toggle/labcoat/emt/highvis = 5)
 	refill_canister = /obj/item/vending_refill/wardrobe/medi_wardrobe
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	payment_department = ACCOUNT_MED
 	cost_multiplier_per_dept = list(ACCOUNT_MED = 0)
 
-/obj/item/vending_refill/wardrobe/para_wardrobe
-	machine_name = "ParaDrobe"
+/obj/item/vending_refill/wardrobe/medi_wardrobe
+	machine_name = "MediDrobe"
 
 /obj/machinery/vending/wardrobe/engi_wardrobe
 	name = "EngiDrobe"
@@ -331,6 +309,7 @@
 	vend_reply = "Thank you for using the BarDrobe!"
 	products = list(/obj/item/clothing/head/that = 3,
 					/obj/item/radio/headset/headset_srv = 3,
+					/obj/item/clothing/suit/hooded/wintercoat/bar = 3,
 					/obj/item/clothing/under/suit/sl = 3,
 					/obj/item/clothing/under/rank/civilian/bartender = 3,
 					/obj/item/clothing/under/rank/civilian/bartender/skirt = 2,
@@ -392,7 +371,7 @@
 					/obj/item/cartridge/janitor = 3,
 					/obj/item/clothing/gloves/color/black = 2,
 					/obj/item/clothing/head/soft/purple = 2,
-					/obj/item/twohanded/broom = 2,
+					/obj/item/broom = 2,
 					/obj/item/paint/paint_remover = 2,
 					/obj/item/melee/flyswatter = 2,
 					/obj/item/flashlight = 2,
@@ -566,6 +545,8 @@
 					/obj/item/clothing/gloves/color/captain = 1)
 	refill_canister = /obj/item/vending_refill/wardrobe/cap_wardrobe
 	payment_department = ACCOUNT_CIV
+	default_price = PRICE_ALMOST_EXPENSIVE
+	extra_price = PRICE_ABOVE_EXPENSIVE
 
 /obj/machinery/vending/wardrobe/cap_wardrobe/Initialize()
 	. = ..()

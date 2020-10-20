@@ -325,7 +325,7 @@
 	desc = "A blue bathrobe."
 	icon_state = "bathrobe"
 	item_state = "bathrobe"
-
+	
 /obj/item/clothing/under/misc/mechsuitred
 	name = "red mech suit"
 	desc = "What are you, stupid?"
@@ -337,9 +337,10 @@
 	desc = "...Mom?"
 	icon_state = "white_mech_suit"
 	item_state = "white_mech_suit"
-
+	
 /obj/item/clothing/under/misc/mechsuitblue
 	name = "blue mech suit"
 	desc = "Get in the damn robot already!"
 	icon_state = "blue_mech_suit"
 	item_state = "blue_mech_suit"
+	

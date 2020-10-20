@@ -3,16 +3,11 @@
 	id = SPECIES_IPC
 	say_mod = "beeps"
 	default_color = "00FF00"
-	icon_limbs = DEFAULT_BODYPART_ICON_CITADEL
 	blacklisted = 0
 	sexes = 0
-<<<<<<< HEAD
-	species_traits = list(MUTCOLORS,NOEYES,NOTRANSSTING)
-=======
 	inherent_traits = list(TRAIT_EASYDISMEMBER,TRAIT_LIMBATTACHMENT,TRAIT_NO_PROCESS_FOOD)
 	species_traits = list(MUTCOLORS,NOEYES,NOTRANSSTING,HAS_FLESH,HAS_BONE,HAIR,ROBOTIC_LIMBS)
 	hair_alpha = 210
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	mutant_bodyparts = list("ipc_screen" = "Blank", "ipc_antenna" = "None")
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ipc
@@ -32,11 +27,8 @@
 	mutant_organs = list(/obj/item/organ/cyberimp/arm/power_cord)
 
 	exotic_bloodtype = "HF"
-<<<<<<< HEAD
-=======
 	exotic_blood_color = BLOOD_COLOR_OIL
 	species_category = SPECIES_CATEGORY_ROBOT
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 	var/datum/action/innate/monitor_change/screen
 

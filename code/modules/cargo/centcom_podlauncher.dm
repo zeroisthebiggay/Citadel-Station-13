@@ -638,7 +638,7 @@
 	refreshView()
 
 /area/centcom/supplypod/pod_storage/Initialize(mapload) //temp_pod holding area
-	. = ..()
+	. = ..() 
 	var/obj/imgbound = locate() in locate(200,SUPPLYPOD_X_OFFSET*-4.5, 1)
 	call(GLOB.podlauncher, "RegisterSignal")(imgbound, "ct[GLOB.podstyles[14][9]]", "[GLOB.podstyles[14][10]]dlauncher")
 

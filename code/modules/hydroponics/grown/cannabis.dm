@@ -15,9 +15,7 @@
 	icon_dead = "cannabis-dead" // Same for the dead icon
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 	mutatelist = list(/obj/item/seeds/cannabis/rainbow,
-						/obj/item/seeds/cannabis/death,
-						/obj/item/seeds/cannabis/white,
-						/obj/item/seeds/cannabis/ultimate)
+						/obj/item/seeds/cannabis/death)
 	reagents_add = list(/datum/reagent/drug/space_drugs = 0.15, /datum/reagent/toxin/lipolicide = 0.35) // gives u the munchies
 
 
@@ -28,7 +26,7 @@
 	species = "megacannabis"
 	plantname = "Rainbow Weed"
 	product = /obj/item/reagent_containers/food/snacks/grown/cannabis/rainbow
-	mutatelist = list()
+	mutatelist = list(/obj/item/seeds/cannabis/ultimate)
 	reagents_add = list(/datum/reagent/toxin/mindbreaker = 0.15, /datum/reagent/toxin/lipolicide = 0.35)
 	rarity = 40
 
@@ -39,7 +37,7 @@
 	species = "blackcannabis"
 	plantname = "Deathweed"
 	product = /obj/item/reagent_containers/food/snacks/grown/cannabis/death
-	mutatelist = list()
+	mutatelist = list(/obj/item/seeds/cannabis/white)
 	reagents_add = list(/datum/reagent/toxin/cyanide = 0.35, /datum/reagent/drug/space_drugs = 0.15, /datum/reagent/toxin/lipolicide = 0.15)
 	rarity = 40
 

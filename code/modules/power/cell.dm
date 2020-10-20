@@ -45,7 +45,7 @@
 
 /obj/item/stock_parts/cell/vv_edit_var(var_name, var_value)
 	switch(var_name)
-		if("self_recharge")
+		if(NAMEOF(src, self_recharge))
 			if(var_value)
 				START_PROCESSING(SSobj, src)
 			else
@@ -151,6 +151,27 @@
 				if(prob(25))
 					corrupt()
 
+/obj/item/stock_parts/cell/attack_self(mob/user)
+	if(isethereal(user))
+		var/mob/living/carbon/human/H = user
+		if(charge < 100)
+			to_chat(H, "<span class='warning'>The [src] doesn't have enough power!</span>")
+			return
+		var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+		if(stomach.crystal_charge > 146)
+			to_chat(H, "<span class='warning'>Your charge is full!</span>")
+			return
+		to_chat(H, "<span class='notice'>You clumsily channel power through the [src] and into your body, wasting some in the process.</span>")
+		if(do_after(user, 5, target = src))
+			if((charge < 100) || (stomach.crystal_charge > 146))
+				return
+			if(istype(stomach))
+				to_chat(H, "<span class='notice'>You receive some charge from the [src].</span>")
+				stomach.adjust_charge(3)
+				charge -= 100 //you waste way more than you receive, so that ethereals cant just steal one cell and forget about hunger
+			else
+				to_chat(H, "<span class='warning'>You can't receive charge from the [src]!</span>")
+		return
 
 /obj/item/stock_parts/cell/blob_act(obj/structure/blob/B)
 	ex_act(EXPLODE_DEVASTATE)
@@ -244,6 +265,7 @@
 	icon_state = "h+cell"
 	maxcharge = 15000
 	chargerate = 2250
+	rating = 2
 
 /obj/item/stock_parts/cell/high/empty
 	start_charged = FALSE
@@ -254,6 +276,7 @@
 	maxcharge = 20000
 	custom_materials = list(/datum/material/glass=300)
 	chargerate = 2000
+	rating = 3
 
 /obj/item/stock_parts/cell/super/empty
 	start_charged = FALSE
@@ -264,6 +287,7 @@
 	maxcharge = 30000
 	custom_materials = list(/datum/material/glass=400)
 	chargerate = 3000
+	rating = 4
 
 /obj/item/stock_parts/cell/hyper/empty
 	start_charged = FALSE
@@ -275,6 +299,7 @@
 	maxcharge = 40000
 	custom_materials = list(/datum/material/glass=600)
 	chargerate = 4000
+	rating = 5
 
 /obj/item/stock_parts/cell/bluespace/empty
 	start_charged = FALSE
@@ -330,7 +355,7 @@
 
 /obj/item/stock_parts/cell/emproof/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/empprotection, EMP_PROTECT_SELF)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF)
 
 /obj/item/stock_parts/cell/emproof/empty
 	start_charged = FALSE

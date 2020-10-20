@@ -29,9 +29,6 @@
 	var/recent_bee_visit = FALSE //Have we been visited by a bee recently, so bees dont overpollinate one plant
 	var/mob/lastuser //Last user to add reagents to a tray. Mostly for logging.
 	var/self_sustaining = FALSE //If the tray generates nutrients and water on its own
-<<<<<<< HEAD
-
-=======
 	// Here lies irrigation. You won't be missed, because you were never used.
 
 /obj/machinery/hydroponics/Initialize()
@@ -39,7 +36,6 @@
 	create_reagents(20)
 	reagents.add_reagent(/datum/reagent/plantnutriment/eznutriment, 10) //Half filled nutrient trays for dirt trays to have more to grow with in prison/lavaland.
 	. = ..()
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /obj/machinery/hydroponics/constructable
 	name = "hydroponics tray"
@@ -585,20 +581,6 @@
 	else if(default_unfasten_wrench(user, O))
 		return
 
-<<<<<<< HEAD
-	else if(istype(O, /obj/item/wirecutters) && unwrenchable)
-		if (!anchored)
-			to_chat(user, "<span class='warning'>Anchor the tray first!</span>")
-			return
-		using_irrigation = !using_irrigation
-		O.play_tool_sound(src)
-		user.visible_message("<span class='notice'>[user] [using_irrigation ? "" : "dis"]connects [src]'s irrigation hoses.</span>", \
-		"<span class='notice'>You [using_irrigation ? "" : "dis"]connect [src]'s irrigation hoses.</span>")
-		for(var/obj/machinery/hydroponics/h in range(1,src))
-			h.update_icon()
-
-=======
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	else if(istype(O, /obj/item/shovel/spade))
 		if(!myseed && !weedlevel)
 			to_chat(user, "<span class='warning'>[src] doesn't have any plants or weeds!</span>")

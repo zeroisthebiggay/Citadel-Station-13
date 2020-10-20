@@ -2,7 +2,7 @@
 	name = "Anthromorphic Fly"
 	id = SPECIES_FLY
 	say_mod = "buzzes"
-	species_traits = list(NOEYES)
+	species_traits = list(NOEYES,HAS_FLESH,HAS_BONE)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 	mutanttongue = /obj/item/organ/tongue/fly
 	mutantliver = /obj/item/organ/liver/fly
@@ -11,11 +11,8 @@
 	disliked_food = null
 	liked_food = GROSS
 	exotic_bloodtype = "BUG"
-<<<<<<< HEAD
-=======
 	exotic_blood_color = BLOOD_COLOR_BUG
 	species_category = SPECIES_CATEGORY_INSECT
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	if(istype(chem, /datum/reagent/toxin/pestkiller))

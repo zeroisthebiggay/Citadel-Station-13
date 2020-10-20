@@ -11,6 +11,7 @@
 	desc = "Stylish dark wood."
 	icon_state = "wood"
 	floor_tile = /obj/item/stack/tile/wood
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 0.25)
 	broken_states = list("wood-broken", "wood-broken2", "wood-broken3", "wood-broken4", "wood-broken5", "wood-broken6", "wood-broken7")
 	footstep = FOOTSTEP_WOOD
 	barefootstep = FOOTSTEP_WOOD_BAREFOOT
@@ -25,7 +26,8 @@
 /turf/open/floor/wood/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())
 		return TRUE
-	return pry_tile(I, user)
+	. = STOP_ATTACK_PROC_CHAIN
+	pry_tile(I, user)
 
 /turf/open/floor/wood/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
 	if(T.turf_type == type)
@@ -60,6 +62,11 @@
 			if(user && !silent)
 				to_chat(user, "<span class='notice'>You forcefully pry off the planks, destroying them in the process.</span>")
 	return make_plating()
+
+/turf/open/floor/wood/rust_heretic_act()
+	if(prob(70))
+		new /obj/effect/temp_visual/glowing_rune(src)
+	ChangeTurf(/turf/open/floor/plating/rust)
 
 /turf/open/floor/wood/cold
 	temperature = 255.37
@@ -174,7 +181,7 @@
 	planetary_atmos = TRUE
 	floor_tile = null
 	initial_gas_mix = FROZEN_ATMOS
-	slowdown = 2
+	slowdown = 1.5 //So digging it out paths are useful.
 	bullet_sizzle = TRUE
 	footstep = FOOTSTEP_SAND
 	barefootstep = FOOTSTEP_SAND

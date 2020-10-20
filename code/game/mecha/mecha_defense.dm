@@ -52,11 +52,7 @@
 		. *= booster_damage_modifier
 
 
-/obj/mecha/attack_hand(mob/living/user)
-	. = ..()
-	if(.)
-		return
-	user.changeNext_move(CLICK_CD_MELEE) // Ugh. Ideally we shouldn't be setting cooldowns outside of click code.
+/obj/mecha/on_attack_hand(mob/living/user, act_intent = user.a_intent, unarmed_attack_flags)
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	playsound(loc, 'sound/weapons/tap.ogg', 40, 1, -1)
 	user.visible_message("<span class='danger'>[user] hits [name]. Nothing happens</span>", null, null, COMBAT_MESSAGE_RANGE)
@@ -75,7 +71,7 @@
 /obj/mecha/attack_animal(mob/living/simple_animal/user)
 	mecha_log_message("Attack by simple animal. Attacker - [user].", color="red")
 	if(!user.melee_damage_upper && !user.obj_damage)
-		user.emote("custom", message = "[user.friendly] [src].")
+		user.emote("custom", message = "[user.friendly_verb_continuous] [src].")
 		return 0
 	else
 		var/play_soundeffect = 1
@@ -253,7 +249,7 @@
 		return
 
 	else if(istype(W, /obj/item/weldingtool) && user.a_intent != INTENT_HARM)
-		user.changeNext_move(CLICK_CD_MELEE)
+		user.DelayNextAction(CLICK_CD_MELEE)
 		if(obj_integrity < max_integrity)
 			if(W.use_tool(src, user, 0, volume=50, amount=1))
 				if (internal_damage & MECHA_INT_TANK_BREACH)
@@ -276,9 +272,9 @@
 	else
 		return ..()
 
-/obj/mecha/attacked_by(obj/item/I, mob/living/user)
+/obj/mecha/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
 	mecha_log_message("Attacked by [I]. Attacker - [user]")
-	..()
+	return ..()
 
 /obj/mecha/proc/mech_toxin_damage(mob/living/target)
 	playsound(src, 'sound/effects/spray2.ogg', 50, 1)

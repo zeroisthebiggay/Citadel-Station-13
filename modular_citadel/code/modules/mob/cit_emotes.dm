@@ -235,8 +235,6 @@
 	user.nextsoundemote = world.time + 7
 	var/sound = pick('modular_citadel/sound/voice/bark1.ogg', 'modular_citadel/sound/voice/bark2.ogg')
 	playsound(user, sound, 50, 1, -1)
-<<<<<<< HEAD
-=======
 
 /datum/emote/living/squish
 	key = "squish"
@@ -254,4 +252,3 @@
 	user.nextsoundemote = world.time + 7
 	var/sound = pick('sound/voice/slime_squish.ogg')
 	playsound(user, sound, 50, 1, -1)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

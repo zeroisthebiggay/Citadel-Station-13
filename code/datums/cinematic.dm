@@ -30,7 +30,6 @@
 /datum/cinematic
 	var/id = CINEMATIC_DEFAULT
 	var/list/watching = list() //List of clients watching this
-	var/list/locked = list() //Who had notransform set during the cinematic
 	var/list/locked = list() //Who had mob_transforming  set during the cinematic
 	var/is_global = FALSE //Global cinematics will override mob-specific ones
 	var/obj/screen/cinematic/screen
@@ -50,8 +49,6 @@
 		C.screen -= screen
 	watching = null
 	QDEL_NULL(screen)
-	for(var/mob/M in locked)
-		M.notransform = FALSE
 	QDEL_NULL(special_callback)
 	for(var/MM in locked)
 		if(!MM)
@@ -77,20 +74,6 @@
 		ooc_toggled = TRUE
 		toggle_ooc(FALSE)
 
-
-	for(var/mob/M in GLOB.mob_list)
-		if(M in watchers)
-			M.notransform = TRUE //Should this be done for non-global cinematics or even at all ?
-			locked += M
-			//Close watcher ui's
-			SStgui.close_user_uis(M)
-			if(M.client)
-				watching += M.client
-				M.client.screen += screen
-		else
-			if(is_global)
-				M.notransform = TRUE
-				locked += M
 	//Place /obj/screen/cinematic into everyone's screens, prevent them from moving
 	for(var/MM in watchers)
 		var/mob/M = MM

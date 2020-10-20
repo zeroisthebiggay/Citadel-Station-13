@@ -98,6 +98,11 @@
 	config_entry_value = 6
 	min_val = 1
 
+/datum/config_entry/number/ecult_scaling_coeff		//how much does the amount of players get divided by to determine e_cult
+	config_entry_value = 6
+	integer = FALSE
+	min_val = 1
+
 /datum/config_entry/number/security_scaling_coeff	//how much does the amount of players get divided by to determine open security officer positions
 	config_entry_value = 8
 	min_val = 1
@@ -168,11 +173,13 @@
 
 /datum/config_entry/flag/join_with_mutant_humans	//players can pick mutant bodyparts for humans before joining the game
 
-/datum/config_entry/flag/no_summon_guns	//No
+/datum/config_entry/flag/no_summon_guns		//No
 
 /datum/config_entry/flag/no_summon_magic	//Fun
 
 /datum/config_entry/flag/no_summon_events	//Allowed
+
+/datum/config_entry/flag/no_summon_traumas	//!
 
 /datum/config_entry/flag/no_intercept_report	//Whether or not to send a communications intercept report roundstart. This may be overridden by gamemodes.
 
@@ -454,6 +461,10 @@
 	config_entry_value = 64
 	min_val = 0
 
+/datum/config_entry/number/ratcap
+	config_entry_value = 64
+	min_val = 0
+
 /datum/config_entry/flag/disable_stambuffer
 
 /datum/config_entry/keyed_list/box_random_engine
@@ -526,6 +537,10 @@
 
 //Allows players to set a hexadecimal color of their choice as skin tone, on top of the standard ones.
 /datum/config_entry/flag/allow_custom_skintones
+
+///Initial loadout points
+/datum/config_entry/number/initial_gear_points
+	config_entry_value = 10
 
 /**
   * Enables the FoV component, which hides objects and mobs behind the parent from their sight, unless they turn around, duh.

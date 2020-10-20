@@ -767,6 +767,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /* CITADEL EDIT - We're using top menu instead
 			button_name = pixel_size
 			dat += "<b>Pixel Scaling:</b> <a href='?_src_=prefs;preference=pixel_size'>[(button_name) ? "Pixel Perfect [button_name]x" : "Stretch to fit"]</a><br>"
+
 			switch(scaling_method)
 				if(SCALING_METHOD_NORMAL)
 					button_name = "Nearest Neighbor"

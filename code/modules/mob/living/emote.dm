@@ -3,6 +3,11 @@
 	key_third_person = "blushes"
 	message = "blushes."
 
+/datum/emote/living/blush/run_emote(mob/user, params)
+	. = ..()
+	if(. && isipcperson(user))
+		do_fake_sparks(5,FALSE,user)
+
 /datum/emote/living/bow
 	key = "bow"
 	key_third_person = "bows"
@@ -220,7 +225,7 @@
 			'sound/voice/catpeople/nyahehe.ogg'),
 			50, 1)
 			return
-		else if(ismoth(C))
+		else if(isinsect(C))
 			playsound(C, 'sound/voice/moth/mothlaugh.ogg', 50, 1)
 		else if(isjellyperson(C))
 			var/mob/living/carbon/human/H = C
@@ -253,7 +258,7 @@
 	. = ..()
 	if(. && iscarbon(user)) //Citadel Edit because this is hilarious
 		var/mob/living/carbon/C = user
-		if(ismoth(C))
+		if(isinsect(C))
 			playsound(C, 'sound/voice/moth/mothchitter.ogg', 50, 1)
 
 /datum/emote/living/look
@@ -334,6 +339,11 @@
 	key = "smile"
 	key_third_person = "smiles"
 	message = "smiles."
+
+/datum/emote/living/smirk
+	key = "smirk"
+	key_third_person = "smirks"
+	message = "smirks."
 
 /datum/emote/living/sneeze
 	key = "sneeze"
@@ -450,7 +460,7 @@
 		to_chat(user, "You cannot send IC messages (muted).")
 		return FALSE
 	else if(!params)
-		var/custom_emote = stripped_multiline_input(user, "Choose an emote to display.", "Custom Emote", null, MAX_MESSAGE_LEN)
+		var/custom_emote = stripped_multiline_input_or_reflect(user, "Choose an emote to display.", "Custom Emote", null, MAX_MESSAGE_LEN)
 		if(custom_emote && !check_invalid(user, custom_emote))
 			var/type = input("Is this a visible or hearable emote?") as null|anything in list("Visible", "Hearable")
 			switch(type)
@@ -466,6 +476,7 @@
 		message = params
 		if(type_override)
 			emote_type = type_override
+	message = user.say_emphasis(message)
 	. = ..()
 	message = null
 	emote_type = EMOTE_VISIBLE
@@ -539,8 +550,6 @@
 		to_chat(user, "<span class='notice'>You ready your slapping hand.</span>")
 	else
 		to_chat(user, "<span class='warning'>You're incapable of slapping in your current state.</span>")
-<<<<<<< HEAD
-=======
 
 /datum/emote/living/audio_emote/blorble
 	key = "blorble"
@@ -567,4 +576,3 @@
 		var/mob/living/carbon/C = user
 		if(isjellyperson(C))
 			pick(playsound(C, 'sound/effects/meatslap.ogg', 50, 1),playsound(C, 'sound/effects/gib_step.ogg', 50, 1))
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

@@ -270,19 +270,23 @@ GLOBAL_LIST_INIT(meta_gas_fusions, meta_gas_fusion_list())
 	reaction_results = new
 	var/temp = return_temperature()
 	var/ener = thermal_energy()
+
 	reaction_loop:
 		for(var/r in reactions)
 			var/datum/gas_reaction/reaction = r
+
 			var/list/min_reqs = reaction.min_requirements
 			if((min_reqs["TEMP"] && temp < min_reqs["TEMP"]) \
 			|| (min_reqs["ENER"] && ener < min_reqs["ENER"]))
 				continue
+
 			for(var/id in min_reqs)
 				if (id == "TEMP" || id == "ENER")
 					continue
 				if(get_moles(id) < min_reqs[id])
 					continue reaction_loop
 			//at this point, all minimum requirements for the reaction are satisfied.
+
 			/*	currently no reactions have maximum requirements, so we can leave the checks commented out for a slight performance boost
 				PLEASE DO NOT REMOVE THIS CODE. the commenting is here only for a performance increase.
 				enabling these checks should be as easy as possible and the fact that they are disabled should be as clear as possible

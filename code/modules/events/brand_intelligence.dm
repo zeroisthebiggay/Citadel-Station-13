@@ -26,7 +26,6 @@
 									 "How do I vore people?",
 									 "ERP?",
 									 "Not epic bros...")
-	threat = 5
 
 
 /datum/round_event/brand_intelligence/announce(fake)
@@ -53,6 +52,7 @@
 	vendingMachines.Remove(originMachine)
 	originMachine.shut_up = 0
 	originMachine.shoot_inventory = 1
+	announce_to_ghosts(originMachine)
 
 
 /datum/round_event/brand_intelligence/tick()

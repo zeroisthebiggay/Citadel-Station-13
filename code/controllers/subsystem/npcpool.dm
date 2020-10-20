@@ -27,13 +27,6 @@ SUBSYSTEM_DEF(npcpool)
 		var/mob/living/simple_animal/SA = currentrun[currentrun.len]
 		--currentrun.len
 
-		if(!SA.ckey && !SA.notransform)
-			if(SA.stat != DEAD)
-				SA.handle_automated_movement()
-			if(SA.stat != DEAD)
-				SA.handle_automated_action()
-			if(SA.stat != DEAD)
-				SA.handle_automated_speech()
 		invoking = TRUE
 		invoke_start = world.time
 		INVOKE_ASYNC(src, .proc/invoke_process, SA)

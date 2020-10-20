@@ -10,6 +10,10 @@
 	var/obj/item/aicard/stored_card = null
 	var/locked = FALSE
 
+/obj/item/computer_hardware/ai_slot/handle_atom_del(atom/A)
+	if(A == stored_card)
+		try_eject(0, null, TRUE)
+	. = ..()
 
 /obj/item/computer_hardware/ai_slot/examine(mob/user)
 	. = ..()
@@ -35,18 +39,7 @@
 	return TRUE
 
 
-<<<<<<< HEAD
-/obj/item/computer_hardware/ai_slot/try_eject(slot=0,mob/living/user = null,forced = 0)
-	if (get_dist(src,user) > 1)
-		if (iscarbon(user))
-			var/mob/living/carbon/H = user
-			if (!(H.dna && H.dna.check_mutation(TK) && tkMaxRangeCheck(src,H)))
-				return FALSE
-		else
-			return FALSE
-=======
 /obj/item/computer_hardware/ai_slot/try_eject(mob/living/user = null,forced = FALSE)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 	if(!stored_card)
 		to_chat(user, "<span class='warning'>There is no card in \the [src].</span>")
 		return FALSE
@@ -56,19 +49,21 @@
 		return FALSE
 
 	if(stored_card)
-		stored_card.forceMove(get_turf(src))
+		to_chat(user, "<span class='notice'>You remove [stored_card] from [src].</span>")
 		locked = FALSE
-		stored_card.verb_pickup()
+		if(user)
+			user.put_in_hands(stored_card)
+		else
+			stored_card.forceMove(drop_location())
 		stored_card = null
 
-		to_chat(user, "<span class='notice'>You remove the card from \the [src].</span>")
 		return TRUE
 	return FALSE
 
 /obj/item/computer_hardware/ai_slot/attackby(obj/item/I, mob/living/user)
 	if(..())
 		return
-	if(istype(I, /obj/item/screwdriver))
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		to_chat(user, "<span class='notice'>You press down on the manual eject button with \the [I].</span>")
 		try_eject(,user,1)
 		return

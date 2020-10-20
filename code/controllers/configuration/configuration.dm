@@ -112,7 +112,9 @@
 	var/list/lines = world.file2list("[directory]/[filename]")
 	var/list/_entries = entries
 	var/list/postload_required = list()
+	var/linenumber = 0
 	for(var/L in lines)
+		linenumber++
 		L = trim(L)
 		if(!L)
 			continue
@@ -140,7 +142,6 @@
 
 		if(entry == "$include")
 			if(!value)
-				log_config("Warning: Invalid $include directive: [value]")
 				log_config("LINE [linenumber]: Warning: Invalid $include directive: [value]")
 			else
 				LoadEntries(value, stack)
@@ -149,7 +150,6 @@
 
 		var/datum/config_entry/E = _entries[entry]
 		if(!E)
-			log_config("Unknown setting in configuration: '[entry]'")
 			log_config("LINE [linenumber]: Unknown setting in configuration: '[entry]'")
 			continue
 
@@ -160,7 +160,6 @@
 			var/datum/config_entry/new_ver = entries_by_type[E.deprecated_by]
 			var/new_value = E.DeprecationUpdate(value)
 			var/good_update = istext(new_value)
-			log_config("Entry [entry] is deprecated and will be removed soon. Migrate to [new_ver.name]![good_update ? " Suggested new value is: [new_value]" : ""]")
 			log_config("LINE [linenumber]: Entry [entry] is deprecated and will be removed soon. Migrate to [new_ver.name]![good_update ? " Suggested new value is: [new_value]" : ""]")
 			if(!warned_deprecated_configs)
 				DelayedMessageAdmins("This server is using deprecated configuration settings. Please check the logs and update accordingly.")
@@ -173,10 +172,10 @@
 
 		var/validated = E.ValidateAndSet(value)
 		if(!validated)
-			log_config("Failed to validate setting \"[value]\" for [entry]")
+			log_config("LINE [linenumber]: Failed to validate setting \"[value]\" for [entry]")
 		else
 			if(E.modified && !E.dupes_allowed)
-				log_config("Duplicate setting for [entry] ([value], [E.resident_file]) detected! Using latest.")
+				log_config("LINE [linenumber]: Duplicate setting for [entry] ([value], [E.resident_file]) detected! Using latest.")
 		if(E.postload_required)
 			postload_required[E] = TRUE
 

@@ -8,7 +8,6 @@
 	possible_transfer_amounts = list(5,10,15,25,30)
 	volume = 30
 
-
 /obj/item/reagent_containers/glass/bottle/Initialize()
 	. = ..()
 	if(!icon_state)
@@ -39,7 +38,6 @@
 				filling.icon_state = "[cached_icon]100"
 
 		. += filling
-
 
 /obj/item/reagent_containers/glass/bottle/epinephrine
 	name = "epinephrine bottle"
@@ -228,6 +226,13 @@
 	desc = "A small bottle of atropine."
 	list_reagents = list(/datum/reagent/medicine/atropine = 30)
 
+/obj/item/reagent_containers/glass/bottle/zeolites
+	name = "Zeolites bottle"
+	desc = "A small bottle of lab made Zeolite, which removes radiation from people quickly as well as contamination on items."
+	list_reagents = list(/datum/reagent/fermi/zeolites = 30)
+
+// Viro bottles
+
 /obj/item/reagent_containers/glass/bottle/romerol
 	name = "romerol bottle"
 	desc = "A small bottle of Romerol. The REAL zombie powder."
@@ -412,29 +417,6 @@
 	name = "bromine bottle"
 	list_reagents = list(/datum/reagent/bromine = 30)
 
-<<<<<<< HEAD
-//Lewd Stuff
-
-/obj/item/reagent_containers/glass/bottle/crocin
-	name = "Crocin bottle"
-	desc = "A bottle of mild aphrodisiac. Increases libido."
-	list_reagents = list(/datum/reagent/drug/aphrodisiac = 30)
-
-/obj/item/reagent_containers/glass/bottle/hexacrocin
-	name = "Hexacrocin bottle"
-	desc = "A bottle of strong aphrodisiac. Increases libido."
-	list_reagents = list(/datum/reagent/drug/aphrodisiacplus = 30)
-
-/obj/item/reagent_containers/glass/bottle/camphor
-	name = "Camphor bottle"
-	desc = "A bottle of mild anaphrodisiac. Reduces libido."
-	list_reagents = list(/datum/reagent/drug/anaphrodisiac = 30)
-
-/obj/item/reagent_containers/glass/bottle/hexacamphor
-	name = "Hexacamphor bottle"
-	desc = "A bottle of strong anaphrodisiac. Reduces libido."
-	list_reagents = list(/datum/reagent/drug/anaphrodisiacplus = 30)
-=======
 //Ichors
 /obj/item/reagent_containers/glass/bottle/ichor
 	possible_transfer_amounts = list(1)
@@ -451,4 +433,3 @@
 /obj/item/reagent_containers/glass/bottle/ichor/green
 	name = "green potion"
 	list_reagents = list(/datum/reagent/green_ichor = 1)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

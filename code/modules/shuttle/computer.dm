@@ -104,20 +104,10 @@
 			if(!COOLDOWN_FINISHED(src, request_cooldown))
 				to_chat(usr, "<span class='warning'>CentCom is still processing last authorization request!</span>")
 				return
-<<<<<<< HEAD
-		switch(SSshuttle.moveShuttle(shuttleId, href_list["move"], 1))
-			if(0)
-				say("Shuttle departing. Please stand away from the doors.")
-			if(1)
-				to_chat(usr, "<span class='warning'>Invalid shuttle requested.</span>")
-			else
-				to_chat(usr, "<span class='notice'>Unable to comply.</span>")
-=======
 			COOLDOWN_START(src, request_cooldown, 1 MINUTES)
 			to_chat(usr, "<span class='notice'>Your request has been received by CentCom.</span>")
 			to_chat(GLOB.admins, "<b>FERRY: <font color='#3d5bc3'>[ADMIN_LOOKUPFLW(usr)] (<A HREF='?_src_=holder;[HrefToken()];secrets=moveferry'>Move Ferry</a>)</b> is requesting to move the transport ferry to CentCom.</font>")
 			return TRUE
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /obj/machinery/computer/shuttle/emag_act(mob/user)
 	. = ..()
@@ -128,6 +118,6 @@
 	to_chat(user, "<span class='notice'>You fried the consoles ID checking system.</span>")
 	return TRUE
 
-/obj/machinery/computer/shuttle/proc/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
+/obj/machinery/computer/shuttle/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
 	if(port && (shuttleId == initial(shuttleId) || override))
 		shuttleId = port.id

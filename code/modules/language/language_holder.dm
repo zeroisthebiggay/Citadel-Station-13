@@ -276,7 +276,8 @@ Key procs
 							/datum/language/draconic = list(LANGUAGE_ATOM))
 
 /datum/language_holder/lizard/ash
-	selected_language = /datum/language/draconic
+	understood_languages = list(/datum/language/draconic = list(LANGUAGE_ATOM))
+	spoken_languages = list(/datum/language/draconic = list(LANGUAGE_ATOM))
 
 /datum/language_holder/monkey
 	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
@@ -323,8 +324,6 @@ Key procs
 								/datum/language/sylvan = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/sylvan = list(LANGUAGE_ATOM))
 
-<<<<<<< HEAD
-=======
 /datum/language_holder/ethereal
 	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
 								/datum/language/voltaic = list(LANGUAGE_ATOM))
@@ -337,7 +336,6 @@ Key procs
 	spoken_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
 							/datum/language/arachnid = list(LANGUAGE_ATOM))
 
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 /datum/language_holder/empty
 	understood_languages = list()
 	spoken_languages = list()

@@ -49,8 +49,9 @@
 	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/rank/cargo/miner
-	desc = "It's a snappy jumpsuit with a sturdy set of overalls. It is very dirty."
 	name = "shaft miner's jumpsuit"
+	desc = "It's a snappy jumpsuit with a sturdy set of overalls. It is very dirty."
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 0, "wound" = 10)
 	icon_state = "miner"
 	item_state = "miner"
 

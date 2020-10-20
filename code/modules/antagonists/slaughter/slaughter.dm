@@ -1,4 +1,3 @@
-
 //////////////////The Monster
 
 /mob/living/simple_animal/slaughter

@@ -41,7 +41,6 @@
 	filling_color = "#FFD700"
 	tastes = list("salt" = 1, "crisps" = 1)
 	foodtype = JUNKFOOD | FRIED
-	custom_price = 90
 
 /obj/item/reagent_containers/food/snacks/no_raisin
 	name = "4no raisins"
@@ -69,7 +68,7 @@
 	junkiness = 25
 	filling_color = "#FFD700"
 	foodtype = JUNKFOOD | GRAIN | SUGAR
-	custom_price = 30
+	custom_price = PRICE_CHEAP_AS_FREE
 
 /obj/item/reagent_containers/food/snacks/cheesiehonkers
 	name = "cheesie honkers"
@@ -81,7 +80,6 @@
 	filling_color = "#FFD700"
 	tastes = list("cheese" = 5, "crisps" = 2)
 	foodtype = JUNKFOOD | DAIRY | SUGAR
-	custom_price = 45
 
 /obj/item/reagent_containers/food/snacks/syndicake
 	name = "syndi-cakes"
@@ -91,9 +89,6 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/doctor_delight = 5)
 	filling_color = "#F5F5DC"
 	tastes = list("sweetness" = 3, "cake" = 1)
-<<<<<<< HEAD
-	foodtype = GRAIN | FRUIT | VEGETABLES
-=======
 	foodtype = GRAIN | FRUIT | VEGETABLES | ANTITOXIC
 	custom_price = PRICE_CHEAP
 
@@ -106,4 +101,3 @@
 	filling_color = "#97ee63"
 	tastes = list("pure electricity" = 3, "fitness" = 2)
 	foodtype = TOXIC
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

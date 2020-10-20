@@ -10,10 +10,7 @@
 	var/charges = 1
 	var/insisting = 0
 
-/obj/machinery/wish_granter/attack_hand(mob/living/carbon/user)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/wish_granter/on_attack_hand(mob/living/carbon/user)
 	if(charges <= 0)
 		to_chat(user, "The Wish Granter lies silent.")
 		return
@@ -22,19 +19,11 @@
 		to_chat(user, "You feel a dark stirring inside of the Wish Granter, something you want nothing of. Your instincts are better than any man's.")
 		return
 
-	else if(is_special_character(user))
-		to_chat(user, "Even to a heart as dark as yours, you know nothing good will come of this.  Something instinctual makes you pull away.")
-
 	else if (!insisting)
 		to_chat(user, "Your first touch makes the Wish Granter stir, listening to you.  Are you really sure you want to do this?")
 		insisting++
 
 	else
-		to_chat(user, "You speak.  [pick("I want the station to disappear","Humanity is corrupt, mankind must be destroyed","I want to be rich", "I want to rule the world","I want immortality.")].  The Wish Granter answers.")
-		to_chat(user, "Your head pounds for a moment, before your vision clears.  You are the avatar of the Wish Granter, and your power is LIMITLESS!  And it's all yours.  You need to make sure no one can take it from you.  No one can know, first.")
-
-		charges--
-		insisting = 0
 		if(is_special_character(user))
 			to_chat(user, "You speak.  [pick("I want power","Humanity is corrupt, mankind must be destroyed", "I want to rule the world","I want immortality")].  The Wish Granter answers.")
 			to_chat(user, "Your head pounds for a moment, before your vision clears. The Wish Granter, sensing the darkness in your heart, has given you limitless power, and it's all yours!")
@@ -133,8 +122,13 @@
 					insisting = FALSE
 					qdel(src)
 
-		user.mind.add_antag_datum(/datum/antagonist/wishgranter)
+//ITEMS THAT IT USES
 
-		to_chat(user, "You have a very bad feeling about this.")
+/obj/structure/closet/crate/trashcart/moneywish
+	desc = "A heavy, metal trashcart with wheels. Filled with cash."
+	name = "loaded trash cart"
 
-	return
+/obj/structure/closet/crate/trashcart/moneywish/PopulateContents()	//25*20*1000=500,000
+	for(var/i in 1 to 25)
+		var/obj/item/stack/spacecash/c1000/lodsamoney = new /obj/item/stack/spacecash/c1000(src)
+		lodsamoney.amount = lodsamoney.max_amount

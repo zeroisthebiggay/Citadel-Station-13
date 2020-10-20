@@ -3,7 +3,6 @@
 	stop_automated_movement_when_pulled = 0
 	obj_damage = 40
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES //Bitflags. Set to ENVIRONMENT_SMASH_STRUCTURES to break closets,tables,racks, etc; ENVIRONMENT_SMASH_WALLS for walls; ENVIRONMENT_SMASH_RWALLS for rwalls
-	var/threat = 0 // for dynamic
 	var/atom/target
 	var/ranged = FALSE
 	var/rapid = 0 //How many shots per volley.
@@ -20,6 +19,7 @@
 	var/casingtype		//set ONLY it and NULLIFY projectiletype, if we have projectile IN CASING
 	var/move_to_delay = 3 //delay for the automated movement.
 	var/list/friends = list()
+	var/list/foes = list()
 	var/list/emote_taunt = list()
 	var/taunt_chance = 0
 
@@ -75,13 +75,14 @@
 
 /mob/living/simple_animal/hostile/Destroy()
 	targets_from = null
+	friends = null
+	foes = null
 	return ..()
 
-/mob/living/simple_animal/hostile/Life()
-	. = ..()
-	if(!.) //dead
+/mob/living/simple_animal/hostile/BiologicalLife(seconds, times_fired)
+	if(!(. = ..()))
 		walk(src, 0) //stops walking
-		return 0
+		return
 
 /mob/living/simple_animal/hostile/handle_automated_action()
 	if(AIStatus == AI_OFF)
@@ -127,7 +128,7 @@
 		Move(get_step(src,chosen_dir))
 		face_atom(target) //Looks better if they keep looking at you when dodging
 
-/mob/living/simple_animal/hostile/attacked_by(obj/item/I, mob/living/user)
+/mob/living/simple_animal/hostile/attacked_by(obj/item/I, mob/living/user, attackchain_flags = NONE, damage_multiplier = 1)
 	if(stat == CONSCIOUS && !target && AIStatus != AI_OFF && !client && user)
 		FindTarget(list(user), 1)
 	return ..()
@@ -206,7 +207,7 @@
 
 // Please do not add one-off mob AIs here, but override this function for your mob
 /mob/living/simple_animal/hostile/CanAttack(atom/the_target)//Can we actually attack a possible target?
-	if(isturf(the_target) || !the_target || the_target.type == /atom/movable/lighting_object) // bail out on invalids
+	if(!the_target || the_target.type == /atom/movable/lighting_object || isturf(the_target)) // bail out on invalids
 		return FALSE
 
 	if(ismob(the_target)) //Target is in godmode, ignore it.
@@ -221,13 +222,13 @@
 	if(search_objects < 2)
 		if(isliving(the_target))
 			var/mob/living/L = the_target
-			var/faction_check = faction_check_mob(L)
+			var/faction_check = !foes[L] && faction_check_mob(L)
 			if(robust_searching)
 				if(faction_check && !attack_same)
 					return FALSE
-				if(L.stat > stat_attack)
+				if(L.stat > stat_attack || (L.stat == UNCONSCIOUS && stat_attack == UNCONSCIOUS && HAS_TRAIT(L, TRAIT_DEATHCOMA)))
 					return FALSE
-				if(L in friends)
+				if(friends[L] > 0 && foes[L] < 1)
 					return FALSE
 			else
 				if((faction_check && !attack_same) || L.stat)
@@ -537,9 +538,9 @@ mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with mega
 	if(ranged && ranged_cooldown <= world.time)
 		target = A
 		OpenFire(A)
-	..()
-
-
+		DelayNextAction()
+	. = ..()
+	return TRUE
 
 ////// AI Status ///////
 /mob/living/simple_animal/hostile/proc/AICanContinue(var/list/possible_targets)
@@ -615,10 +616,6 @@ mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with mega
 			else if (M.loc.type in hostile_machines)
 				. += M.loc
 
-<<<<<<< HEAD
-/mob/living/simple_animal/hostile/proc/threat()
-	return threat
-=======
 
 /**
   * Proc that handles a charge attack windup for a mob.
@@ -679,4 +676,3 @@ mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with mega
 			charge_state = FALSE
 			update_icons()
 			update_mobility()
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

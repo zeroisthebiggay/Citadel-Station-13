@@ -98,14 +98,10 @@
 #define NO_APHRO			(1<<9)
 #define NO_ASS_SLAP			(1<<10)
 #define BIMBOFICATION		(1<<11)
-
 #define NO_AUTO_WAG			(1<<12)
 #define GENITAL_EXAMINE		(1<<13)
 #define VORE_EXAMINE		(1<<14)
 #define TOGGLES_CITADEL 0
-
-//component stuff
-#define COMSIG_VORE_TOGGLED "voremode_toggled" // totally not copypasta
 
 //belly sound pref things
 #define NORMIE_HEARCHECK 4

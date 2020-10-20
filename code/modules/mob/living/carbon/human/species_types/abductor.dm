@@ -3,13 +3,10 @@
 	id = SPECIES_ABDUCTOR
 	say_mod = "gibbers"
 	sexes = FALSE
-	species_traits = list(NOBLOOD,NOEYES,NOGENITALS,NOAROUSAL)
+	species_traits = list(NOBLOOD,NOEYES,NOGENITALS,NOAROUSAL,HAS_FLESH,HAS_BONE)
 	inherent_traits = list(TRAIT_VIRUSIMMUNE,TRAIT_CHUNKYFINGERS,TRAIT_NOHUNGER,TRAIT_NOBREATH)
 	mutanttongue = /obj/item/organ/tongue/abductor
-<<<<<<< HEAD:code/modules/mob/living/carbon/human/species_types/abductors.dm
-=======
 	species_category = SPECIES_CATEGORY_ALIEN
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d:code/modules/mob/living/carbon/human/species_types/abductor.dm
 
 /datum/species/abductor/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()

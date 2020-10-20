@@ -8,14 +8,11 @@
 
 	var/obj/item/card/id/stored_card = null
 
-<<<<<<< HEAD
-=======
 /obj/item/computer_hardware/card_slot/handle_atom_del(atom/A)
 	if(A == stored_card)
 		try_eject(null, TRUE)
 	. = ..()
 
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 /obj/item/computer_hardware/card_slot/Destroy()
 	try_eject()
 	return ..()
@@ -56,69 +53,16 @@
 	else
 		I.forceMove(src)
 
-<<<<<<< HEAD
-	if(!stored_card)
-		stored_card = I
-	else
-		stored_card2 = I
-	to_chat(user, "<span class='notice'>You insert \the [I] into \the [src].</span>")
-	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-=======
 	stored_card = I
 	to_chat(user, "<span class='notice'>You insert \the [I] into \the [expansion_hw ? "secondary":"primary"] [src].</span>")
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.sec_hud_set_ID()
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 	return TRUE
 
 
-<<<<<<< HEAD
-/obj/item/computer_hardware/card_slot/try_eject(slot=0, mob/living/user = null, forced = 0)
-	if (get_dist(src,user) > 1)
-		if (iscarbon(user))
-			var/mob/living/carbon/H = user
-			if (!(H.dna && H.dna.check_mutation(TK) && tkMaxRangeCheck(src,H)))
-				return FALSE
-		else
-			return FALSE
-	if(!stored_card && !stored_card2)
-		to_chat(user, "<span class='warning'>There are no cards in \the [src].</span>")
-		return FALSE
-
-	var/ejected = 0
-	if(stored_card && (!slot || slot == 1))
-		if(user)
-			user.put_in_hands(stored_card)
-		else
-			stored_card.forceMove(get_turf(src))
-		stored_card = null
-		ejected++
-
-	if(stored_card2 && (!slot || slot == 2))
-		if(user)
-			user.put_in_hands(stored_card2)
-		else
-			stored_card2.forceMove(get_turf(src))
-		stored_card2 = null
-		ejected++
-
-	if(ejected)
-		if(holder)
-			if(holder.active_program)
-				holder.active_program.event_idremoved(0, slot)
-
-			for(var/I in holder.idle_threads)
-				var/datum/computer_file/program/P = I
-				P.event_idremoved(1, slot)
-
-		to_chat(user, "<span class='notice'>You remove the card[ejected>1 ? "s" : ""] from \the [src].</span>")
-		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
-		return TRUE
-	return FALSE
-=======
 /obj/item/computer_hardware/card_slot/try_eject(mob/living/user = null, forced = FALSE)
 	if(!stored_card)
 		to_chat(user, "<span class='warning'>There are no cards in \the [src].</span>")
@@ -143,17 +87,10 @@
 	to_chat(user, "<span class='notice'>You remove the card from \the [src].</span>")
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 	return TRUE
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /obj/item/computer_hardware/card_slot/attackby(obj/item/I, mob/living/user)
 	if(..())
 		return
-<<<<<<< HEAD
-	if(istype(I, /obj/item/screwdriver))
-		to_chat(user, "<span class='notice'>You press down on the manual eject button with \the [I].</span>")
-		try_eject(0,user)
-		return
-=======
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(stored_card)
 			to_chat(user, "<span class='notice'>You press down on the manual eject button with \the [I].</span>")
@@ -171,7 +108,6 @@
 		device_type = MC_CARD2
 	else
 		device_type = MC_CARD
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
 
 /obj/item/computer_hardware/card_slot/examine(mob/user)
 	. = ..()

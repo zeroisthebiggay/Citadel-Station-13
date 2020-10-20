@@ -78,7 +78,6 @@
 	toolspeed = 0.5
 	attack_verb = list("attacked", "pinched")
 
-
 /obj/item/cautery
 	name = "cautery"
 	desc = "This stops bleeding."
@@ -108,7 +107,6 @@
 	w_class = WEIGHT_CLASS_TINY
 	toolspeed = 0.5
 	attack_verb = list("burnt")
-
 
 /obj/item/surgicaldrill
 	name = "surgical drill"
@@ -172,7 +170,6 @@
 	toolspeed = 0.5
 	attack_verb = list("drilled")
 
-
 /obj/item/scalpel
 	name = "scalpel"
 	desc = "Cut, cut, and once more cut."
@@ -190,9 +187,10 @@
 	item_flags = SURGICAL_TOOL
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP_ACCURATE
+	sharpness = SHARP_POINTY
 	tool_behaviour = TOOL_SCALPEL
 	toolspeed = 1
+	bare_wound_bonus = 20
 
 /obj/item/scalpel/Initialize()
 	. = ..()
@@ -213,7 +211,7 @@
 	force = 16
 	toolspeed = 0.7
 	light_color = LIGHT_COLOR_GREEN
-	sharpness = IS_SHARP_ACCURATE
+	sharpness = SHARP_POINTY
 
 /obj/item/scalpel/advanced/Initialize()
 	. = ..()
@@ -253,12 +251,11 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	toolspeed = 0.5
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP_ACCURATE
+	sharpness = SHARP_POINTY
 
 /obj/item/scalpel/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] [pick("wrists", "throat", "stomach")] with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
-
 
 /obj/item/circular_saw
 	name = "circular saw"
@@ -278,9 +275,11 @@
 	throw_range = 5
 	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=6000)
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 	tool_behaviour = TOOL_SAW
 	toolspeed = 1
+	wound_bonus = 5
+	bare_wound_bonus = 10
 
 /obj/item/circular_saw/Initialize()
 	. = ..()
@@ -308,7 +307,7 @@
 	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=6000)
 	toolspeed = 0.5
 	attack_verb = list("attacked", "slashed", "sawed", "cut")
-	sharpness = IS_SHARP
+	sharpness = SHARP_EDGED
 
 /obj/item/surgical_drapes
 	name = "surgical drapes"
@@ -413,8 +412,6 @@
 			advanced_surgeries |= OC.advanced_surgeries
 		return TRUE
 	return
-<<<<<<< HEAD
-=======
 
 /obj/item/bonesetter
 	name = "bonesetter"
@@ -436,4 +433,3 @@
 		to_chat(user, "<span class='warning'>You refrain from hitting [L] with [src], as you are in help intent.</span>")
 		return
 	return ..()
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

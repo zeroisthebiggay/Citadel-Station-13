@@ -27,6 +27,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install pyyaml
+          sudo apt-get install  dos2unix
       - name: "Checkout"
         if: steps.value_holder.outputs.CL_ENABLED
         uses: actions/checkout@v1
@@ -36,13 +37,10 @@ jobs:
         if: steps.value_holder.outputs.CL_ENABLED
         run: |
           python tools/ss13_genchangelog.py html/changelog.html html/changelogs
-<<<<<<< HEAD
-=======
       - name: "Convert Lineendings"
         if: steps.value_holder.outputs.CL_ENABLED
         run: |
           unix2dos html/changelogs/.all_changelog.yml
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
       - name: Commit
         if: steps.value_holder.outputs.CL_ENABLED
         run: |

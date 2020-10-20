@@ -877,14 +877,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Brig"
 	icon_state = "brig"
 
-/area/security/brigmed
-	name = "Brig Medical"
-	icon_state = "medbay3"
-
-/area/security/interrogation
-	name = "Interrogation"
-	icon_state = "security"
-
 /area/security/courtroom
 	name = "Courtroom"
 	icon_state = "courtroom"
@@ -1406,10 +1398,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/fitness/pool
 	name = "Pool Area"
 	icon_state = "pool"
-
-/area/crew_quarters/fitness/sauna
-	name = "Sauna"
-	icon_state = "sauna"
 
 /area/crew_quarters/dorms/blue
 	name = "Blue Dorms"

@@ -17,9 +17,5 @@
 	species_traits = list(NOBLOOD,EYECOLOR,NOGENITALS)
 	inherent_traits = list(TRAIT_RADIMMUNE,TRAIT_VIRUSIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOLIMBDISABLE,TRAIT_NOHUNGER)
 	sexes = 0
-<<<<<<< HEAD
-	gib_types = /obj/effect/gibspawner/robot
-=======
 	gib_types = /obj/effect/gibspawner/robot
 	species_category = SPECIES_CATEGORY_ROBOT
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d

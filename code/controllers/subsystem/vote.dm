@@ -50,8 +50,6 @@ SUBSYSTEM_DEF(vote)
 				client_popup.open(0)
 			next_pop = world.time+VOTE_COOLDOWN
 
-
-
 /datum/controller/subsystem/vote/proc/reset()
 	initiator = null
 	end_time = 0

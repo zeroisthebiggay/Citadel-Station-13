@@ -11,7 +11,6 @@
 #define MOVE_INTENT_WALK "walk"
 #define MOVE_INTENT_RUN  "run"
 
-//Blood levels
 // Blood levels
 #define BLOOD_VOLUME_MAX_LETHAL		2150
 #define BLOOD_VOLUME_EXCESS			2100
@@ -64,11 +63,11 @@
 #define BODYPART_NOT_DISABLED 0
 #define BODYPART_DISABLED_DAMAGE 1
 #define BODYPART_DISABLED_PARALYSIS 2
+#define BODYPART_DISABLED_WOUND 3
 
 #define DEFAULT_BODYPART_ICON 'icons/mob/human_parts.dmi'
 #define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/human_parts_greyscale.dmi'
 #define DEFAULT_BODYPART_ICON_ROBOTIC 'icons/mob/augmentation/augments.dmi'
-#define DEFAULT_BODYPART_ICON_CITADEL 'modular_citadel/icons/mob/mutant_bodyparts.dmi'
 
 #define MONKEY_BODYPART "monkey"
 #define ALIEN_BODYPART  "alien"
@@ -105,16 +104,8 @@
 #define BRAIN_TRAUMA_MILD /datum/brain_trauma/mild
 #define BRAIN_TRAUMA_SEVERE /datum/brain_trauma/severe
 #define BRAIN_TRAUMA_SPECIAL /datum/brain_trauma/special
+#define BRAIN_TRAUMA_MAGIC /datum/brain_trauma/magic
 
-#define TRAUMA_RESILIENCE_BASIC 1      //Curable with chems
-#define TRAUMA_RESILIENCE_SURGERY 2    //Curable with brain surgery
-#define TRAUMA_RESILIENCE_LOBOTOMY 3   //Curable with lobotomy
-#define TRAUMA_RESILIENCE_MAGIC 4      //Curable only with magic
-#define TRAUMA_RESILIENCE_ABSOLUTE 5   //This is here to stay
-
-//Limit of traumas for each resilience tier
-#define TRAUMA_LIMIT_BASIC 3
-#define TRAUMA_LIMIT_SURGERY 2
 #define TRAUMA_RESILIENCE_BASIC    1	// Curable with chems
 #define TRAUMA_RESILIENCE_SURGERY  2	// Curable with brain surgery
 #define TRAUMA_RESILIENCE_LOBOTOMY 3	// Curable with lobotomy
@@ -144,21 +135,6 @@
 #define SCREWYHUD_DEAD	  2
 #define SCREWYHUD_HEALTHY 3
 
-//Moods levels for humans
-#define MOOD_LEVEL_HAPPY4 15
-#define MOOD_LEVEL_HAPPY3 10
-#define MOOD_LEVEL_HAPPY2 6
-#define MOOD_LEVEL_HAPPY1 2
-#define MOOD_LEVEL_NEUTRAL 0
-#define MOOD_LEVEL_SAD1 -3
-#define MOOD_LEVEL_SAD2 -12
-#define MOOD_LEVEL_SAD3 -18
-#define MOOD_LEVEL_SAD4 -25
-
-//Sanity levels for humans
-#define SANITY_AMAZING 150
-#define SANITY_GREAT 125
-#define SANITY_NEUTRAL 100
 // Threshold levels for beauty for humans
 #define BEAUTY_LEVEL_HORRID -66
 #define BEAUTY_LEVEL_BAD    -33
@@ -203,7 +179,6 @@
 #define DISGUST_LEVEL_VERYGROSS	 50
 #define DISGUST_LEVEL_GROSS		 25
 
-//Slime evolution threshold. Controls how fast slimes can split/grow
 // Charge levels for Ethereals
 #define ETHEREAL_CHARGE_NONE		0
 #define ETHEREAL_CHARGE_LOWPOWER   20
@@ -291,37 +266,6 @@
 
 // Offsets defines
 
-#define OFFSET_UNIFORM "uniform"
-#define OFFSET_ID "id"
-#define OFFSET_GLOVES "gloves"
-#define OFFSET_GLASSES "glasses"
-#define OFFSET_EARS "ears"
-#define OFFSET_SHOES "shoes"
-#define OFFSET_S_STORE "s_store"
-#define OFFSET_FACEMASK "mask"
-#define OFFSET_HEAD "head"
-#define OFFSET_EYES "eyes"
-#define OFFSET_LIPS "lips"
-#define OFFSET_BELT "belt"
-#define OFFSET_BACK "back"
-#define OFFSET_SUIT "suit"
-#define OFFSET_NECK "neck"
-#define OFFSET_HAIR "hair"
-#define OFFSET_FHAIR "fhair"
-#define OFFSET_MUTPARTS "mutantparts"
-
-//MINOR TWEAKS/MISC
-#define AGE_MIN				18	//youngest a character can be //CITADEL EDIT - 17 --> 18
-#define AGE_MAX				85	//oldest a character can be
-#define WIZARD_AGE_MIN		30	//youngest a wizard can be
-#define APPRENTICE_AGE_MIN	29	//youngest an apprentice can be
-#define SHOES_SLOWDOWN		0	//How much shoes slow you down by default. Negative values speed you up
-#define SHOES_SPEED_SLIGHT  SHOES_SLOWDOWN - 1 // slightest speed boost to movement
-#define POCKET_STRIP_DELAY			40	//time taken (in deciseconds) to search somebody's pockets
-#define DOOR_CRUSH_DAMAGE	15	//the amount of damage that airlocks deal when they crush you
-
-#define	HUNGER_FACTOR		0.1	//factor at which mob nutrition decreases
-#define	REAGENTS_METABOLISM 0.4	//How many units of reagent are consumed per tick, by default.
 #define OFFSET_UNIFORM	"uniform"
 #define OFFSET_ID		"id"
 #define OFFSET_GLOVES	"gloves"
@@ -379,6 +323,7 @@
 #define GRAB_PIXEL_SHIFT_NECK		16
 
 #define SLEEP_CHECK_DEATH(X) sleep(X); if(QDELETED(src) || stat == DEAD) return;
+#define INTERACTING_WITH(X, Y) (Y in X.do_afters)
 
 // / Field of vision defines.
 #define FOV_90_DEGREES	90

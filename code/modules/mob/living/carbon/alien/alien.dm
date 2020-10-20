@@ -25,7 +25,7 @@
 
 	status_flags = CANUNCONSCIOUS|CANPUSH
 
-	var/heat_protection = 0.5
+	heat_protection = 0.5
 	var/leaping = 0
 	gib_type = /obj/effect/decal/cleanable/blood/gibs/xeno
 	unique_name = 1
@@ -138,7 +138,8 @@ Des: Removes all infected images from the alien.
 
 /mob/living/carbon/alien/proc/alien_evolve(mob/living/carbon/alien/new_xeno)
 	to_chat(src, "<span class='noticealien'>You begin to evolve!</span>")
-	visible_message("<span class='alertalien'>[src] begins to twist and contort!</span>")
+	visible_message("<span class='alertalien'>[src] begins to twist and contort!</span>",
+		"<span class='alertalien'>You begin to twist and contort!</span>")
 	new_xeno.setDir(dir)
 	if(!alien_name_regex.Find(name))
 		new_xeno.name = name

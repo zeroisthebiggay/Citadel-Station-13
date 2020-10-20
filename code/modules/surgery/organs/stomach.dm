@@ -91,8 +91,6 @@
 /obj/item/organ/stomach/ipc
 	name = "ipc cell"
 	icon_state = "stomach-ipc"
-<<<<<<< HEAD
-=======
 
 /obj/item/organ/stomach/ipc/emp_act(severity)
 	. = ..()
@@ -137,4 +135,3 @@
 
 /obj/item/organ/stomach/ethereal/proc/adjust_charge(amount)
 	crystal_charge = clamp(crystal_charge + amount, ETHEREAL_CHARGE_NONE, ETHEREAL_CHARGE_DANGEROUS)
->>>>>>> 8e72c61d2d002ee62e7a3b0b83d5f95aeddd712d
