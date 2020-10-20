@@ -212,6 +212,15 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/syringe(src)
 
+/obj/item/storage/box/smartdarts
+	name = "box of smartdarts"
+	desc = "A box full of smartdarts."
+	illustration = "syringe"
+
+/obj/item/storage/box/smartdarts/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/syringe/dart(src)
+
 /obj/item/storage/box/medipens
 	name = "box of medipens"
 	desc = "A box full of epinephrine MediPens."

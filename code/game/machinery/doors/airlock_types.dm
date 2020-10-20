@@ -59,6 +59,12 @@
 /obj/machinery/door/airlock/atmos/abandoned
 	abandoned = TRUE
 
+/obj/machinery/door/airlock/substation
+	name = "substation airlock"
+	icon = 'icons/obj/doors/airlocks/station/substation.dmi'
+	assemblytype = /obj/structure/door_assembly/door_assembly_sub
+	wiretypepath = /datum/wires/airlock/engineering
+
 /obj/machinery/door/airlock/research
 	icon = 'icons/obj/doors/airlocks/station/research.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_research
@@ -154,6 +160,10 @@
 
 /obj/machinery/door/airlock/atmos/glass/critical
 	critical_machine = TRUE //stops greytide virus from opening & bolting doors in critical positions, such as the SM chamber.
+
+/obj/machinery/door/airlock/substation/glass
+	opacity = 0
+	glass = TRUE
 
 /obj/machinery/door/airlock/science/glass
 	opacity = 0
