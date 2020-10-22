@@ -262,6 +262,9 @@
 		playsound(B, 'sound/items/sheath.ogg', 25, 1)
 	..()
 
+/obj/item/melee/baton/stunsword/loaded //this one starts with a cell pre-installed.
+	preload_cell_type = /obj/item/stock_parts/cell/high/plus
+
 /obj/item/ssword_kit
 	name = "stunsword kit"
 	desc = "a modkit for making a stunbaton into a stunsword"

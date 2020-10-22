@@ -117,6 +117,10 @@
 	var/movable = FALSE
 	use_overlays = FALSE
 
+/obj/machinery/portable_atmospherics/scrubber/huge/on
+	on = "1"
+	update_icon()
+
 /obj/machinery/portable_atmospherics/scrubber/huge/movable
 	movable = TRUE
 
