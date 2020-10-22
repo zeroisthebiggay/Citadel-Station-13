@@ -48,3 +48,7 @@ endmap
 
 map kilostation
 endmap
+
+map zerostation
+	minplayers 25
+endmap

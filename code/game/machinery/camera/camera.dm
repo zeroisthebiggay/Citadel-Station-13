@@ -52,6 +52,12 @@
 	light_range = 10
 	start_active = TRUE
 
+/obj/machinery/camera/floormounted
+	name = "floor-mounted security camera"
+	desc = "A floor-mounted security camera with a rotating array of optics to view the surrounding area. Nobody knows why it was not put on the ceiling."
+	icon = 'icons/obj/machines/camera.dmi'
+	icon_state = "camerafloor"
+
 /obj/machinery/camera/Initialize(mapload, obj/structure/camera_assembly/CA)
 	. = ..()
 	for(var/i in network)

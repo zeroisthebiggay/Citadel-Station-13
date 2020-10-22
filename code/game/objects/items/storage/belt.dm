@@ -822,7 +822,7 @@
 	icon_state = "secsheath"
 	item_state = "secsheath"
 	w_class = WEIGHT_CLASS_BULKY
-	starting_sword = /obj/item/melee/baton/stunsword
+	starting_sword = null
 	content_overlays = TRUE
 
 /obj/item/storage/belt/sabre/secbelt/ComponentInitialize()
@@ -846,8 +846,12 @@
 		/obj/item/restraints/legcuffs/bola
 		))
 
-/obj/item/storage/belt/sabre/secbelt/PopulateContents()
-	new /obj/item/melee/baton/stunsword(src)
+/obj/item/storage/belt/sabre/secbelt/full/PopulateContents()
+	new /obj/item/reagent_containers/spray/pepper(src)
+	new /obj/item/restraints/handcuffs(src)
+	new /obj/item/grenade/flashbang(src)
+	new /obj/item/assembly/flash/handheld(src)
+	new /obj/item/melee/baton/stunsword/loaded(src)
 	update_icon()
 
 /obj/item/storage/belt/sabre/twin
