@@ -641,30 +641,29 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engine/substation
 	name = "Substation"
 	icon_state = "substation"
+	ambientsounds = MAINTENANCE
+	valid_territory = FALSE
 
 /area/engine/substation/security
 	name = "Security Substation"
-	icon_state = "substation"
 
 /area/engine/substation/engineering
 	name = "Engineering Substation"
-	icon_state = "substation"
 
 /area/engine/substation/science
 	name = "Science Substation"
-	icon_state = "substation"
 
 /area/engine/substation/medical
 	name = "Medical Substation"
-	icon_state = "substation"
 
 /area/engine/substation/service
 	name = "Service Substation"
-	icon_state = "substation"
 
 /area/engine/substation/cargo
 	name = "Cargo Substation"
-	icon_state = "substation"
+
+/area/engine/substation/command
+	name = "Command Substation"
 
 
 //Solars
