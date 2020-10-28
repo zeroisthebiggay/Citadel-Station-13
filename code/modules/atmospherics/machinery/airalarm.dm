@@ -132,6 +132,15 @@
 		/datum/gas/methyl_bromide	= new/datum/tlv/no_checks
 	)
 
+/obj/machinery/airalarm/server/zero // zerostation has refridgeration inside of its telecomms room and a better atmos so warn when toxic
+	TLV = list(
+		/datum/gas/oxygen			= new/datum/tlv/dangerous,
+		/datum/gas/nitrogen			= new/datum/tlv(-1, -1, 1000, 1000),
+		/datum/gas/plasma			= new/datum/tlv/dangerous,
+		/datum/gas/nitrous_oxide	= new/datum/tlv/dangerous,
+		/datum/gas/tritium			= new/datum/tlv/dangerous,
+	)
+
 /obj/machinery/airalarm/kitchen_cold_room // Copypasta: to check temperatures.
 	TLV = list(
 		"pressure"					= new/datum/tlv(ONE_ATMOSPHERE * 0.8, ONE_ATMOSPHERE*  0.9, ONE_ATMOSPHERE * 1.1, ONE_ATMOSPHERE * 1.2), // kPa
