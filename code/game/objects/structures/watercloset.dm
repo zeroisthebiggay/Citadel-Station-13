@@ -619,6 +619,10 @@
 			var/datum/material/M = i
 			new M.sheet_type(loc, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
 
+/obj/structure/sink/baseless
+	icon = 'icons/obj/watercloset.dmi'
+	icon_state = "sinkbaseless"
+
 /obj/structure/sink/kitchen
 	name = "kitchen sink"
 	icon_state = "sink_alt"
