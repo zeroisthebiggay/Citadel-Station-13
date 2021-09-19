@@ -15,6 +15,11 @@ GLOBAL_LIST(bad_gremlin_items)
 	icon_living = "gremlin"
 	icon_dead = "gremlin_dead"
 
+/mob/living/simple_animal/hostile/gremlincc
+    . = ..()
+    // Gremlins are expert tamperers.
+    ADD_TRAIT(src, TRAIT_SHOCKIMMUNE, INNATE_TRAIT)
+
 	var/in_vent = FALSE
 
 	health = 20
